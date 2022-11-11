@@ -50,7 +50,13 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: ListTile(
-            leading: Text(account.accountName),
+            leading: CircleAvatar(
+              child: Icon(
+                  (account.isCreditCard == 1)
+                      ? Icons.credit_card
+                      : Icons.account_balance),
+            ),
+            title: Text(account.accountName),
             trailing: Text(account.availableBalance.toString()),
           ),
         );
@@ -83,7 +89,10 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: ListTile(
-              leading: Text(category.categoryName),
+              leading: CircleAvatar(
+                child: Text(category.categoryName.substring(0, 1).toUpperCase()),
+              ),
+              title: Text(category.categoryName),
               trailing: Text(category.childCount == 0 ? "" : category.childCount.toString()),
             ),
           );
@@ -153,7 +162,7 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                   ),
                   readOnly: true,
                   onTap: () async{
-                    await _accountService.getAllAccounts().then((accounts) => openFilterDelegateForAccount(context, accounts));
+                    await _accountService.getAllAccountsByType(false).then((accounts) => openFilterDelegateForAccount(context, accounts));
                     FocusManager.instance.primaryFocus?.unfocus();
                   },
                 ),

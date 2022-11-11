@@ -20,6 +20,14 @@ class AccountService {
     return result.map((account) => Account.fromMapObject(account)).toList();
   }
 
+  Future<List<Account>> getAllAccountsByType(bool isCreditCard) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    var result = await database
+        .rawQuery("SELECT * FROM ACCOUNT WHERE IS_DELETED = ? AND IS_CREDIT_CARD = ?", [0, isCreditCard ? 1 : 0]);
+    return result.map((account) => Account.fromMapObject(account)).toList();
+  }
+
   Future<List<Account>> getAccountByName(String name) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
