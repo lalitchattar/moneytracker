@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:intl/intl.dart';
 import 'package:moneytracker/model/category.dart';
+import 'package:moneytracker/model/transactions.dart';
 import 'package:moneytracker/service/account_service.dart';
+import 'package:moneytracker/service/transaction_service.dart';
 
 import '../../../main.dart';
 import '../../../model/account.dart';
@@ -20,7 +23,7 @@ class AddIncomeTransaction extends StatefulWidget {
 class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteAware{
   final _formKey = GlobalKey<FormBuilderState>();
   final CategoryService _categoryService = CategoryService();
-
+  final TransactionService _transactionService = TransactionService();
   final AccountService _accountService = AccountService();
   List<Account>? selectedAccountList = [];
   List<Category>? selectedCategoryList = [];
@@ -141,6 +144,10 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                     border: OutlineInputBorder(),
                   ),
                   initialTime: const TimeOfDay(hour: 8, minute: 0),
+                  valueTransformer: (value) {
+                    final DateFormat formatter = DateFormat('dd-MM-yyyy HH:mm');
+                    return formatter.format(value!);
+                  },
                   // locale: const Locale.fromSubtags(languageCode: 'fr'),
                 ),
                 const SizedBox(
@@ -231,7 +238,9 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
         spacing: 5.0,
         icon: Icons.check,
         onPress: () {
-          _formKey.currentState?.saveAndValidate();
+          if (_formKey.currentState?.saveAndValidate() ?? false) {
+            _transactionService.createTransaction(_formKey.currentState?.value, "I");
+          }
         },
       ),
     );

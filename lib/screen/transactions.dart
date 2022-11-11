@@ -8,6 +8,12 @@ class Transactions extends StatefulWidget {
 }
 
 class _TransactionsState extends State<Transactions> {
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint("Loading again........");
+  }
   @override
   Widget build(BuildContext context) {
     return const Center(

@@ -83,6 +83,21 @@ class DatabaseHelper {
       SELECT 'Utilities', 'E', 'Utilities', 0 UNION ALL
       SELECT 'Vacation', 'E', 'Vacation', 0 """;
 
+  static const String _transaction = """ CREATE TABLE TRANSACTIONS (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        TRANSACTION_DATE TEXT NOT NULL,
+        TRANSACTION_TYPE TEXT NOT NULL,
+        FROM_ACCOUNT TEXT,
+        TO_ACCOUNT TEXT,
+        CATEGORY TEXT NOT NULL,
+        FINAL_AMOUNT REAL NOT NULL,
+        DESCRIPTION TEXT,
+        IS_DELETED INTEGER DEFAULT 0,
+        IS_SUSPENDED INTEGER DEFAULT 0,
+        EXCLUDED_FROM_SUMMARY INTEGER DEFAULT 0
+      )""";
+
+
   DatabaseHelper._createInstance();
 
   Future<Database> get database async {
@@ -97,6 +112,7 @@ class DatabaseHelper {
     await database.execute(_account);
     await database.execute(_category);
     await database.execute(_categoryInsert);
+    await database.execute(_transaction);
   }
 
   Future<Database> initializeDatabase() async {

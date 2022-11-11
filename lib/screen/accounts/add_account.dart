@@ -88,6 +88,7 @@ class _AddAccountState extends State<AddAccount> with RouteAware{
 
   List<String> _selectedBillingDayList = [];
   List<String> _selectedGracePeriodList = [];
+  AccountService _accountService = AccountService();
 
   Future<void> openFilterDelegate(List<String> itemList, String dropdownName) async {
     await FilterListDelegate.show<String>(
@@ -340,8 +341,8 @@ class _AddAccountState extends State<AddAccount> with RouteAware{
         icon: Icons.check,
         onPress: () {
           if (_formKey.currentState?.saveAndValidate() ?? false) {
-            AccountService accountService = AccountService();
-            accountService
+
+            _accountService
                 .getAccountByName(
                     _formKey.currentState?.fields["ACCOUNT_NAME"]?.value)
                 .then((accountList) {
@@ -351,10 +352,10 @@ class _AddAccountState extends State<AddAccount> with RouteAware{
                     builder: (context) => const ErrorDialogWidget(
                         'Account with same name already exists'));
               } else {
-                accountService
+                _accountService
                     .createAccount(_formKey.currentState?.value)
                     .then((value) => {
-                          accountService
+                  _accountService
                               .updateOutstandingBalance(value)
                               .then((value) => {
                                     Navigator.pop(

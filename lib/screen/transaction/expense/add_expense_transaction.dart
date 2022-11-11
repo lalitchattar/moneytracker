@@ -3,12 +3,14 @@ import 'package:filter_list/filter_list.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:intl/intl.dart';
 import 'package:moneytracker/model/category.dart';
 import 'package:moneytracker/service/account_service.dart';
 
 import '../../../main.dart';
 import '../../../model/account.dart';
 import '../../../service/category_service.dart';
+import '../../../service/transaction_service.dart';
 
 class AddExpenseTransaction extends StatefulWidget {
   const AddExpenseTransaction({Key? key}) : super(key: key);
@@ -22,6 +24,7 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
   final _formKey = GlobalKey<FormBuilderState>();
   final CategoryService _categoryService = CategoryService();
   final AccountService _accountService = AccountService();
+  final TransactionService _transactionService = TransactionService();
   List<Account>? selectedAccountList = [];
   List<Category>? selectedCategoryList = [];
 
@@ -36,9 +39,9 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
         onApplyButtonClick: (list) {
           setState(() {
             selectedAccountList = list;
-            _formKey.currentState!.fields['TO_ACCOUNT']
+            _formKey.currentState!.fields['FROM_ACCOUNT']
                 ?.didChange(selectedAccountList?.first.accountName);
-            _formKey.currentState?.fields['TO_ACCOUNT']?.validate();
+            _formKey.currentState?.fields['FROM_ACCOUNT']?.validate();
           });
         },
         suggestionBuilder: (context, account, isSelected) {
@@ -120,7 +123,10 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
                     border: OutlineInputBorder(),
                   ),
                   initialTime: const TimeOfDay(hour: 8, minute: 0),
-                  // locale: const Locale.fromSubtags(languageCode: 'fr'),
+                  valueTransformer: (value) {
+                    final DateFormat formatter = DateFormat('dd-MM-yyyy HH:mm');
+                    return formatter.format(value!);
+                  },
                 ),
                 const SizedBox(
                   height: 20.0,
@@ -210,7 +216,9 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
         spacing: 5.0,
         icon: Icons.check,
         onPress: () {
-          _formKey.currentState?.saveAndValidate();
+          if (_formKey.currentState?.saveAndValidate() ?? false) {
+            _transactionService.createTransaction(_formKey.currentState?.value, "E");
+          }
         },
       ),
     );
