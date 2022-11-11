@@ -6,6 +6,8 @@ import 'package:moneytracker/screen/home.dart';
 import 'package:moneytracker/screen/more.dart';
 import 'package:moneytracker/screen/transactions.dart';
 
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
 void main() {
   runApp(const Application());
 }
@@ -28,6 +30,7 @@ class Application extends StatelessWidget {
       ],
       supportedLocales: FormBuilderLocalizations.delegate.supportedLocales,
       home: const BaseScreen(),
+      navigatorObservers: [routeObserver],
     );
   }
 }
