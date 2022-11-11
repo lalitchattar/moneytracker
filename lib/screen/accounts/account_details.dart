@@ -190,7 +190,7 @@ class _AccountDetailState extends State<AccountDetail> {
                               child: ListTile(
                                 leading: const Text("Billing Cycle"),
                                 trailing: snapshot.data!.first.billingDay == null ? const Text("---") : Text(
-                                    "${snapshot.data!.first.billingDay.toString()} of Every month"),
+                                    snapshot.data!.first.billingDay.toString()),
                                 dense: true,
                                 visualDensity: const VisualDensity(vertical: -3),
                               ),

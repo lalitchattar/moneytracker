@@ -1,3 +1,4 @@
+import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -19,37 +20,37 @@ class _AddAccountState extends State<AddAccount> {
   bool _isCreditCard = false;
   bool _isFieldEnable = false;
   final _billingDays = [
-    "1st",
-    "2nd",
-    "3rd",
-    "4th",
-    "5th",
-    "6th",
-    "7th",
-    "8th",
-    "9th",
-    "10th",
-    "11th",
-    "12th",
-    "13th",
-    "14th",
-    "15th",
-    "16th",
-    "17th",
-    "18th",
-    "19th",
-    "20th",
-    "21st",
-    "22nd",
-    "23rd",
-    "24th",
-    "25th",
-    "26th",
-    "27th",
-    "28th",
-    "29th",
-    "30th",
-    "31st"
+    "1st of Every Month",
+    "2nd of Every Month",
+    "3rd of Every Month",
+    "4th of Every Month",
+    "5th of Every Month",
+    "6th of Every Month",
+    "7th of Every Month",
+    "8th of Every Month",
+    "9th of Every Month",
+    "10th of Every Month",
+    "11th of Every Month",
+    "12th of Every Month",
+    "13th of Every Month",
+    "14th of Every Month",
+    "15th of Every Month",
+    "16th of Every Month",
+    "17th of Every Month",
+    "18th of Every Month",
+    "19th of Every Month",
+    "20th of Every Month",
+    "21st of Every Month",
+    "22nd of Every Month",
+    "23rd of Every Month",
+    "24th of Every Month",
+    "25th of Every Month",
+    "26th of Every Month",
+    "27th of Every Month",
+    "28th of Every Month",
+    "29th of Every Month",
+    "30th of Every Month",
+    "31st of Every Month"
   ];
 
   final _gracePeriod = [
@@ -84,6 +85,51 @@ class _AddAccountState extends State<AddAccount> {
     "29 days",
     "30 days"
   ];
+
+  List<String> _selectedBillingDayList = [];
+  List<String> _selectedGracePeriodList = [];
+
+  Future<void> openFilterDelegate(List<String> itemList, String dropdownName) async {
+    await FilterListDelegate.show<String>(
+      context: context,
+      list: itemList,
+      selectedListData: dropdownName == "BILLING_DAY" ? _selectedBillingDayList : _selectedGracePeriodList,
+      theme: FilterListDelegateThemeData(
+        tileMargin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+        listTileTheme: ListTileThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(width: 1, color: Colors.grey),
+          ),
+          tileColor: Colors.white,
+        ),
+      ),
+      // enableOnlySingleSelection: true,
+      onItemSearch: (value, query) {
+        return value
+            .toLowerCase()
+            .contains(query.toLowerCase());
+      },
+      tileLabel: (value) => value,
+      emptySearchChild: const Center(child: Text('No item found')),
+      searchFieldHint: 'Search Here..',
+      enableOnlySingleSelection: true,
+      onApplyButtonClick: (list) {
+        setState(() {
+          if(dropdownName == "BILLING_DAY") {
+            _selectedBillingDayList = list!;
+            _formKey.currentState!.fields['BILLING_DAY']
+                ?.didChange(_selectedBillingDayList?.first);
+          } else {
+            _selectedGracePeriodList = list!;
+            _formKey.currentState!.fields['GRACE_PERIOD']
+                ?.didChange(_selectedGracePeriodList?.first);
+          }
+
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,21 +233,23 @@ class _AddAccountState extends State<AddAccount> {
                 ),
                 Visibility(
                   visible: _isCreditCard,
-                  child: FormBuilderDropdown(
-                    name: "BILLING_DAY",
+                  child:         FormBuilderTextField(
                     enabled: _isFieldEnable,
+                    initialValue: null,
+                    name: "BILLING_DAY",
                     decoration: const InputDecoration(
                       labelText: "Billing Day",
                       border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.arrow_drop_down),
                     ),
-                    initialValue: null,
-                    items: _billingDays
-                        .map((billingDay) => DropdownMenuItem(
-                              alignment: AlignmentDirectional.centerStart,
-                              value: billingDay,
-                              child: Text(billingDay),
-                            ))
-                        .toList(),
+                    readOnly: true,
+                    onTap: () async{
+                      _formKey.currentState!.save();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      await openFilterDelegate(_billingDays, "BILLING_DAY");
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+
                   ),
                 ),
                 Visibility(
@@ -212,28 +260,28 @@ class _AddAccountState extends State<AddAccount> {
                 ),
                 Visibility(
                   visible: _isCreditCard,
-                  child: FormBuilderDropdown(
-                    name: "GRACE_PERIOD",
+                  child: FormBuilderTextField(
                     enabled: _isFieldEnable,
+                    initialValue: null,
+                    name: "GRACE_PERIOD",
                     decoration: const InputDecoration(
                       labelText: "Grace Period",
                       border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.arrow_drop_down),
                     ),
-                    initialValue: null,
-                    onTap: () {
+                    readOnly: true,
+                    onTap: () async{
                       _formKey.currentState!.save();
+                      FocusManager.instance.primaryFocus?.unfocus();
                       if(_formKey.currentState?.fields['BILLING_DAY']?.value == null) {
-                          Navigator.pop(context);
                         _formKey.currentState?.fields['BILLING_DAY']?.invalidate("Select Billing Day");
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        return;
                       }
+                      await openFilterDelegate(_gracePeriod, "GRACE_PERIOD");
+                      FocusManager.instance.primaryFocus?.unfocus();
                     },
-                    items: _gracePeriod
-                        .map((gracePeriod) => DropdownMenuItem(
-                              alignment: AlignmentDirectional.centerStart,
-                              value: gracePeriod,
-                              child: Text(gracePeriod),
-                            ))
-                        .toList(),
+
                   ),
                 ),
                 Visibility(

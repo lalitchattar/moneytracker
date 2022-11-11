@@ -69,7 +69,7 @@ class AccountService {
       DatabaseHelper databaseHelper = DatabaseHelper();
       Database database = await databaseHelper.database;
       String updateQuery = """
-        UPDATE ACCOUNT SET OUTSTANDING_BALANCE = (CREDIT_LIMIT - AVAILABLE_BALANCE) WHERE ID = ?
+        UPDATE ACCOUNT SET OUTSTANDING_BALANCE = (CREDIT_LIMIT - AVAILABLE_BALANCE) WHERE ID = ? AND AVAILABLE_BALANCE != 0;
       """;
       List<dynamic> params = [id];
       await database.rawQuery(updateQuery, params);
