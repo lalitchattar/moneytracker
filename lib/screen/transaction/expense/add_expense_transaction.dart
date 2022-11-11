@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:filter_list/filter_list.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:moneytracker/model/category.dart';
 import 'package:moneytracker/service/account_service.dart';
 
+import '../../../main.dart';
 import '../../../model/account.dart';
 import '../../../service/category_service.dart';
 
@@ -17,7 +17,7 @@ class AddExpenseTransaction extends StatefulWidget {
   State<AddExpenseTransaction> createState() => _AddExpenseTransactionState();
 }
 
-class _AddExpenseTransactionState extends State<AddExpenseTransaction> {
+class _AddExpenseTransactionState extends State<AddExpenseTransaction> with RouteAware {
 
   final _formKey = GlobalKey<FormBuilderState>();
   final CategoryService _categoryService = CategoryService();
@@ -214,5 +214,23 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> {
         },
       ),
     );
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    routeObserver.unsubscribe(this);
   }
 }

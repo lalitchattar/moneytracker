@@ -154,6 +154,7 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                   readOnly: true,
                   onTap: () async{
                     await _accountService.getAllAccounts().then((accounts) => openFilterDelegateForAccount(context, accounts));
+                    FocusManager.instance.primaryFocus?.unfocus();
                   },
                 ),
                 const SizedBox(
@@ -170,6 +171,7 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                   readOnly: true,
                   onTap: () async{
                     await _categoryService.getCategoriesByType("I").then((categories) => openFilterDelegateForCategory(context, categories));
+                    FocusManager.instance.primaryFocus?.unfocus();
                   },
                   validator: FormBuilderValidators.compose(
                     [

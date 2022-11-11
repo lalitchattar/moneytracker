@@ -5,7 +5,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:moneytracker/service/account_service.dart';
 import 'package:moneytracker/widget/error_dialog_widget.dart';
-
+import '../../../main.dart';
 import 'list_account.dart';
 
 class AddAccount extends StatefulWidget {
@@ -15,7 +15,7 @@ class AddAccount extends StatefulWidget {
   State<AddAccount> createState() => _AddAccountState();
 }
 
-class _AddAccountState extends State<AddAccount> {
+class _AddAccountState extends State<AddAccount> with RouteAware{
   final _formKey = GlobalKey<FormBuilderState>();
   bool _isCreditCard = false;
   bool _isFieldEnable = false;
@@ -372,5 +372,23 @@ class _AddAccountState extends State<AddAccount> {
         },
       ),
     );
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    routeObserver.unsubscribe(this);
   }
 }

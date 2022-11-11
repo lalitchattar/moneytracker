@@ -8,6 +8,7 @@ import 'package:filter_list/filter_list.dart';
 import 'package:moneytracker/service/category_service.dart';
 
 import '../../widget/error_dialog_widget.dart';
+import '../../../main.dart';
 
 class AddCategory extends StatefulWidget {
   const AddCategory({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class AddCategory extends StatefulWidget {
   State<AddCategory> createState() => _AddCategoryState();
 }
 
-class _AddCategoryState extends State<AddCategory> {
+class _AddCategoryState extends State<AddCategory> with RouteAware{
   final _formKey = GlobalKey<FormBuilderState>();
   final Map<String, String> _categoryType = {
     "Income Category": "I",
@@ -211,5 +212,23 @@ class _AddCategoryState extends State<AddCategory> {
         },
       ),
     );
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    routeObserver.unsubscribe(this);
   }
 }

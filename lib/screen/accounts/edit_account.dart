@@ -6,7 +6,7 @@ import 'package:moneytracker/screen/accounts/account_details.dart';
 import 'package:moneytracker/service/account_service.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moneytracker/widget/error_dialog_widget.dart';
-import 'package:moneytracker/screen/accounts/list_account.dart';
+import '../../../main.dart';
 import 'package:moneytracker/util/utils.dart';
 import 'package:moneytracker/model/account.dart';
 
@@ -18,7 +18,7 @@ class EditAccount extends StatefulWidget {
   State<EditAccount> createState() => _EditAccountState();
 }
 
-class _EditAccountState extends State<EditAccount> {
+class _EditAccountState extends State<EditAccount> with RouteAware{
   final AccountService _accountService = AccountService();
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -418,5 +418,22 @@ class _EditAccountState extends State<EditAccount> {
         },
       ),
     );
+  }
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    routeObserver.unsubscribe(this);
   }
 }

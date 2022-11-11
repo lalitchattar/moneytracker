@@ -8,6 +8,7 @@ import 'package:moneytracker/screen/category/category_details.dart';
 
 import '../../service/category_service.dart';
 import '../../widget/error_dialog_widget.dart';
+import '../../../main.dart';
 
 class EditCategory extends StatefulWidget {
   final int id;
@@ -17,7 +18,7 @@ class EditCategory extends StatefulWidget {
   State<EditCategory> createState() => _EditCategoryState();
 }
 
-class _EditCategoryState extends State<EditCategory> {
+class _EditCategoryState extends State<EditCategory> with RouteAware{
   final _formKey = GlobalKey<FormBuilderState>();
 
   final CategoryService _categoryService = CategoryService();
@@ -237,5 +238,23 @@ class _EditCategoryState extends State<EditCategory> {
             }
           },
         ),);
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    routeObserver.unsubscribe(this);
   }
 }
