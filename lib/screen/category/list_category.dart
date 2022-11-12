@@ -64,7 +64,7 @@ class _ListCategoryState extends State<ListCategory> {
                             padding: const EdgeInsets.all(8.0),
                             child: Chip(label: Text(snapshot.data![index].childCount.toString())),
                           ) : const Text(""),
-                          title: Text(snapshot.data![index].categoryName),
+                          title: Text(snapshot.data![index].categoryName, style: const TextStyle(fontWeight: FontWeight.w500),),
                         ),
                       ),
                     ),

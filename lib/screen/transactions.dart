@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:moneytracker/screen/transaction/transaction_details.dart';
 import 'package:moneytracker/util/utils.dart';
 import '../model/transactions.dart';
 import '../service/transaction_service.dart';
@@ -53,18 +54,23 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           pagingController: _pagingController,
           builderDelegate: PagedChildBuilderDelegate<Transactions>(
               itemBuilder: (context, transaction, index) {
-            return Card(
-              child: ListTile(
-                leading: CircleAvatar(
-                  child:
-                      Text(transaction.categoryName!.substring(0, 1).toUpperCase()),
-                ),
-                title: Text(transaction.accountName!),
-                subtitle: Text(transaction.categoryName!),
-                trailing: Chip(
-                  backgroundColor: transaction.transactionType == "I" ? Colors.green : Colors.red,
-                  label: Text(
-                      Utils.formatNumber(transaction.finalAmount).toString()),
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => TransactionDetails(transaction.id!)));
+              },
+              child: Card(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    child:
+                        Text(transaction.categoryName!.substring(0, 1).toUpperCase()),
+                  ),
+                  title: Text(transaction.accountName!),
+                  subtitle: Text(transaction.categoryName!),
+                  trailing: Chip(
+                    backgroundColor: transaction.transactionType == "I" ? Colors.green : Colors.red,
+                    label: Text(
+                        Utils.formatNumber(transaction.finalAmount).toString()),
+                  ),
                 ),
               ),
             );

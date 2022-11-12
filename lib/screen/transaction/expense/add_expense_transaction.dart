@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:moneytracker/model/category.dart';
 import 'package:moneytracker/screen/transaction/transaction_details.dart';
 import 'package:moneytracker/service/account_service.dart';
+import 'package:moneytracker/util/utils.dart';
 
 import '../../../main.dart';
 import '../../../model/account.dart';
@@ -57,8 +58,8 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: ListTile(
-              leading: Text(account.accountName),
-              trailing: Text(account.availableBalance.toString()),
+              leading: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500),),
+              trailing: Chip(backgroundColor: account.availableBalance! > 0 ? Colors.green: Colors.red, label: Text(Utils.formatNumber(account.availableBalance))),
             ),
           );
         }
@@ -91,7 +92,7 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: ListTile(
-              leading: Text(category.categoryName),
+              leading: Text(category.categoryName, style: const TextStyle(fontWeight: FontWeight.w500),),
               trailing: Text(category.childCount == 0 ? "" : category.childCount.toString()),
             ),
           );

@@ -63,8 +63,8 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                       ? Icons.credit_card
                       : Icons.account_balance),
             ),
-            title: Text(account.accountName),
-            trailing: Text(Utils.formatNumber(account.availableBalance).toString()),
+            title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500),),
+            trailing: Chip(backgroundColor: account.availableBalance! > 0 ? Colors.green: Colors.red, label: Text(Utils.formatNumber(account.availableBalance).toString())),
           ),
         );
       }
@@ -100,7 +100,7 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
               leading: CircleAvatar(
                 child: Text(category.categoryName.substring(0, 1).toUpperCase()),
               ),
-              title: Text(category.categoryName),
+              title: Text(category.categoryName, style: const TextStyle(fontWeight: FontWeight.w500),),
               trailing: Text(category.childCount == 0 ? "" : category.childCount.toString()),
             ),
           );

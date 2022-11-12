@@ -63,9 +63,12 @@ class _ListAccountState extends State<ListAccount> {
                                     ? Icons.credit_card
                                     : Icons.account_balance),
                           ),
-                          title: Text(snapshot.data![index].accountName),
-                          trailing: Text(Utils.formatNumber(snapshot.data![index].availableBalance)
-                              .toString()),
+                          title: Text(snapshot.data![index].accountName, style: const TextStyle(fontWeight: FontWeight.w500),),
+                          trailing: Chip(
+                            backgroundColor: snapshot.data![index].availableBalance! > 0 ? Colors.green: Colors.red,
+                            label: Text(Utils.formatNumber(snapshot.data![index].availableBalance)
+                                .toString(), style: const TextStyle(color: Colors.white),),
+                          ),
                         ),
                       ),
                     ),
