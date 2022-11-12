@@ -10,4 +10,16 @@ class Utils {
     }
     return formatPattern.format(number);
   }
+
+  static String formatDate(String dateTime) {
+    DateTime dateTimeObj = DateFormat("dd-MM-yyyy").parse(dateTime);
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    return formatter.format(dateTimeObj);
+  }
+
+  static String formatTime(String dateTime) {
+    DateTime dateTimeObj = DateFormat("dd-MM-yyyy HH:mm").parse(dateTime);
+    final DateFormat formatter = DateFormat('HH:mm');
+    return formatter.format(dateTimeObj);
+  }
 }

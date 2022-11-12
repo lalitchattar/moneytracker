@@ -140,6 +140,22 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                               dense: true,
                               visualDensity: const VisualDensity(vertical: -3),
                             ),
+                            const Divider(thickness: 2),
+                            ListTile(
+                              leading: const Text("Credited Amount"),
+                              trailing: Text(snapshot.data!.first.creditedAmount
+                                  .toString()),
+                              dense: true,
+                              visualDensity: const VisualDensity(vertical: -3),
+                            ),
+                            const Divider(thickness: 2),
+                            ListTile(
+                              leading: const Text("Debited Amount"),
+                              trailing: Text(snapshot.data!.first.debitedAmount
+                                  .toString()),
+                              dense: true,
+                              visualDensity: const VisualDensity(vertical: -3),
+                            ),
                             const SizedBox(
                               height: 5.0,
                             ),

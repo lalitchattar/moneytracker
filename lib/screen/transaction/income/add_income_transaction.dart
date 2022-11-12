@@ -5,6 +5,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:moneytracker/model/category.dart';
+import 'package:moneytracker/screen/transaction/transaction_details.dart';
 import 'package:moneytracker/service/account_service.dart';
 import 'package:moneytracker/service/transaction_service.dart';
 import 'package:moneytracker/util/utils.dart';
@@ -248,17 +249,30 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
         spacing: 5.0,
         icon: Icons.check,
         onPress: () async{
+          int? transactionId;
+          final navigator = Navigator.of(context); //
           if (_formKey.currentState?.saveAndValidate() ?? false) {
             await _transactionService.createTransaction(_formKey.currentState?.value, "I").then((value) async{
-              await _accountService.getAccountById(_accountId!).then((accountList) async{
+              transactionId = value;
+              await _accountService.getAccountById(_accountId!).then((accountList) async {
                   Account account = accountList.first;
                   account.availableBalance = account.availableBalance + double.parse(_formKey.currentState?.fields["FINAL_AMOUNT"]?.value);
                   account.creditedAmount = account.creditedAmount + double.parse(_formKey.currentState?.fields["FINAL_AMOUNT"]?.value);
                   account.inTransaction = account.inTransaction + 1;
-                  await _accountService.updateAccountForInTransaction(account.toMap(), account.isCreditCard == 1 ? true : false, account.id!);
+                  await _accountService.updateAccountForInTransaction(account.toMap(), account.isCreditCard == 1 ? true : false, account.id!).then((value) async{
+                    await _categoryService.getCategoryById(_categoryId!).then((categoryList) async {
+                      Category category = categoryList.first;
+                      category.creditedAmount = category.creditedAmount + double.parse(_formKey.currentState?.fields["FINAL_AMOUNT"]?.value);
+                      category.inTransaction = category.inTransaction + 1;
+                      await _categoryService.updateCategoryForInTransaction(category.toMap(), category.id!);
+                    });
+                  });
               });
+
             });
           }
+          navigator.pop();
+          navigator.push(MaterialPageRoute(builder: (context) => TransactionDetails(transactionId!)));
         },
       ),
     );

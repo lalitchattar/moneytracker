@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moneytracker/screen/transaction/expense/add_expense_transaction.dart';
 import 'package:moneytracker/screen/transaction/income/add_income_transaction.dart';
+import 'package:moneytracker/screen/transaction/transaction_details.dart';
 import 'package:moneytracker/screen/transactions.dart';
 
 class Home extends StatefulWidget {
@@ -16,7 +17,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: const Icon(Icons.arrow_back),
           title: const Text("Home"),
           centerTitle: false,
         ),

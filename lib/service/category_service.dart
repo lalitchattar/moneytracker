@@ -95,4 +95,26 @@ class CategoryService {
     var result = await database.rawQuery("SELECT * FROM CATEGORY WHERE PARENT_CATEGORY = ?", [id]);
     return result.map((category) => Category.fromMapObject(category)).toList().isNotEmpty;
   }
+
+  Future<void> updateCategoryForInTransaction(Map<String, dynamic>? category, int id) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+      String updateQuery = """
+      UPDATE CATEGORY SET CREDITED_AMOUNT = ?, 
+      IN_TRANSACTION = ? WHERE ID = ?
+      """;
+      List<dynamic> params = [category!["CREDITED_AMOUNT"], category!["IN_TRANSACTION"], id];
+      await database.rawQuery(updateQuery, params);
+  }
+
+  Future<void> updateCategoryForOutTransaction(Map<String, dynamic>? category, int id) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    String updateQuery = """
+      UPDATE CATEGORY SET DEBITED_AMOUNT = ?, 
+      OUT_TRANSACTION = ? WHERE ID = ?
+      """;
+    List<dynamic> params = [category!["DEBITED_AMOUNT"], category!["OUT_TRANSACTION"], id];
+    await database.rawQuery(updateQuery, params);
+  }
 }

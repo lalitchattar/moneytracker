@@ -1,61 +1,50 @@
 class Category {
-  late int _id;
-  late String _categoryName;
-  late String _categoryType;
-  late String? _description;
-  late int _parentCategory;
-  late double _debitedAmount;
-  late double _creditedAmount;
-  late int _inTransaction;
-  late int _outTransaction;
-  late int _isDeleted;
-  late int _isSuspended;
-  late int _excludeFromSummary;
-  late int _childCount;
-  late String? _parentCategoryName;
+  late int id;
+  late String categoryName;
+  late String categoryType;
+  late String? description;
+  late int parentCategory;
+  late double debitedAmount;
+  late double creditedAmount;
+  late int inTransaction;
+  late int outTransaction;
+  late int isDeleted;
+  late int isSuspended;
+  late int excludeFromSummary;
+  late int childCount;
+  late String? parentCategoryName;
 
-  int? get id => _id;
-  String get categoryName => _categoryName;
-  String get categoryType => _categoryType;
-  String? get description => _description;
-  int get inTransaction => _inTransaction;
-  int get outTransaction => _outTransaction;
-  double get creditedAmount => _creditedAmount;
-  double get debitedAmount => _debitedAmount;
-  int get parentCategory => _parentCategory;
-  int get childCount => _childCount;
-  String? get parentCategoryName => _parentCategoryName;
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{};
-    map["CATEGORY_NAME"] = _categoryName;
-    map["CATEGORY_TYPE"] = _categoryType;
-    map["DESCRIPTION"] = _description;
-    map["PARENT_CATEGORY"] = _parentCategory;
-    map["DEBITED_AMOUNT"] = _debitedAmount;
-    map["CREDITED_AMOUNT"] = _creditedAmount;
-    map["IN_TRANSACTION"] = _inTransaction;
-    map["OUT_TRANSACTION"] = _outTransaction;
-    map["IS_DELETED"] = _isDeleted;
-    map["IS_SUSPENDED"] = _isSuspended;
-    map["EXCLUDED_FROM_SUMMARY"] = _excludeFromSummary;
+    map["CATEGORY_NAME"] = categoryName;
+    map["CATEGORY_TYPE"] = categoryType;
+    map["DESCRIPTION"] = description;
+    map["PARENT_CATEGORY"] = parentCategory;
+    map["DEBITED_AMOUNT"] = debitedAmount;
+    map["CREDITED_AMOUNT"] = creditedAmount;
+    map["IN_TRANSACTION"] = inTransaction;
+    map["OUT_TRANSACTION"] = outTransaction;
+    map["IS_DELETED"] = isDeleted;
+    map["IS_SUSPENDED"] = isSuspended;
+    map["EXCLUDED_FROM_SUMMARY"] = excludeFromSummary;
     return map;
   }
 
   Category.fromMapObject(Map<String, dynamic> map) {
-    _id = map["ID"];
-    _categoryName = map["CATEGORY_NAME"];
-    _categoryType = map["CATEGORY_TYPE"];
-    _parentCategory = map["PARENT_CATEGORY"];
-    _description = map["DESCRIPTION"];
-    _debitedAmount = map["DEBITED_AMOUNT"];
-    _creditedAmount = map["CREDITED_AMOUNT"];
-    _inTransaction = map["IN_TRANSACTION"];
-    _outTransaction = map["OUT_TRANSACTION"];
-    _isDeleted = map["IS_DELETED"];
-    _isSuspended = map["IS_SUSPENDED"];
-    _excludeFromSummary = map["EXCLUDED_FROM_SUMMARY"];
-    _childCount = map.containsKey("CHILD_COUNT") ? map["CHILD_COUNT"] : 0;
-    _parentCategoryName = map.containsKey("PARENT_CATEGORY_NAME") ? map["PARENT_CATEGORY_NAME"] : "";
+    id = map["ID"];
+    categoryName = map["CATEGORY_NAME"];
+    categoryType = map["CATEGORY_TYPE"];
+    parentCategory = map["PARENT_CATEGORY"];
+    description = map["DESCRIPTION"];
+    debitedAmount = map["DEBITED_AMOUNT"];
+    creditedAmount = map["CREDITED_AMOUNT"];
+    inTransaction = map["IN_TRANSACTION"];
+    outTransaction = map["OUT_TRANSACTION"];
+    isDeleted = map["IS_DELETED"];
+    isSuspended = map["IS_SUSPENDED"];
+    excludeFromSummary = map["EXCLUDED_FROM_SUMMARY"];
+    childCount = map.containsKey("CHILD_COUNT") ? map["CHILD_COUNT"] : 0;
+    parentCategoryName = map.containsKey("PARENT_CATEGORY_NAME") ? map["PARENT_CATEGORY_NAME"] : "";
   }
 }

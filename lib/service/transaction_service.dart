@@ -51,4 +51,15 @@ class TransactionService {
         .toList();
   }
 
+  Future<List<Transactions>> getTransactionsById(int id) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    var result = await database.rawQuery(
+        "SELECT T.*, A.ACCOUNT_NAME, C.CATEGORY_NAME FROM TRANSACTIONS T, ACCOUNT A, CATEGORY C WHERE (A.ID = T.TO_ACCOUNT OR A.ID = T.FROM_ACCOUNT) AND C.ID = T.CATEGORY AND T.IS_DELETED = ? AND T.ID = ?",
+        [0, id]);
+    return result
+        .map((transactions) => Transactions.fromMapObject(transactions))
+        .toList();
+  }
+
 }
