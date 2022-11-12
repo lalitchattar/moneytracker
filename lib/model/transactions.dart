@@ -2,9 +2,11 @@ class Transactions {
   late int _id;
   late String _dateAndTime;
   late String _transactionType;
-  late String? _fromAccount;
-  late String? _toAccount;
-  late String _category;
+  late int? _fromAccount;
+  late int? _toAccount;
+  late int _category;
+  late String? _accountName;
+  late String? _categoryName;
   late double _finalAmount;
   late String? _description;
   late int _isDeleted;
@@ -13,11 +15,13 @@ class Transactions {
   int? get id => _id;
   String get dateAndTime => _dateAndTime;
   String get transactionType => _transactionType;
-  String? get fromAccount => _fromAccount;
-  String? get toAccount => _toAccount;
-  String get category => _category;
+  int? get fromAccount => _fromAccount;
+  int? get toAccount => _toAccount;
+  int get category => _category;
   double get finalAmount => _finalAmount;
   String? get description => _description;
+  String? get categoryName => _categoryName;
+  String? get accountName => _accountName;
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{};
@@ -42,6 +46,8 @@ class Transactions {
     _category = map["CATEGORY"];
     _finalAmount = map["FINAL_AMOUNT"];
     _description = map["DESCRIPTION"];
+    _accountName = map.containsKey("ACCOUNT_NAME") ? map["ACCOUNT_NAME"] : null;
+    _categoryName = map.containsKey("CATEGORY_NAME") ? map["CATEGORY_NAME"] : null;
     _isDeleted = map["IS_DELETED"];
     _excludeFromSummary = map["EXCLUDED_FROM_SUMMARY"];
   }

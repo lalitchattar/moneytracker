@@ -45,7 +45,7 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   int index = 0;
 
-  List<Widget> screens = const [Home(), Budget(), Transactions(), More()];
+  List<Widget> screens = const [Home(), Budget(), TransactionsScreen(), More()];
 
   @override
   Widget build(BuildContext context) {

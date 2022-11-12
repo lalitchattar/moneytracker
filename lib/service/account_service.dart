@@ -41,7 +41,7 @@ class AccountService {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result =
-        await database.rawQuery('SELECT * FROM ACCOUNT WHERE ID = ?', [id]);
+    await database.rawQuery('SELECT * FROM ACCOUNT WHERE ID = ?', [id]);
     return result.map((account) => Account.fromMapObject(account)).toList();
   }
 
@@ -73,14 +73,56 @@ class AccountService {
     }
   }
 
-  Future<void> updateOutstandingBalance(int id) async {
-      DatabaseHelper databaseHelper = DatabaseHelper();
-      Database database = await databaseHelper.database;
+  Future<void> updateAccountForInTransaction(Map<String, dynamic>? account, bool isCreditCard, int id) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    if (isCreditCard) {
       String updateQuery = """
+      UPDATE ACCOUNT SET OUTSTANDING_BALANCE = ?,
+      AVAILABLE_BALANCE = ?, IN_TRANSACTION = ?, 
+      CREDITED_AMOUNT = ? WHERE ID = ?
+      """;
+      List<dynamic> params = [account!["OUTSTANDING_BALANCE"],account!["AVAILABLE_BALANCE"], account!["IN_TRANSACTION"], account!["CREDITED_AMOUNT"], id];
+      await database.rawQuery(updateQuery, params);
+    } else {
+      String updateQuery = """
+      UPDATE ACCOUNT SET AVAILABLE_BALANCE = ?, 
+      CREDITED_AMOUNT = ?, IN_TRANSACTION = ? WHERE ID = ?
+      """;
+      List<dynamic> params = [account!["AVAILABLE_BALANCE"], account!["CREDITED_AMOUNT"], account!["IN_TRANSACTION"], id];
+      await database.rawQuery(updateQuery, params);
+    }
+  }
+
+  Future<void> updateAccountForOutTransaction(Map<String, dynamic>? account, bool isCreditCard, int id) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    if (isCreditCard) {
+      String updateQuery = """
+      UPDATE ACCOUNT SET OUTSTANDING_BALANCE = ?,
+      AVAILABLE_BALANCE = ?, OUT_TRANSACTION = ?, 
+      DEBITED_AMOUNT = ? WHERE ID = ?
+      """;
+      List<dynamic> params = [account!["OUTSTANDING_BALANCE"],account!["AVAILABLE_BALANCE"], account!["OUT_TRANSACTION"], account!["DEBITED_AMOUNT"], id];
+      await database.rawQuery(updateQuery, params);
+    } else {
+      String updateQuery = """
+      UPDATE ACCOUNT SET AVAILABLE_BALANCE = ?, 
+      DEBITED_AMOUNT = ?, OUT_TRANSACTION = ? WHERE ID = ?
+      """;
+      List<dynamic> params = [account!["AVAILABLE_BALANCE"], account!["DEBITED_AMOUNT"], account!["OUT_TRANSACTION"], id];
+      await database.rawQuery(updateQuery, params);
+    }
+  }
+
+  Future<void> updateOutstandingBalance(int id) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    String updateQuery = """
         UPDATE ACCOUNT SET OUTSTANDING_BALANCE = (CREDIT_LIMIT - AVAILABLE_BALANCE) WHERE ID = ? AND AVAILABLE_BALANCE != 0;
       """;
-      List<dynamic> params = [id];
-      await database.rawQuery(updateQuery, params);
+    List<dynamic> params = [id];
+    await database.rawQuery(updateQuery, params);
 
   }
 }

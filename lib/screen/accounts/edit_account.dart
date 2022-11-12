@@ -154,12 +154,12 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
         builder: (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
           if (snapshot.hasData) {
             _isCreditCard =
-                snapshot.data!.first.isCreditCard == 1 ? true : false;
+            snapshot.data!.first.isCreditCard == 1 ? true : false;
             _isFieldEnable = _isCreditCard;
             _billingDay = snapshot.data!.first.billingDay;
             return Container(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -195,7 +195,7 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
                                 border: OutlineInputBorder(),
                               ),
                               initialValue: Utils.formatNumber(
-                                      snapshot.data!.first.creditLimit)
+                                  snapshot.data!.first.creditLimit)
                                   .toString(),
                               keyboardType: TextInputType.number,
                               validator: FormBuilderValidators.compose(
@@ -242,30 +242,30 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
                             ),
                           ),
                           Visibility(
-                            visible: _isCreditCard,
-                            child: FormBuilderTextField(
-                              enabled: _isFieldEnable,
-                              initialValue: snapshot.data!.first.gracePeriod,
-                              name: "GRACE_PERIOD",
-                              decoration: const InputDecoration(
-                                labelText: "Grace Period",
-                                border: OutlineInputBorder(),
-                                suffixIcon: Icon(Icons.arrow_drop_down),
-                              ),
-                              readOnly: true,
-                              onTap: () async{
-                                _formKey.currentState!.save();
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                if(_formKey.currentState?.fields['BILLING_DAY']?.value == null) {
-                                  _formKey.currentState?.fields['BILLING_DAY']?.invalidate("Select Billing Day");
+                              visible: _isCreditCard,
+                              child: FormBuilderTextField(
+                                enabled: _isFieldEnable,
+                                initialValue: snapshot.data!.first.gracePeriod,
+                                name: "GRACE_PERIOD",
+                                decoration: const InputDecoration(
+                                  labelText: "Grace Period",
+                                  border: OutlineInputBorder(),
+                                  suffixIcon: Icon(Icons.arrow_drop_down),
+                                ),
+                                readOnly: true,
+                                onTap: () async{
+                                  _formKey.currentState!.save();
                                   FocusManager.instance.primaryFocus?.unfocus();
-                                  return;
-                                }
-                                await openFilterDelegate(_gracePeriod, "GRACE_PERIOD");
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              },
+                                  if(_formKey.currentState?.fields['BILLING_DAY']?.value == null) {
+                                    _formKey.currentState?.fields['BILLING_DAY']?.invalidate("Select Billing Day");
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    return;
+                                  }
+                                  await openFilterDelegate(_gracePeriod, "GRACE_PERIOD");
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                },
 
-                            )
+                              )
                           ),
                           Visibility(
                             visible: _isCreditCard,
@@ -281,7 +281,7 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
                             ),
                             keyboardType: TextInputType.number,
                             initialValue: Utils.formatNumber(
-                                    snapshot.data!.first.availableBalance)
+                                snapshot.data!.first.availableBalance)
                                 .toString(),
                             valueTransformer: (value) {
                               return value == null || value.isEmpty ? 0 : value;
@@ -289,15 +289,15 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.numeric(
                                   errorText: "Enter valid numbers"),
-                              (value) {
+                                  (value) {
                                 if (_isCreditCard &&
                                     _formKey.currentState!
-                                            .fields['CREDIT_LIMIT']?.value !=
+                                        .fields['CREDIT_LIMIT']?.value !=
                                         null &&
                                     value != null &&
                                     value != "") {
                                   if (double.parse(_formKey.currentState!
-                                          .fields['CREDIT_LIMIT']?.value) <
+                                      .fields['CREDIT_LIMIT']?.value) <
                                       double.parse(value)) {
                                     return "Available balance can not be greater than Credit Limit";
                                   }
@@ -306,8 +306,11 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
                               },
                             ]),
                           ),
-                          const SizedBox(
-                            height: 20.0,
+                          Visibility(
+                            visible: _isCreditCard,
+                            child: const SizedBox(
+                              height: 20.0,
+                            ),
                           ),
                           Visibility(
                             visible: _isCreditCard,
@@ -315,7 +318,7 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
                               enabled: _isFieldEnable,
                               name: "OUTSTANDING_BALANCE",
                               initialValue: Utils.formatNumber(
-                                      snapshot.data!.first.outstandingBalance)
+                                  snapshot.data!.first.outstandingBalance)
                                   .toString(),
                               decoration: const InputDecoration(
                                 labelText: "Outstanding Balance",
@@ -324,19 +327,19 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.numeric(
                                     errorText: "Enter valid number"),
-                                (value) {
+                                    (value) {
                                   if (_isCreditCard &&
                                       value != null &&
                                       value != "") {
                                     if (double.parse(_formKey.currentState!
-                                            .fields['CREDIT_LIMIT']?.value) <
+                                        .fields['CREDIT_LIMIT']?.value) <
                                         double.parse(value)) {
                                       return "Outstanding balance can not be greater than Credit Limit";
                                     }
                                     return null;
                                   }
                                 },
-                                (value) {
+                                    (value) {
                                   if (_isCreditCard &&
                                       value != null &&
                                       value != "") {
@@ -389,9 +392,9 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
           if (_formKey.currentState?.saveAndValidate() ?? false) {
             _accountService
                 .getAccountByName(
-                    _formKey.currentState?.fields["ACCOUNT_NAME"]?.value)
+                _formKey.currentState?.fields["ACCOUNT_NAME"]?.value)
                 .then(
-              (accountList) async {
+                  (accountList) async {
                 if (accountList.isNotEmpty && accountList[0].id != widget.id) {
                   showDialog(
                       context: context,
@@ -400,17 +403,17 @@ class _EditAccountState extends State<EditAccount> with RouteAware{
                 } else {
                   await _accountService
                       .updateAccount(_formKey.currentState?.value,
-                          _isCreditCard, widget.id)
+                      _isCreditCard, widget.id)
                       .then(
                         (value) => {
-                          Navigator.pop(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AccountDetail(widget.id),
-                            ),
-                          )
-                        },
-                      );
+                      Navigator.pop(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AccountDetail(widget.id),
+                        ),
+                      )
+                    },
+                  );
                 }
               },
             );

@@ -5,9 +5,9 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:moneytracker/model/category.dart';
-import 'package:moneytracker/model/transactions.dart';
 import 'package:moneytracker/service/account_service.dart';
 import 'package:moneytracker/service/transaction_service.dart';
+import 'package:moneytracker/util/utils.dart';
 
 import '../../../main.dart';
 import '../../../model/account.dart';
@@ -27,6 +27,8 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
   final AccountService _accountService = AccountService();
   List<Account>? selectedAccountList = [];
   List<Category>? selectedCategoryList = [];
+  late int? _accountId;
+  late int? _categoryId;
 
   Future<void> openFilterDelegateForAccount(BuildContext context, List<Account> accounts) async {
     await FilterListDelegate.show<Account>(
@@ -37,8 +39,9 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
         return account.accountName.toLowerCase().contains(query.toLowerCase());
       },
       onApplyButtonClick: (list) {
+        selectedAccountList = list;
+        _accountId = selectedAccountList?.first.id;
         setState(() {
-          selectedAccountList = list;
           _formKey.currentState!.fields['TO_ACCOUNT']
               ?.didChange(selectedAccountList?.first.accountName);
           _formKey.currentState?.fields['TO_ACCOUNT']?.validate();
@@ -60,7 +63,7 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                       : Icons.account_balance),
             ),
             title: Text(account.accountName),
-            trailing: Text(account.availableBalance.toString()),
+            trailing: Text(Utils.formatNumber(account.availableBalance).toString()),
           ),
         );
       }
@@ -76,8 +79,9 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
           return category.categoryName.toLowerCase().contains(query.toLowerCase());
         },
         onApplyButtonClick: (list) {
+          selectedCategoryList = list;
+          _categoryId = selectedCategoryList?.first.id;
           setState(() {
-            selectedCategoryList = list;
             _formKey.currentState!.fields['CATEGORY']
                 ?.didChange(selectedCategoryList?.first.categoryName);
             _formKey.currentState?.fields['CATEGORY']?.validate();
@@ -169,8 +173,11 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                   ),
                   readOnly: true,
                   onTap: () async{
-                    await _accountService.getAllAccountsByType(false).then((accounts) => openFilterDelegateForAccount(context, accounts));
+                    await _accountService.getAllAccounts().then((accounts) => openFilterDelegateForAccount(context, accounts));
                     FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  valueTransformer: (value) {
+                    return _accountId;
                   },
                 ),
                 const SizedBox(
@@ -194,7 +201,10 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                       FormBuilderValidators.required(
                           errorText: "Select category"),
                     ],
-                  )
+                  ),
+                  valueTransformer: (value) {
+                    return _categoryId;
+                  },
                 ),
                 const SizedBox(
                   height: 20.0,
@@ -237,9 +247,17 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
       floatingActionButton: SpeedDial(
         spacing: 5.0,
         icon: Icons.check,
-        onPress: () {
+        onPress: () async{
           if (_formKey.currentState?.saveAndValidate() ?? false) {
-            _transactionService.createTransaction(_formKey.currentState?.value, "I");
+            await _transactionService.createTransaction(_formKey.currentState?.value, "I").then((value) async{
+              await _accountService.getAccountById(_accountId!).then((accountList) async{
+                  Account account = accountList.first;
+                  account.availableBalance = account.availableBalance + double.parse(_formKey.currentState?.fields["FINAL_AMOUNT"]?.value);
+                  account.creditedAmount = account.creditedAmount + double.parse(_formKey.currentState?.fields["FINAL_AMOUNT"]?.value);
+                  account.inTransaction = account.inTransaction + 1;
+                  await _accountService.updateAccountForInTransaction(account.toMap(), account.isCreditCard == 1 ? true : false, account.id!);
+              });
+            });
           }
         },
       ),

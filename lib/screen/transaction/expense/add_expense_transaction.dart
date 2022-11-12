@@ -27,6 +27,8 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
   final TransactionService _transactionService = TransactionService();
   List<Account>? selectedAccountList = [];
   List<Category>? selectedCategoryList = [];
+  late int? _accountId;
+  late int? _categoryId;
 
   Future<void> openFilterDelegateForAccount(BuildContext context, List<Account> accounts) async {
     await FilterListDelegate.show<Account>(
@@ -37,8 +39,9 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
           return account.accountName.toLowerCase().contains(query.toLowerCase());
         },
         onApplyButtonClick: (list) {
+          selectedAccountList = list;
+          _accountId = selectedAccountList?.first.id;
           setState(() {
-            selectedAccountList = list;
             _formKey.currentState!.fields['FROM_ACCOUNT']
                 ?.didChange(selectedAccountList?.first.accountName);
             _formKey.currentState?.fields['FROM_ACCOUNT']?.validate();
@@ -70,8 +73,9 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
           return category.categoryName.toLowerCase().contains(query.toLowerCase());
         },
         onApplyButtonClick: (list) {
+          selectedCategoryList = list;
+          _categoryId = selectedCategoryList?.first.id;
           setState(() {
-            selectedCategoryList = list;
             _formKey.currentState!.fields['CATEGORY']
                 ?.didChange(selectedCategoryList?.first.categoryName);
             _formKey.currentState?.fields['CATEGORY']?.validate();
@@ -150,6 +154,9 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
                     await _accountService.getAllAccounts().then((accounts) => openFilterDelegateForAccount(context, accounts));
                     FocusManager.instance.primaryFocus?.unfocus();
                   },
+                  valueTransformer: (value){
+                    return _accountId;
+                  },
                 ),
                 const SizedBox(
                   height: 20.0,
@@ -172,7 +179,10 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
                         FormBuilderValidators.required(
                             errorText: "Select category"),
                       ],
-                    )
+                    ),
+                  valueTransformer: (value) {
+                      return _categoryId;
+                  },
                 ),
                 const SizedBox(
                   height: 20.0,
@@ -215,9 +225,18 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
       floatingActionButton: SpeedDial(
         spacing: 5.0,
         icon: Icons.check,
-        onPress: () {
+        onPress: () async{
           if (_formKey.currentState?.saveAndValidate() ?? false) {
-            _transactionService.createTransaction(_formKey.currentState?.value, "E");
+            await _transactionService.createTransaction(_formKey.currentState?.value, "E").then((value) async{
+              await _accountService.getAccountById(_accountId!).then((accountList) async{
+                Account account = accountList.first;
+                account.availableBalance = account.availableBalance - double.parse(_formKey.currentState?.fields["FINAL_AMOUNT"]?.value);
+                account.debitedAmount = account.debitedAmount + double.parse(_formKey.currentState?.fields["FINAL_AMOUNT"]?.value);
+                account.outTransaction = account.outTransaction + 1;
+                account.outstandingBalance = account.outstandingBalance! + double.parse(_formKey.currentState?.fields["FINAL_AMOUNT"]?.value);
+                await _accountService.updateAccountForOutTransaction(account.toMap(), account.isCreditCard == 1 ? true : false, account.id!);
+              });
+            });
           }
         },
       ),

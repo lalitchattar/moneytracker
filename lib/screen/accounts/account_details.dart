@@ -3,6 +3,7 @@ import 'package:moneytracker/model/account.dart';
 import 'package:moneytracker/screen/accounts/edit_account.dart';
 import 'package:moneytracker/screen/accounts/list_account.dart';
 import 'package:moneytracker/service/account_service.dart';
+import 'package:moneytracker/service/transaction_service.dart';
 import 'package:moneytracker/util/utils.dart';
 
 class AccountDetail extends StatefulWidget {
@@ -17,6 +18,7 @@ class _AccountDetailState extends State<AccountDetail> {
 
 
   final AccountService _accountService = AccountService();
+  final TransactionService _transactionService = TransactionService();
 
   @override
   Widget build(BuildContext context) {
