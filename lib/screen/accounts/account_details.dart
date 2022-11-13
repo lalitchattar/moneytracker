@@ -269,7 +269,7 @@ class _AccountDetailState extends State<AccountDetail> {
               ),
               onPressed: () {
                 _transactionService.getTransactionCountByAccountId(id).then((value) {
-                  if(value == null) {
+                  if(value == 0) {
                     _accountService.deleteAccount(id);
                     Navigator.pop(context);
                     Navigator.pop(

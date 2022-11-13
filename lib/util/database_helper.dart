@@ -27,6 +27,8 @@ class DatabaseHelper {
       )
       """;
 
+  static const String _defaultAccount = """INSERT INTO ACCOUNT(ACCOUNT_NAME, DESCRIPTION) VALUES("Cash", "Cash")""";
+
   static const String _category = """ CREATE TABLE CATEGORY (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         CATEGORY_NAME TEXT UNIQUE NOT NULL,
@@ -96,6 +98,15 @@ class DatabaseHelper {
         EXCLUDED_FROM_SUMMARY INTEGER DEFAULT 0
       )""";
 
+  static const String _budget = """ CREATE TABLE BUDGET (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        BUDGET_AMOUNT REAL NOT NULL,
+        FOR_YEAR INTEGER NOT NULL DEFAULT 0,
+        ALERT_ENABLED INTEGER NOT NULL DEFAULT 0,
+        IS_DELETED INTEGER DEFAULT 0
+      )""";
+
+
 
   DatabaseHelper._createInstance();
 
@@ -109,9 +120,11 @@ class DatabaseHelper {
 
   void _createDB(Database database, int version) async {
     await database.execute(_account);
+    await database.execute(_defaultAccount);
     await database.execute(_category);
     await database.execute(_categoryInsert);
     await database.execute(_transaction);
+    await database.execute(_budget);
   }
 
   Future<Database> initializeDatabase() async {
