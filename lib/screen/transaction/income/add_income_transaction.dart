@@ -174,7 +174,7 @@ class _AddIncomeTransactionState extends State<AddIncomeTransaction> with RouteA
                   ),
                   readOnly: true,
                   onTap: () async{
-                    await _accountService.getAllAccounts().then((accounts) => openFilterDelegateForAccount(context, accounts));
+                    await _accountService.getAllAccounts(false).then((accounts) => openFilterDelegateForAccount(context, accounts));
                     FocusManager.instance.primaryFocus?.unfocus();
                   },
                   valueTransformer: (value) {

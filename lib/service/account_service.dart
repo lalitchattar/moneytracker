@@ -12,11 +12,11 @@ class AccountService {
     return result;
   }
 
-  Future<List<Account>> getAllAccounts() async {
+  Future<List<Account>> getAllAccounts(bool fetchSuspended) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database
-        .rawQuery("SELECT * FROM ACCOUNT WHERE IS_DELETED = ?", [0]);
+        .rawQuery("SELECT * FROM ACCOUNT WHERE IS_DELETED = ? AND IS_SUSPENDED <= ? ORDER BY IS_SUSPENDED ASC", [0, fetchSuspended ? 1: 0]);
     return result.map((account) => Account.fromMapObject(account)).toList();
   }
 
@@ -124,5 +124,12 @@ class AccountService {
     List<dynamic> params = [id];
     await database.rawQuery(updateQuery, params);
 
+  }
+
+  void suspendAccount(int id) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    var result = await database
+        .rawQuery('UPDATE ACCOUNT SET IS_SUSPENDED = ? WHERE ID = ?', [1, id]);
   }
 }

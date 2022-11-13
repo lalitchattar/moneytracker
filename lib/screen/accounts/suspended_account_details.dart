@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:moneytracker/model/account.dart';
-import 'package:moneytracker/screen/accounts/edit_account.dart';
-import 'package:moneytracker/screen/accounts/list_account.dart';
-import 'package:moneytracker/service/account_service.dart';
-import 'package:moneytracker/service/transaction_service.dart';
 import 'package:moneytracker/util/utils.dart';
-import 'package:moneytracker/widget/error_dialog_widget.dart';
 
-class AccountDetail extends StatefulWidget {
+import '../../model/account.dart';
+import '../../service/account_service.dart';
+import '../../service/transaction_service.dart';
+import 'edit_account.dart';
+import 'list_account.dart';
+
+class SuspendedAccountDetails extends StatefulWidget {
   final int id;
-  const AccountDetail(this.id, {Key? key}) : super(key: key);
+  const SuspendedAccountDetails(this.id, {Key? key}) : super(key: key);
 
   @override
-  State<AccountDetail> createState() => _AccountDetailState();
+  State<SuspendedAccountDetails> createState() => _SuspendedAccountDetailsState();
 }
 
-class _AccountDetailState extends State<AccountDetail> {
-
+class _SuspendedAccountDetailsState extends State<SuspendedAccountDetails> {
 
   final AccountService _accountService = AccountService();
-  final TransactionService _transactionService = TransactionService();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,13 +36,7 @@ class _AccountDetailState extends State<AccountDetail> {
         actions: [
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccount(widget.id))).then((value) => setState((){}));
-          }, icon: const Icon(Icons.edit)),
-          IconButton(onPressed: (){
-            _showDeleteConfirmationDialog(widget.id);
-          }, icon: const Icon(Icons.delete)),
-          IconButton(onPressed: (){
-            _showSuspendConfirmationDialog(widget.id);
-          }, icon: const Icon(Icons.disabled_visible))
+          }, icon: const Icon(Icons.remove_red_eye)),
         ],
       ),
       body: Padding(
@@ -93,7 +84,7 @@ class _AccountDetailState extends State<AccountDetail> {
                             ),
                             Center(
                               child: Text(
-                                  "Available Balance: ${Utils.formatNumber(snapshot.data!.first.availableBalance)}"),
+                                  "Balance: ${Utils.formatNumber(snapshot.data!.first.availableBalance)}"),
                             ),
                             const SizedBox(
                               height: 20,
@@ -233,111 +224,6 @@ class _AccountDetailState extends State<AccountDetail> {
           },
         ),
       ),
-    );
-  }
-
-  Future<void> _showDeleteConfirmationDialog(int id) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Confirm',
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              children: const <Widget>[
-                Text('Are you sure to delete?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('NO', style: TextStyle(color: Colors.red)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text(
-                'YES',
-                style: TextStyle(color: Colors.red),
-              ),
-              onPressed: () {
-                _transactionService.getTransactionCountByAccountId(id).then((value) {
-                  if(value == null) {
-                    _accountService.deleteAccount(id);
-                    Navigator.pop(context);
-                    Navigator.pop(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ListAccount(),
-                      ),
-                    );
-                  } else {
-                    Navigator.pop(context);
-                    showDialog(context: context, builder: (context) => const ErrorDialogWidget("Account can not be deleted as transaction exists with this account. However, you can disable it."));
-                  }
-                });
-
-
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _showSuspendConfirmationDialog(int id) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Confirm',
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              children: const <Widget>[
-                Text('Are you sure to suspend?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('NO', style: TextStyle(color: Colors.red)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text(
-                'YES',
-                style: TextStyle(color: Colors.red),
-              ),
-              onPressed: () {
-                _accountService.suspendAccount(id);
-                Navigator.pop(context);
-                Navigator.pop(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ListAccount(),
-                  ),
-                );
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

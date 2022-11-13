@@ -62,4 +62,13 @@ class TransactionService {
         .toList();
   }
 
+  Future<int?> getTransactionCountByAccountId(int id) async{
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    var result = await database.rawQuery(
+        "SELECT * FROM TRANSACTIONS WHERE (TO_ACCOUNT = ? OR FROM_ACCOUNT = ?) AND IS_DELETED = ?",
+        [id, id, 0]);
+    return Sqflite.firstIntValue(result);
+  }
+
 }

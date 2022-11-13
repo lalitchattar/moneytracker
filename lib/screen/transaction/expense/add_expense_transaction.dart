@@ -153,7 +153,7 @@ class _AddExpenseTransactionState extends State<AddExpenseTransaction> with Rout
                   ),
                   readOnly: true,
                   onTap: () async{
-                    await _accountService.getAllAccounts().then((accounts) => openFilterDelegateForAccount(context, accounts));
+                    await _accountService.getAllAccounts(false).then((accounts) => openFilterDelegateForAccount(context, accounts));
                     FocusManager.instance.primaryFocus?.unfocus();
                   },
                   valueTransformer: (value){
