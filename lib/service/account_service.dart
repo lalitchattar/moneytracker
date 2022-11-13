@@ -126,10 +126,10 @@ class AccountService {
 
   }
 
-  void suspendAccount(int id) async {
+  void toggleSuspendAccount(int id, int flag) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database
-        .rawQuery('UPDATE ACCOUNT SET IS_SUSPENDED = ? WHERE ID = ?', [1, id]);
+        .rawQuery('UPDATE ACCOUNT SET IS_SUSPENDED = ? WHERE ID = ?', [flag, id]);
   }
 }

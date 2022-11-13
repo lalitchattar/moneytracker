@@ -44,7 +44,9 @@ class TransactionService {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database.rawQuery(
-        "SELECT T.*, A.ACCOUNT_NAME, C.CATEGORY_NAME FROM TRANSACTIONS T, ACCOUNT A, CATEGORY C WHERE (A.ID = T.TO_ACCOUNT OR A.ID = T.FROM_ACCOUNT) AND C.ID = T.CATEGORY AND T.IS_DELETED = ? LIMIT ? OFFSET ?",
+        """SELECT T.*, A.ACCOUNT_NAME, C.CATEGORY_NAME FROM TRANSACTIONS T, ACCOUNT A, 
+        CATEGORY C WHERE (A.ID = T.TO_ACCOUNT OR A.ID = T.FROM_ACCOUNT) 
+        AND C.ID = T.CATEGORY AND T.IS_DELETED = ? ORDER BY TRANSACTION_DATE DESC LIMIT ? OFFSET ?""",
         [0, limit, offset]);
     return result
         .map((transactions) => Transactions.fromMapObject(transactions))
@@ -55,7 +57,9 @@ class TransactionService {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database.rawQuery(
-        "SELECT T.*, A.ACCOUNT_NAME, C.CATEGORY_NAME FROM TRANSACTIONS T, ACCOUNT A, CATEGORY C WHERE (A.ID = T.TO_ACCOUNT OR A.ID = T.FROM_ACCOUNT) AND C.ID = T.CATEGORY AND T.IS_DELETED = ? AND T.ID = ?",
+        """SELECT T.*, A.ACCOUNT_NAME, C.CATEGORY_NAME FROM TRANSACTIONS T, ACCOUNT A, 
+        CATEGORY C WHERE (A.ID = T.TO_ACCOUNT OR A.ID = T.FROM_ACCOUNT) 
+        AND C.ID = T.CATEGORY AND T.IS_DELETED = ? AND T.ID = ?""",
         [0, id]);
     return result
         .map((transactions) => Transactions.fromMapObject(transactions))

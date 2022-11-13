@@ -325,7 +325,7 @@ class _AccountDetailState extends State<AccountDetail> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
-                _accountService.suspendAccount(id);
+                _accountService.toggleSuspendAccount(id, 1);
                 Navigator.pop(context);
                 Navigator.pop(
                   context,

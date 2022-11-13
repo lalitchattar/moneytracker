@@ -35,7 +35,7 @@ class _SuspendedAccountDetailsState extends State<SuspendedAccountDetails> {
             icon: const Icon(Icons.arrow_back)),
         actions: [
           IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccount(widget.id))).then((value) => setState((){}));
+            _showEnableConfirmationDialog(widget.id);
           }, icon: const Icon(Icons.remove_red_eye)),
         ],
       ),
@@ -224,6 +224,54 @@ class _SuspendedAccountDetailsState extends State<SuspendedAccountDetails> {
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _showEnableConfirmationDialog(int id) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Confirm',
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: const <Widget>[
+                Text('Are you sure to enable again?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('NO', style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'YES',
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                _accountService.toggleSuspendAccount(id, 0);
+                Navigator.pop(context);
+                Navigator.pop(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ListAccount(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
