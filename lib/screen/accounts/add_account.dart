@@ -299,7 +299,7 @@ class _AddAccountState extends State<AddAccount> with RouteAware{
                     ),
                     keyboardType: TextInputType.number,
                     valueTransformer: (value) {
-                      return (value == null || value.isEmpty) && _isCreditCard ? _formKey.currentState!.fields['CREDIT_LIMIT']?.value : 0;
+                      return (value == null || value.isEmpty) && _isCreditCard ? _formKey.currentState!.fields['CREDIT_LIMIT']?.value : value;
                     },
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.numeric(

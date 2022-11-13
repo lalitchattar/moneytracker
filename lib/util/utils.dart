@@ -22,4 +22,12 @@ class Utils {
     final DateFormat formatter = DateFormat('HH:mm');
     return formatter.format(dateTimeObj);
   }
+
+  static double calculateXPercentageOfY(double x, double y) {
+    return double.parse(formatNumber(((x/y) * 100)));
+  }
+
+  static double calculateExceedAmount(double expense, double budget) {
+      return double.parse(formatNumber((expense - budget) > 0 ? (expense - budget) : 0));
+  }
 }

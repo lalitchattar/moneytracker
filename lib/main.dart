@@ -5,6 +5,7 @@ import 'package:moneytracker/screen/budget.dart';
 import 'package:moneytracker/screen/home.dart';
 import 'package:moneytracker/screen/more.dart';
 import 'package:moneytracker/screen/transactions.dart';
+import 'package:moneytracker/service/budget_service.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -44,11 +45,16 @@ class BaseScreen extends StatefulWidget {
 
 class _BaseScreenState extends State<BaseScreen> {
   int index = 0;
+  bool _isBudgetExists = false;
+  bool _forYear = false;
+  bool _noTransaction = false;
 
-  List<Widget> screens = const [Home(), Budget(), TransactionsScreen(), More()];
+  final BudgetService _budgetService = BudgetService();
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> screens = [const Home(), Budget(_isBudgetExists, _forYear, _noTransaction), const TransactionsScreen(), const More()];
+
     return Scaffold(
       body: screens[index],
       bottomNavigationBar: NavigationBarTheme(
@@ -60,9 +66,22 @@ class _BaseScreenState extends State<BaseScreen> {
         child: NavigationBar(
           height: 60,
           selectedIndex: index,
-          onDestinationSelected: (index) => setState(() {
-            this.index = index;
-          }),
+          onDestinationSelected: (index) {
+            if(index == 1) {
+              _budgetService.checkBudgetExists().then((budget) {
+                setState(() {
+                  budget.isNotEmpty  ? _isBudgetExists = true : _isBudgetExists = false;
+                  budget.isNotEmpty && budget.first.forYear == 1 ? _forYear = true : _forYear = false;
+                  budget.isEmpty ? _noTransaction = true : _noTransaction = false;
+                  this.index = index;
+                });
+              });
+            } else {
+              setState(() {
+                this.index = index;
+              });
+            }
+          },
           destinations: const [
             NavigationDestination(icon: Icon(Icons.home), label: "Home"),
             NavigationDestination(icon: Icon(Icons.money), label: "Budget"),

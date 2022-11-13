@@ -46,7 +46,7 @@ class TransactionService {
     var result = await database.rawQuery(
         """SELECT T.*, A.ACCOUNT_NAME, C.CATEGORY_NAME FROM TRANSACTIONS T, ACCOUNT A, 
         CATEGORY C WHERE (A.ID = T.TO_ACCOUNT OR A.ID = T.FROM_ACCOUNT) 
-        AND C.ID = T.CATEGORY AND T.IS_DELETED = ? ORDER BY TRANSACTION_DATE DESC LIMIT ? OFFSET ?""",
+        AND C.ID = T.CATEGORY AND T.IS_DELETED = ? ORDER BY T.ID DESC LIMIT ? OFFSET ?""",
         [0, limit, offset]);
     return result
         .map((transactions) => Transactions.fromMapObject(transactions))
