@@ -192,6 +192,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                               FormBuilderTextField(
                                 name: Constants.addAccountFormAvailableBalance,
                                 initialValue: account.availableBalance.toString(),
+                                keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                   labelText:
                                   Constants.availableBalanceLabel,
@@ -293,7 +294,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: Colors.grey)),
               tileColor: Utils.getColorFromColorCode(
-                  Constants.lisAccountListTileColor),
+                  Constants.lisListTileColor),
               title: Text(option),
             ),
           ),

@@ -6,12 +6,12 @@ import '../util/database_helper.dart';
 class CategoryService {
   final String _tableName = "CATEGORY";
 
-  Future<List<Category>> getAllCategories() async {
+  Future<List<Category>> getAllCategories(bool fetchSuspended) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database.rawQuery(
-        "SELECT C.*, (SELECT COUNT(*) FROM CATEGORY C2 WHERE C2.PARENT_CATEGORY = C.ID AND C2.IS_DELETED = ?) AS CHILD_COUNT FROM CATEGORY C WHERE C.IS_DELETED = ?",
-        [0, 0]);
+        "SELECT C.*, (SELECT COUNT(*) FROM CATEGORY C2 WHERE C2.PARENT_CATEGORY = C.ID AND C2.IS_DELETED = ?) AS CHILD_COUNT FROM CATEGORY C WHERE C.IS_DELETED = ? AND C.IS_SUSPENDED <= ? ORDER BY IS_SUSPENDED ASC",
+        [0, 0, fetchSuspended ? 1: 0]);
     return result.map((account) => Category.fromMapObject(account)).toList();
   }
 
@@ -19,8 +19,8 @@ class CategoryService {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database.rawQuery(
-        "SELECT * FROM CATEGORY WHERE IS_DELETED = ? AND CATEGORY_TYPE = ?",
-        [0, type]);
+        "SELECT C.*, (SELECT COUNT(*) FROM CATEGORY C2 WHERE C2.PARENT_CATEGORY = C.ID AND C2.IS_DELETED = ?) AS CHILD_COUNT FROM CATEGORY C WHERE IS_DELETED = ? AND CATEGORY_TYPE = ?",
+        [0, 0, type]);
     return result.map((account) => Category.fromMapObject(account)).toList();
   }
 
@@ -116,5 +116,12 @@ class CategoryService {
       """;
     List<dynamic> params = [category!["DEBITED_AMOUNT"], category!["OUT_TRANSACTION"], id];
     await database.rawQuery(updateQuery, params);
+  }
+
+  void toggleSuspendCategory(int id, int flag) async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    var result = await database
+        .rawQuery('UPDATE CATEGORY SET IS_SUSPENDED = ? WHERE ID = ?', [flag, id]);
   }
 }

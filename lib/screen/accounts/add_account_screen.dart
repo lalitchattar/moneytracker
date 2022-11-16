@@ -199,6 +199,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
                         ),
                         FormBuilderTextField(
                           name: Constants.addAccountFormAvailableBalance,
+                          keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             labelText:
                                 Constants.availableBalanceLabel,
@@ -258,7 +259,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
     await FilterListDelegate.show<String>(
       context: context,
       list: options,
-      selectedListData: _getOptionListByDropdownName(dropdownName),
+      selectedListData: [],
       theme: FilterListDelegateThemeData(),
       // enableOnlySingleSelection: true,
       onItemSearch: (value, query) {
@@ -290,19 +291,13 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: Colors.grey)),
               tileColor: Utils.getColorFromColorCode(
-                  Constants.lisAccountListTileColor),
+                  Constants.lisListTileColor),
               title: Text(option),
             ),
           ),
         );
       },
     );
-  }
-
-  List<String> _getOptionListByDropdownName(String dropdownName) {
-    return dropdownName == Constants.addAccountFormBillingDay
-        ? Constants.billingDaysOption
-        : Constants.gracePeriodOption;
   }
 
   void _saveAccount() {

@@ -68,7 +68,7 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
                             ),
                             tileColor: _getTileColor(account),
                             leading: _getAccountTypeIcon(account),
-                            title: Text(account.accountName),
+                            title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500)),
                             trailing: Text(
                               Utils.formatNumber(account.availableBalance),
                               style: TextStyle(
@@ -123,8 +123,8 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
 
   Color _getTileColor(Account account) {
     return account.isSuspended == 1 ? Utils.getColorFromColorCode(
-        Constants.lisAccountSuspendedListTileColor) : Utils.getColorFromColorCode(
-        Constants.lisAccountListTileColor);
+        Constants.listSuspendedListTileColor) : Utils.getColorFromColorCode(
+        Constants.lisListTileColor);
   }
 
   Widget _getDetailScreenBasedOnSuspendStatus(Account account) {

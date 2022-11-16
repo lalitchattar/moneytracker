@@ -5,6 +5,7 @@ import 'package:moneytracker/util/utils.dart';
 
 import 'accounts/list_account.dart';
 import 'accounts/list_account_screen.dart';
+import 'category/list_category_screen.dart';
 
 class MoreScreen extends StatefulWidget {
   const MoreScreen({Key? key}) : super(key: key);
@@ -26,10 +27,6 @@ class _MoreScreenState extends State<MoreScreen> {
             style: TextStyle(
               color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
             ),
-          ),
-          leading: const Icon(
-            Icons.arrow_back,
-            color: Colors.deepPurple,
           ),
           centerTitle: true,
           backgroundColor:
@@ -122,7 +119,7 @@ class _MoreScreenState extends State<MoreScreen> {
                           title: const Text(Constants.moreScreenCategoryMenuText),
                           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurple,),
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute( builder: (context) => const ListCategory()));
+                            Navigator.push(context, MaterialPageRoute( builder: (context) => const ListCategoryScreen()));
                           },
                         ),
                       ],

@@ -7,8 +7,9 @@ class Constants {
   static const String appBarBackButtonColor = "#000000";
   static const String moreScreenSectionTitleColor = "#857E8D";
   static const String moreScreenListTileColor = "#FFFFFF";
-  static const String lisAccountListTileColor = "#FFFFFF";
-  static const String lisAccountSuspendedListTileColor = "#BDBDBD";
+  static const String lisListTileColor = "#FFFFFF";
+  static const String listSuspendedListTileColor = "#BDBDBD";
+  static const String detailCategorySubCategoryListTileColor = "#EEEEEE";
 
   /* Text Constsnts */
 
@@ -29,14 +30,20 @@ class Constants {
   static const String moreScreenRateText = "Rate";
   static const String moreScreenFeedbackText = "Feedback";
   static const String saveButton = "Save";
+  static const String updateButton = "Update";
 
   /** Account Screen **/
 
   static const String noInfo = "---";
+  static const String blank = "";
 
   static const String listAccountScreenAppBarTitle = "Accounts";
   static const String addAccountScreenAppBarTitle = "Add Account";
   static const String detailAccountScreenAppBarTitle = "Account Detail";
+
+  static const String listCategoriesScreenAppBarTitle = "Categories";
+  static const String addCategoriesScreenAppBarTitle = "Add Category";
+  static const String editCategoriesScreenAppBarTitle = "Edit Category";
 
 
   /** Add Account Form Constants **/
@@ -65,6 +72,23 @@ class Constants {
   static const String addAccountFormDescription = "DESCRIPTION";
   static const String descriptionLabel = "Description";
 
+  /** Add Category Form Constants **/
+
+  static const String addCategoryFormCategoryName = "CATEGORY_NAME";
+  static const String addCategoryFormCategoryNameLabel = "Category Name";
+  static const String addCategoryFormCategoryNameRequired = "Enter account name";
+
+  static const String addCategoryFormDescription = "DESCRIPTION";
+
+  static const String addCategoryFormCategoryType = "CATEGORY_TYPE";
+  static const String addCategoryFormCategoryTypeNameLabel = "Category Type";
+
+  static const String addCategoryFormParentCategory = "PARENT_CATEGORY";
+  static const String addCategoryFormParentCategoryNameLabel = "Parent Category";
+
+  static const String detailCategoryScreenAppBarTitle = "Category Detail";
+
+
   static const String noOptionFound = "No item found";
   static const String searchHere = "Search here...";
   static const String enterValidNumber = "Enter valid number";
@@ -85,8 +109,11 @@ class Constants {
   static const String yes = "Yes";
   static const String no = "No";
   static const accountCanNotBeDeletedAsTransactionExists = "Account can not be deleted as transaction exists with this account. However, you can disable it.";
+  static const categoryCanNotBeDeletedAsHavingChildCategory = "Category can not be deleted as it is having child category";
 
   static const String noAccountFound = "No Account Details Found";
+  static const String noCategoryFound = "No category found";
+  static const String noSubCategoryDetailFound = "No Sub Category Details Found";
 
   static const billingDaysOption = [
     "1st of Every Month",
@@ -155,8 +182,21 @@ class Constants {
     "30 days"
   ];
 
+  static const Map<String, String> categoryType = {
+    "Income Category": "I",
+    "Expense Category": "E"
+  };
+
   static const String accountNameAlreadyExists = "Account with same name already exists";
+  static const String categoryWithSameNameAlreadyExists = "Category with same name already exists";
   static const String selectBillingDay = "Select billing day";
+  static const String selectCategoryType = "Select Category Type";
+  static const String incomeCategory = "Income Category";
+  static const String expenseCategory = "Expense Category";
+  static const String otherCategory = "Other Category";
+  static const String incomeCategoryCode = "I";
+  static const String expenseCategoryCode = "E";
+  static const String otherCategoryCode = "O";
 
 
 }

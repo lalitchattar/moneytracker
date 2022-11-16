@@ -444,7 +444,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 12.0,
+                                height: 20.0,
                               ),
                             ],
                           ),

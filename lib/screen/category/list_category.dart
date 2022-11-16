@@ -38,7 +38,7 @@ class _ListCategoryState extends State<ListCategory> {
       body: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: FutureBuilder<List<Category>>(
-          future: _categoryService.getAllCategories(),
+          future: _categoryService.getAllCategories(true),
           builder:
               (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
             if (snapshot.hasData) {
