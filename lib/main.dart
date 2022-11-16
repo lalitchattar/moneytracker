@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:moneytracker/screen/budget.dart';
 import 'package:moneytracker/screen/home.dart';
 import 'package:moneytracker/screen/more.dart';
+import 'package:moneytracker/screen/more_screen.dart';
 import 'package:moneytracker/screen/transactions.dart';
 import 'package:moneytracker/service/budget_service.dart';
 
@@ -53,7 +54,7 @@ class _BaseScreenState extends State<BaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = [const Home(), Budget(_isBudgetExists, _forYear, _noTransaction), const TransactionsScreen(), const More()];
+    List<Widget> screens = [const Home(), Budget(_isBudgetExists, _forYear, _noTransaction), const TransactionsScreen(), const MoreScreen()];
 
     return Scaffold(
       body: screens[index],

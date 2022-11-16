@@ -94,7 +94,9 @@ class _BudgetState extends State<Budget> {
                                 'measure': (100 -
                                     Utils.calculateXPercentageOfY(
                                         snapshot.data?.first.expense ?? 0,
-                                        snapshot.data?.first.budgetAmount ?? 0))
+                                        snapshot.data?.first.budgetAmount ?? 0) <= 0 ? 0 : Utils.calculateXPercentageOfY(
+                                    snapshot.data?.first.expense ?? 0,
+                                    snapshot.data?.first.budgetAmount ?? 0))
                               },
                             ],
                             fillColor: (pieData, index) {

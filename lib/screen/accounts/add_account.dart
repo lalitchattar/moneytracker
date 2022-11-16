@@ -242,6 +242,9 @@ class _AddAccountState extends State<AddAccount> with RouteAware{
                       labelText: "Billing Day",
                       border: OutlineInputBorder(),
                       suffixIcon: Icon(Icons.arrow_drop_down),
+                      focusedBorder:OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                      ),
                     ),
                     readOnly: true,
                     onTap: () async{
@@ -269,6 +272,9 @@ class _AddAccountState extends State<AddAccount> with RouteAware{
                       labelText: "Grace Period",
                       border: OutlineInputBorder(),
                       suffixIcon: Icon(Icons.arrow_drop_down),
+                      focusedBorder:OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                      ),
                     ),
                     readOnly: true,
                     onTap: () async{
@@ -299,7 +305,7 @@ class _AddAccountState extends State<AddAccount> with RouteAware{
                     ),
                     keyboardType: TextInputType.number,
                     valueTransformer: (value) {
-                      return (value == null || value.isEmpty) && _isCreditCard ? _formKey.currentState!.fields['CREDIT_LIMIT']?.value : value;
+                      return (value == null || value.isEmpty) && _isCreditCard ? _formKey.currentState!.fields['CREDIT_LIMIT']?.value : 0;
                     },
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.numeric(

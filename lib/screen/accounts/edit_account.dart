@@ -2,7 +2,7 @@ import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:moneytracker/screen/accounts/account_details.dart';
+import 'package:moneytracker/screen/accounts/account_details_screen.dart';
 import 'package:moneytracker/service/account_service.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moneytracker/widget/error_dialog_widget.dart';

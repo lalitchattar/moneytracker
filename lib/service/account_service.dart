@@ -63,6 +63,7 @@ class AccountService {
       """;
       List<dynamic> params = [account!["ACCOUNT_NAME"],account!["CREDIT_LIMIT"], account!["OUTSTANDING_BALANCE"], account!["BILLING_DAY"], account!["GRACE_PERIOD"], account!["AVAILABLE_BALANCE"], account!["DESCRIPTION"], id];
       await database.rawQuery(updateQuery, params);
+      await updateOutstandingBalance(id);
     } else {
       String updateQuery = """
       UPDATE ACCOUNT SET ACCOUNT_NAME = ?, 

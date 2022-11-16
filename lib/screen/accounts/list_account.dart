@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moneytracker/model/account.dart';
-import 'package:moneytracker/screen/accounts/account_details.dart';
+import 'package:moneytracker/screen/accounts/account_details_screen.dart';
 import 'package:moneytracker/screen/accounts/suspended_account_details.dart';
 import 'package:moneytracker/screen/more.dart';
 import 'package:moneytracker/service/account_service.dart';
