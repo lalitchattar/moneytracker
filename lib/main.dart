@@ -5,7 +5,7 @@ import 'package:moneytracker/screen/budget.dart';
 import 'package:moneytracker/screen/home.dart';
 import 'package:moneytracker/screen/more.dart';
 import 'package:moneytracker/screen/more_screen.dart';
-import 'package:moneytracker/screen/transactions.dart';
+import 'package:moneytracker/screen/transaction_screen.dart';
 import 'package:moneytracker/service/budget_service.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -54,7 +54,7 @@ class _BaseScreenState extends State<BaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = [const Home(), Budget(_isBudgetExists, _forYear, _noTransaction), const TransactionsScreen(), const MoreScreen()];
+    List<Widget> screens = [const Home(), Budget(_isBudgetExists, _forYear, _noTransaction), const TransactionScreen(), const MoreScreen()];
 
     return Scaffold(
       body: screens[index],
@@ -65,6 +65,7 @@ class _BaseScreenState extends State<BaseScreen> {
               const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
         ),
         child: NavigationBar(
+          backgroundColor: Colors.white,
           height: 60,
           selectedIndex: index,
           onDestinationSelected: (index) {
@@ -84,7 +85,7 @@ class _BaseScreenState extends State<BaseScreen> {
             }
           },
           destinations: const [
-            NavigationDestination(icon: Icon(Icons.home), label: "Home"),
+            NavigationDestination(icon: Icon(Icons.home,), label: "Home"),
             NavigationDestination(icon: Icon(Icons.money), label: "Budget"),
             NavigationDestination(
                 icon: Icon(Icons.arrow_back), label: "Transactions"),

@@ -64,7 +64,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                           name: Constants.addCategoryFormCategoryName,
                           decoration: const InputDecoration(
                             labelText:
-                                Constants.addCategoryFormCategoryNameLabel,
+                                Constants.categoryNameLabel,
                             border: OutlineInputBorder(),
                           ),
                           validator: FormBuilderValidators.compose(
@@ -147,16 +147,17 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                           height: 25.0,
                         ),
                         SizedBox(
-                            width: double.infinity,
-                            height: 50.0,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.deepPurple),
-                              onPressed: () {
-                                _saveCategory();
-                              },
-                              child: const Text(Constants.saveButton),
-                            )),
+                          width: double.infinity,
+                          height: 50.0,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.deepPurple),
+                            onPressed: () {
+                              _saveCategory();
+                            },
+                            child: const Text(Constants.saveButton),
+                          ),
+                        ),
                         const SizedBox(
                           height: 25.0,
                         ),
@@ -249,8 +250,8 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
               ),
-              tileColor: Utils.getColorFromColorCode(
-                  Constants.lisListTileColor),
+              tileColor:
+                  Utils.getColorFromColorCode(Constants.lisListTileColor),
               leading: CircleAvatar(
                 backgroundColor: Colors.deepPurple,
                 child: Text(
@@ -275,8 +276,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
             child: Chip(
               label: Text(
                 category.childCount.toString(),
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500),
+                style: const TextStyle(fontWeight: FontWeight.w500),
               ),
             ),
           )

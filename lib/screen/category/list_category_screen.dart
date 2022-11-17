@@ -50,7 +50,7 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
               (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
             if (snapshot.hasData) {
               return Padding(
-                padding: const EdgeInsets.only(top: 20.0),
+                padding: const EdgeInsets.only(top: 5.0),
                 child: ListView.builder(
                   padding: const EdgeInsets.only(bottom: 100), //
                   itemCount: snapshot.data?.length,

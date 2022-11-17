@@ -21,8 +21,7 @@ class Utils {
 
   static String formatTime(String dateTime) {
     DateTime dateTimeObj = DateFormat("dd-MM-yyyy HH:mm").parse(dateTime);
-    final DateFormat formatter = DateFormat('HH:mm');
-    return formatter.format(dateTimeObj);
+    return DateFormat.jm().format(dateTimeObj);
   }
 
   static double calculateXPercentageOfY(double x, double y) {

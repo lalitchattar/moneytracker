@@ -5,14 +5,14 @@ import 'package:moneytracker/util/utils.dart';
 import '../model/transactions.dart';
 import '../service/transaction_service.dart';
 
-class TransactionsScreen extends StatefulWidget {
-  const TransactionsScreen({Key? key}) : super(key: key);
+class TransactionsScreen1 extends StatefulWidget {
+  const TransactionsScreen1({Key? key}) : super(key: key);
 
   @override
-  State<TransactionsScreen> createState() => _TransactionsScreenState();
+  State<TransactionsScreen1> createState() => _Transactions1ScreenState();
 }
 
-class _TransactionsScreenState extends State<TransactionsScreen> {
+class _Transactions1ScreenState extends State<TransactionsScreen1> {
   static const _pageSize = 20;
 
   final PagingController<int, Transactions> _pagingController =

@@ -75,7 +75,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
                                   initialValue: category!.categoryName,
                                   decoration: const InputDecoration(
                                     labelText: Constants
-                                        .addCategoryFormCategoryNameLabel,
+                                        .categoryNameLabel,
                                     border: OutlineInputBorder(),
                                   ),
                                   validator: FormBuilderValidators.compose(
@@ -172,7 +172,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
                                       onPressed: () async {
                                         await _updateCategory();
                                       },
-                                      child: const Text(Constants.updateButton),
+                                      child: const Text(Constants.saveButton),
                                     )),
                                 const SizedBox(
                                   height: 25.0,

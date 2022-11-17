@@ -30,6 +30,7 @@ class Constants {
   static const String moreScreenRateText = "Rate";
   static const String moreScreenFeedbackText = "Feedback";
   static const String saveButton = "Save";
+  static const String addButton = "Add";
   static const String updateButton = "Update";
 
   /** Account Screen **/
@@ -75,7 +76,7 @@ class Constants {
   /** Add Category Form Constants **/
 
   static const String addCategoryFormCategoryName = "CATEGORY_NAME";
-  static const String addCategoryFormCategoryNameLabel = "Category Name";
+  static const String categoryNameLabel = "Category Name";
   static const String addCategoryFormCategoryNameRequired = "Enter account name";
 
   static const String addCategoryFormDescription = "DESCRIPTION";
@@ -197,6 +198,42 @@ class Constants {
   static const String incomeCategoryCode = "I";
   static const String expenseCategoryCode = "E";
   static const String otherCategoryCode = "O";
+
+  static const String addIncomeScreenAppBarTitle = "Add Income Transaction";
+  static const String addExpenseScreenAppBarTitle = "Add Expense Transaction";
+  static const String addTransactionScreenTransactionDate = "TRANSACTION_DATE";
+  static const String addTransactionScreenTransactionDateLabel = "Date & Time";
+  static const String dateTimeFormat = "dd-MM-yyyy HH:mm";
+
+  static const String addTransactionScreenToAccount = "TO_ACCOUNT";
+  static const String toAccountLabel = "To Account";
+  static const String selectAccount = "Select account";
+
+  static const String addTransactionScreenCategory = "CATEGORY";
+  static const String addTransactionScreenCategoryLabel = "Category";
+  static const String selectCategory = "Select category";
+
+  static const String addTransactionScreenFromAccount = "FROM_ACCOUNT";
+  static const String fromAccountLabel = "From Account";
+
+  static const String addTransactionScreenFinalAmount = "FINAL_AMOUNT";
+  static const String addTransactionScreenFinalAmountLabel = "Amount";
+  static const String enterFinalAmount = "Enter final amount";
+  static const String enterValidAmount = "Enter valid amount";
+
+  static const String addTransactionScreenDescription = "DESCRIPTION";
+  static const String addTransactionScreenDetailsLabel = "Details";
+
+  static const String listTransactionScreenAppBarTitle = "Transactions";
+  static const String detailTransactionScreenAppBarTitle = "Transactions Detail";
+
+  static const String income = "Income";
+  static const String expense = "Expense";
+  static const String incomeCode = "I";
+  static const String expenseCode = "E";
+  static const String transactionDate = "Transaction Date";
+  static const String transactionTime = "Time";
+  static const String transactionAmount = "Amount";
 
 
 }

@@ -79,9 +79,11 @@ class _DetailCategoryScreenState extends State<DetailCategoryScreen> {
                                 child: CircleAvatar(
                                   radius: 40.0,
                                   backgroundColor: Colors.deepPurple,
-                                  child: Text(category!.categoryName
-                                      .substring(0, 1)
-                                      .toUpperCase()),
+                                  child: Text(
+                                    category!.categoryName
+                                        .substring(0, 1)
+                                        .toUpperCase(),
+                                  ),
                                 ),
                               ),
                             ),
@@ -400,7 +402,7 @@ class _DetailCategoryScreenState extends State<DetailCategoryScreen> {
           actions: <Widget>[
             TextButton(
               child:
-              const Text(Constants.no, style: TextStyle(color: Colors.red)),
+                  const Text(Constants.no, style: TextStyle(color: Colors.red)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
