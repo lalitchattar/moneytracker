@@ -3,6 +3,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:moneytracker/screen/transaction/transaction_details.dart';
 import 'package:moneytracker/screen/transaction/transaction_details_screen.dart';
 import 'package:moneytracker/service/transaction_service.dart';
+import 'package:moneytracker/util/category_icon_mapping.dart';
+import 'package:svg_icon/svg_icon.dart';
 
 import '../model/transactions.dart';
 import '../util/constants.dart';
@@ -81,33 +83,27 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     },
                     child: Card(
                       child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.deepPurple,
-                          child: Text(transaction.categoryName!
-                              .substring(0, 1)
-                              .toUpperCase()),
-                        ),
-                        title: Text(
-                          transaction.accountName!,
-                          style: const TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                        subtitle: Text(
-                          transaction.categoryName!,
-                          style: const TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                        trailing: Column(
+                        visualDensity: const VisualDensity(vertical: 4),
+                        leading: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text(
-                              Utils.formatDate(transaction.dateAndTime),
+                            CircleAvatar(
+                              backgroundColor: Colors.deepPurple,
+                              child: _getSVGIconOrLetter(transaction),
                             ),
                             Text(
-                              Utils.formatNumber(transaction.finalAmount),
-                              style: TextStyle(
-                                  color: _getBalanceColor(transaction),
-                                  fontWeight: FontWeight.w600),
-                            ),
+                              transaction.transactionCategoryName!,
+                              style: const TextStyle(
+                                  fontSize: 10.0, fontWeight: FontWeight.w500),
+                            )
                           ],
+                        ),
+                        title: _getTransactionTitle(transaction),
+                        trailing: Text(
+                          Utils.formatNumber(transaction.finalAmount),
+                          style: TextStyle(
+                              color: _getBalanceColor(transaction),
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -122,7 +118,38 @@ class _TransactionScreenState extends State<TransactionScreen> {
   }
 
   MaterialColor _getBalanceColor(Transactions transaction) {
-    return transaction.transactionType == "I" ? Colors.green : Colors.red;
+    if(transaction.transactionType == "T") {
+      return Colors.deepPurple;
+    } else if(transaction.transactionType == "I") {
+      return Colors.green;
+    } else {
+      return Colors.red;;
+    }
+  }
+
+  Widget _getSVGIconOrLetter(Transactions transaction) {
+    if (CategoryIcon.icon[transaction.category] == null) {
+      return Text(transaction.transactionCategoryName!.substring(0, 1));
+    }
+    return SvgIcon(CategoryIcon.icon[transaction.category]!);
+  }
+
+  Widget _getTransactionTitle(Transactions transaction) {
+    if (transaction.transactionType == "T") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(Constants.from + transaction.fromAccountName.toString(), style: const TextStyle(
+              fontSize: 12.0, fontWeight: FontWeight.w500),),
+          const SizedBox(height: 10,),
+          Text(Constants.to + transaction.toAccountName.toString(), style: const TextStyle(
+              fontSize: 12.0, fontWeight: FontWeight.w500),),
+        ],
+      );
+    } else {
+      return Padding(padding: const EdgeInsets.only(left: 5.0), child: Text(transaction.fromAccountName!.isEmpty ? transaction.toAccountName! : transaction.fromAccountName!, style: const TextStyle(
+          fontSize: 12.0, fontWeight: FontWeight.w500),),);
+    }
   }
 
   @override

@@ -198,6 +198,7 @@ class Constants {
   static const String incomeCategoryCode = "I";
   static const String expenseCategoryCode = "E";
   static const String otherCategoryCode = "O";
+  static const String transferTransactionCode = "T";
 
   static const String addIncomeScreenAppBarTitle = "Add Income Transaction";
   static const String addExpenseScreenAppBarTitle = "Add Expense Transaction";
@@ -208,6 +209,8 @@ class Constants {
   static const String addTransactionScreenToAccount = "TO_ACCOUNT";
   static const String toAccountLabel = "To Account";
   static const String selectAccount = "Select account";
+  static const String selectToAccount = "Select To account";
+  static const String selectFromAccount = "Select From account";
 
   static const String addTransactionScreenCategory = "CATEGORY";
   static const String addTransactionScreenCategoryLabel = "Category";
@@ -229,11 +232,16 @@ class Constants {
 
   static const String income = "Income";
   static const String expense = "Expense";
+  static const String transfer = "Transfer";
   static const String incomeCode = "I";
   static const String expenseCode = "E";
+  static const String transferCode = "T";
   static const String transactionDate = "Transaction Date";
   static const String transactionTime = "Time";
   static const String transactionAmount = "Amount";
+
+  static const String from = "From: ";
+  static const String to = "To: ";
 
 
 }

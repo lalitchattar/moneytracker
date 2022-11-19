@@ -4,8 +4,10 @@ import 'package:moneytracker/model/category.dart';
 import 'package:moneytracker/screen/category/add_category_screen.dart';
 import 'package:moneytracker/screen/category/detail_category_screen.dart';
 import 'package:moneytracker/screen/category/suspend_detail_category_screen.dart';
+import 'package:svg_icon/svg_icon.dart';
 import '../../service/category_service.dart';
 
+import '../../util/category_icon_mapping.dart';
 import '../../util/constants.dart';
 import '../../util/utils.dart';
 import 'category_details.dart';
@@ -62,19 +64,15 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
                         elevation: 0,
                         child: GestureDetector(
                           child: ListTile(
+                            visualDensity: const VisualDensity(vertical: 2),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
                             tileColor: _getTileColor(category),
                             leading: CircleAvatar(
+                              radius: 20.0,
                               backgroundColor: Colors.deepPurple,
-                              child: Text(
-                                category.categoryName
-                                    .substring(0, 1)
-                                    .toUpperCase(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500),
-                              ),
+                              child: _getSVGIconOrLetter(category),
                             ),
                             title: Text(
                               category.categoryName,
@@ -149,5 +147,9 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
     return account.isSuspended == 1
         ? SuspendDetailCategoryScreen(account.id)
         : DetailCategoryScreen(account.id);
+  }
+
+  Widget _getSVGIconOrLetter(Category category) {
+    return category.iconId == 0 ? Text(category.categoryName.substring(0, 1)) : SvgIcon(CategoryIcon.icon[category.iconId]!, color: Colors.white,);
   }
 }

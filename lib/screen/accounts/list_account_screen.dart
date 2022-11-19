@@ -5,6 +5,8 @@ import 'package:moneytracker/screen/accounts/account_details_screen.dart';
 import 'package:moneytracker/screen/accounts/add_account_screen.dart';
 import 'package:moneytracker/screen/accounts/detail_account_screen.dart';
 import 'package:moneytracker/screen/accounts/suspended_detail_account_screen.dart';
+import 'package:moneytracker/util/all_screen_icon.dart';
+import 'package:svg_icon/svg_icon.dart';
 import '../../service/account_service.dart';
 
 import '../../util/constants.dart';
@@ -63,11 +65,16 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
                         elevation: 0,
                         child: GestureDetector(
                           child: ListTile(
+                            visualDensity: const VisualDensity(vertical: 2),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(5)
                             ),
                             tileColor: _getTileColor(account),
-                            leading: _getAccountTypeIcon(account),
+                            leading: CircleAvatar(
+                              radius: 20.0,
+                              backgroundColor: Colors.deepPurple,
+                              child: _getAccountTypeIcon(account),
+                            ),
                             title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500)),
                             trailing: Text(
                               Utils.formatNumber(account.availableBalance),
@@ -115,10 +122,10 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
         : Colors.red;
   }
 
-  Icon _getAccountTypeIcon(Account account) {
+  SvgIcon _getAccountTypeIcon(Account account) {
     return account.isCreditCard == 1
-        ? const Icon(Icons.credit_card, size: 30, color: Colors.deepPurple,)
-        : const Icon(Icons.account_balance, size: 30, color: Colors.deepPurple,);
+        ? const SvgIcon(AllScreenIcon.creditCard, color: Colors.white,)
+        : const SvgIcon(AllScreenIcon.bank, color: Colors.white,);
   }
 
   Color _getTileColor(Account account) {

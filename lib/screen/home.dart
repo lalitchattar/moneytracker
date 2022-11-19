@@ -5,6 +5,7 @@ import 'package:moneytracker/screen/transaction/expense/add_expense_transaction_
 import 'package:moneytracker/screen/transaction/income/add_income_transaction.dart';
 import 'package:moneytracker/screen/transaction/income/add_income_transaction_screen.dart';
 import 'package:moneytracker/screen/transaction/transaction_details.dart';
+import 'package:moneytracker/screen/transaction/transfer/add_transfer_transaction_screen.dart';
 import 'package:moneytracker/screen/transactions.dart';
 
 class Home extends StatefulWidget {
@@ -39,6 +40,13 @@ class _HomeState extends State<Home> {
                 child: const Icon(Icons.add),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const AddExpenseTransactionScreen()));
+                }
+            ),
+            SpeedDialChild(
+                label: "Transfer",
+                child: const Icon(Icons.add),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AddTransferTransactionScreen()));
                 }
             )
           ],

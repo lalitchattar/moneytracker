@@ -4,6 +4,8 @@ class Category {
   late String categoryType;
   late String? description;
   late int parentCategory;
+  late int iconId;
+  late int editable;
   late double debitedAmount;
   late double creditedAmount;
   late int inTransaction;
@@ -36,6 +38,8 @@ class Category {
     categoryName = map["CATEGORY_NAME"];
     categoryType = map["CATEGORY_TYPE"];
     parentCategory = map["PARENT_CATEGORY"];
+    iconId = map["ICON_ID"];
+    editable = map["EDITABLE"];
     description = map["DESCRIPTION"];
     debitedAmount = map["DEBITED_AMOUNT"];
     creditedAmount = map["CREDITED_AMOUNT"];

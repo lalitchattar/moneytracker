@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneytracker/screen/accounts/list_account_screen.dart';
+import 'package:svg_icon/svg_icon.dart';
 
 import '../../model/account.dart';
 import '../../service/account_service.dart';
@@ -467,10 +468,10 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
     return account.isCreditCard == 1 ? true : false;
   }
 
-  Icon _getAccountTypeIcon(Account account) {
+  SvgIcon _getAccountTypeIcon(Account account) {
     return account.isCreditCard == 1
-        ? const Icon(Icons.credit_card)
-        : const Icon(Icons.account_balance);
+        ? const SvgIcon("assets/icons/creditcard.svg", color: Colors.white, width: 50.0, height: 50.0,)
+        : const SvgIcon("assets/icons/bank.svg", color: Colors.white, width: 50.0, height: 50.0,);
   }
 
   PopupMenuButton _buildPopupMenuButton() {

@@ -41,6 +41,7 @@ dependencies:
   form_builder_validators: ^8.3.0
   filter_list: ^1.0.2
   infinite_scroll_pagination: ^3.2.0
+  svg_icon: ^0.0.1
   d_chart: ^0.1.0
   flutter_localizations:
     sdk: flutter
@@ -71,9 +72,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  #assets:
-  #  - assets/icons/bank.png
-  #  - assets/icons/categories.png
+  assets:
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

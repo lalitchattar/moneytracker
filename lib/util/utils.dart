@@ -48,4 +48,10 @@ class Utils {
     return formatPattern.format(number);
   }
 
+  static String formatDateTime(String dateTime, String format) {
+    DateTime dateTimeObj = DateFormat(format).parse(dateTime);
+    final DateFormat formatter = DateFormat(format);
+    return formatter.format(dateTimeObj);
+  }
+
 }

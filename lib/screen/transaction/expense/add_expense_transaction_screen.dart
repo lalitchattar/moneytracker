@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
+import 'package:svg_icon/svg_icon.dart';
 import '../../../main.dart';
 import '../../../model/account.dart';
 import '../../../model/category.dart';
@@ -10,9 +11,12 @@ import '../../../service/account_service.dart';
 import '../../../service/category_service.dart';
 
 import '../../../service/transaction_service.dart';
+import '../../../util/all_screen_icon.dart';
+import '../../../util/category_icon_mapping.dart';
 import '../../../util/constants.dart';
 import '../../../util/utils.dart';
 import '../transaction_details.dart';
+import '../transaction_details_screen.dart';
 
 class AddExpenseTransactionScreen extends StatefulWidget {
   const AddExpenseTransactionScreen({Key? key}) : super(key: key);
@@ -95,7 +99,7 @@ class _AddExpenseTransactionScreenState
                           name: Constants.addTransactionScreenFromAccount,
                           decoration: const InputDecoration(
                             labelText:
-                                Constants.toAccountLabel,
+                                Constants.fromAccountLabel,
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.arrow_drop_down),
                           ),
@@ -253,13 +257,17 @@ class _AddExpenseTransactionScreenState
           child: Card(
             elevation: 0,
             child: ListTile(
+              visualDensity: const VisualDensity(vertical: 2),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
               ),
               tileColor:
                   Utils.getColorFromColorCode(Constants.lisListTileColor),
-              leading: _getAccountTypeIcon(account),
+              leading: CircleAvatar(
+                  backgroundColor: Colors.deepPurple,
+                  child: _getAccountTypeIcon(account)
+              ),
               title: Text(account.accountName,
                   style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: Text(
@@ -279,18 +287,10 @@ class _AddExpenseTransactionScreenState
     return account.availableBalance > 0 ? Colors.green : Colors.red;
   }
 
-  Icon _getAccountTypeIcon(Account account) {
+  SvgIcon _getAccountTypeIcon(Account account) {
     return account.isCreditCard == 1
-        ? const Icon(
-            Icons.credit_card,
-            size: 30,
-            color: Colors.deepPurple,
-          )
-        : const Icon(
-            Icons.account_balance,
-            size: 30,
-            color: Colors.deepPurple,
-          );
+        ? const SvgIcon(AllScreenIcon.creditCard, color: Colors.white,)
+        : const SvgIcon(AllScreenIcon.bank, color: Colors.white,);
   }
 
   Future<void> _openCategorySelectionDialog() async {
@@ -341,6 +341,7 @@ class _AddExpenseTransactionScreenState
           child: Card(
             elevation: 0,
             child: ListTile(
+              visualDensity: const VisualDensity(vertical: 2),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
@@ -349,10 +350,7 @@ class _AddExpenseTransactionScreenState
                   Utils.getColorFromColorCode(Constants.lisListTileColor),
               leading: CircleAvatar(
                 backgroundColor: Colors.deepPurple,
-                child: Text(
-                  category.categoryName.substring(0, 1).toUpperCase(),
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
+                child: _getSVGIconOrLetter(category)
               ),
               title: Text(category.categoryName,
                   style: const TextStyle(fontWeight: FontWeight.w500)),
@@ -362,6 +360,11 @@ class _AddExpenseTransactionScreenState
         );
       },
     );
+  }
+
+
+  Widget _getSVGIconOrLetter(Category category) {
+    return category.iconId == 0 ? Text(category.categoryName.substring(0, 1)) : SvgIcon(CategoryIcon.icon[category.iconId]!, color: Colors.white,);
   }
 
   Widget _getChildCountBadge(Category category) {
@@ -434,7 +437,7 @@ class _AddExpenseTransactionScreenState
       );
       navigator.pop();
       navigator.push(MaterialPageRoute(
-          builder: (context) => TransactionDetails(transactionId!)));
+          builder: (context) => TransactionDetailScreen(transactionId!)));
     }
   }
 

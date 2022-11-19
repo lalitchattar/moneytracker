@@ -44,9 +44,12 @@ class TransactionService {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database.rawQuery(
-        """SELECT T.*, A.ACCOUNT_NAME, C.CATEGORY_NAME FROM TRANSACTIONS T, ACCOUNT A, 
-        CATEGORY C WHERE (A.ID = T.TO_ACCOUNT OR A.ID = T.FROM_ACCOUNT) 
-        AND C.ID = T.CATEGORY AND T.IS_DELETED = ? ORDER BY T.ID DESC LIMIT ? OFFSET ?""",
+        """SELECT T.ID, T.TRANSACTION_DATE, T.TRANSACTION_TYPE, T.FROM_ACCOUNT, T.TO_ACCOUNT, IFNULL(T.CATEGORY, 0) AS CATEGORY,
+ T.FINAL_AMOUNT, T.DESCRIPTION, T.IS_DELETED, T.EXCLUDED_FROM_SUMMARY, A.ACCOUNT_NAME AS FROM_ACCOUNT_NAME, B.ACCOUNT_NAME AS TO_ACCOUNT_NAME, 
+ IFNULL(C.CATEGORY_NAME, "Transfer") AS TRANSACTION_CATEGORY_NAME FROM TRANSACTIONS AS T 
+LEFT JOIN ACCOUNT AS A ON A.ID = T.FROM_ACCOUNT 
+LEFT JOIN ACCOUNT AS B ON B.ID = T.TO_ACCOUNT 
+LEFT JOIN CATEGORY AS C ON C.ID = T.CATEGORY WHERE T.IS_DELETED = ? ORDER BY T.ID DESC LIMIT ? OFFSET ? """,
         [0, limit, offset]);
     return result
         .map((transactions) => Transactions.fromMapObject(transactions))
@@ -57,9 +60,12 @@ class TransactionService {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database.rawQuery(
-        """SELECT T.*, A.ACCOUNT_NAME, C.CATEGORY_NAME FROM TRANSACTIONS T, ACCOUNT A, 
-        CATEGORY C WHERE (A.ID = T.TO_ACCOUNT OR A.ID = T.FROM_ACCOUNT) 
-        AND C.ID = T.CATEGORY AND T.IS_DELETED = ? AND T.ID = ?""",
+        """SELECT T.ID, T.TRANSACTION_DATE, T.TRANSACTION_TYPE, T.FROM_ACCOUNT, T.TO_ACCOUNT, IFNULL(T.CATEGORY, 0) AS CATEGORY,
+ T.FINAL_AMOUNT, T.DESCRIPTION, T.IS_DELETED, T.EXCLUDED_FROM_SUMMARY, A.ACCOUNT_NAME AS FROM_ACCOUNT_NAME, B.ACCOUNT_NAME AS TO_ACCOUNT_NAME, 
+ IFNULL(C.CATEGORY_NAME, "Transfer") AS TRANSACTION_CATEGORY_NAME FROM TRANSACTIONS AS T 
+LEFT JOIN ACCOUNT AS A ON A.ID = T.FROM_ACCOUNT 
+LEFT JOIN ACCOUNT AS B ON B.ID = T.TO_ACCOUNT 
+LEFT JOIN CATEGORY AS C ON C.ID = T.CATEGORY WHERE T.IS_DELETED = ? AND T.ID = ?""",
         [0, id]);
     return result
         .map((transactions) => Transactions.fromMapObject(transactions))

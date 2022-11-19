@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:moneytracker/screen/category/list_category.dart';
+import 'package:moneytracker/util/all_screen_icon.dart';
 import 'package:moneytracker/util/constants.dart';
 import 'package:moneytracker/util/utils.dart';
+import 'package:svg_icon/svg_icon.dart';
 
 import 'accounts/list_account.dart';
 import 'accounts/list_account_screen.dart';
@@ -95,11 +97,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 30.0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Utils.getColorFromColorCode(Constants.moreScreenListTileColor),
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.bank, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenAccountMenuText),
                           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurple,),
                           onTap: () {
@@ -111,11 +118,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.category, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenCategoryMenuText),
                           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurple,),
                           onTap: () {
@@ -158,11 +170,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 30.0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.reminder, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenReminderText),
                           trailing: Switch(value: true, onChanged: (value){}, activeColor: Colors.deepPurple,),
                           onTap: () {},
@@ -172,12 +189,17 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           enabled: false,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.reminderTime, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenReminderTimeText),
                           trailing: const Text("12:30 PM"),
                           onTap: () {},
@@ -187,11 +209,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.currency, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenCurrencyMenuText),
                           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurple,),
                           onTap: () {},
@@ -201,11 +228,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.backup, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenBackupText),
                           onTap: () {},
                         ),
@@ -214,11 +246,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.reset, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenResetDataMenuText),
                           onTap: () {},
                         ),
@@ -258,11 +295,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 30.0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.feedback, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenFeedbackText),
                           onTap: () {},
                         ),
@@ -271,11 +313,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.rating, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenRateText),
                           onTap: () {},
                         ),
@@ -284,11 +331,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.share, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenShareText),
                           onTap: () {},
                         ),
@@ -297,11 +349,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           height: 0,
                         ),
                         ListTile(
+                          visualDensity: const VisualDensity(vertical: 2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           tileColor: Colors.white,
-                          leading: const Icon(Icons.account_box),
+                          leading: const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: Colors.deepPurple,
+                            child: SvgIcon(AllScreenIcon.about, color: Colors.white,),
+                          ),
                           title: const Text(Constants.moreScreenAboutText),
                           onTap: () {},
                         ),

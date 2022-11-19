@@ -3,6 +3,8 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moneytracker/screen/category/add_category.dart';
 import 'package:moneytracker/screen/category/category_details.dart';
 import 'package:moneytracker/service/category_service.dart';
+import 'package:moneytracker/util/category_icon_mapping.dart';
+import 'package:svg_icon/svg_icon.dart';
 
 import '../../model/category.dart';
 import '../more.dart';
@@ -58,7 +60,8 @@ class _ListCategoryState extends State<ListCategory> {
                       child: Card(
                         child: ListTile(
                           leading: CircleAvatar(
-                            child: Text(snapshot.data![index].categoryName.substring(0, 1).toUpperCase()),
+                            backgroundColor: Colors.transparent,
+                            child: SvgIcon(CategoryIcon.icon[snapshot.data![index].iconId]!, color: Colors.deepPurple,),
                           ),
                           trailing: snapshot.data![index].childCount != 0 ? Padding(
                             padding: const EdgeInsets.all(8.0),
