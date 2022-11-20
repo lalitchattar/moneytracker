@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+
+class BudgetScreen extends StatefulWidget {
+  const BudgetScreen({Key? key}) : super(key: key);
+
+  @override
+  State<BudgetScreen> createState() => _BudgetScreenState();
+}
+
+class _BudgetScreenState extends State<BudgetScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+
+      ),
+    );
+  }
+}

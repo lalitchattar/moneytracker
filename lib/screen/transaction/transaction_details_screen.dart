@@ -46,7 +46,7 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
             if (snapshot.hasData) {
               Transactions? transactions = snapshot.data?.first;
               return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: const EdgeInsets.only(top: 8.0, left: 10.0, right: 10.0),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

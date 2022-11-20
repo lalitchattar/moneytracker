@@ -51,10 +51,10 @@ class _MoreScreenState extends State<MoreScreen> {
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
                     leading: CircleAvatar(
                       radius: 50.0,
-                      child: const Text("LA"),
+                      child: Text("LA", style: TextStyle(fontWeight: FontWeight.w500),),
                     ),
-                    title: Text("Lalit Chattar"),
-                    subtitle: Text("+91-9654402211"),
+                    title: Text("Lalit Chattar", style: TextStyle(fontWeight: FontWeight.w500),),
+                    subtitle: Text("+91-9654402211", style: TextStyle(fontWeight: FontWeight.w500),),
                     trailing: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30.0),
                       child: Icon(Icons.arrow_forward_ios,),
@@ -102,7 +102,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.bank, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenAccountMenuText),
+                          title: const Text(Constants.moreScreenAccountMenuText, style: TextStyle(fontWeight: FontWeight.w500),),
                           trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute( builder: (context) => const ListAccountScreen()));
@@ -122,7 +122,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.category, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenCategoryMenuText),
+                          title: const Text(Constants.moreScreenCategoryMenuText, style: TextStyle(fontWeight: FontWeight.w500),),
                           trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute( builder: (context) => const ListCategoryScreen()));
@@ -173,7 +173,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.reminder, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenReminderText),
+                          title: const Text(Constants.moreScreenReminderText, style: TextStyle(fontWeight: FontWeight.w500),),
                           trailing: Switch(value: false, onChanged: (value){}, activeColor:  ThemeUtil.getDefaultThemeColor(),),
                           onTap: () {},
                         ),
@@ -192,8 +192,8 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.reminderTime, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenReminderTimeText),
-                          trailing: const Text("12:30 PM"),
+                          title: const Text(Constants.moreScreenReminderTimeText, style: TextStyle(fontWeight: FontWeight.w500),),
+                          trailing: const Text("12:30 PM", style: TextStyle(fontWeight: FontWeight.w500),),
                           onTap: () {},
                         ),
                         const Divider(
@@ -210,7 +210,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.currency, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenCurrencyMenuText),
+                          title: const Text(Constants.moreScreenCurrencyMenuText, style: TextStyle(fontWeight: FontWeight.w500),),
                           trailing: const Icon(Icons.arrow_forward_ios,),
                           onTap: () {},
                         ),
@@ -228,7 +228,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.backup, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenBackupText),
+                          title: const Text(Constants.moreScreenBackupText, style: TextStyle(fontWeight: FontWeight.w500),),
                           onTap: () {},
                         ),
                         const Divider(
@@ -245,7 +245,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.reset, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenResetDataMenuText),
+                          title: const Text(Constants.moreScreenResetDataMenuText, style: TextStyle(fontWeight: FontWeight.w500),),
                           onTap: () {},
                         ),
                       ],
@@ -293,7 +293,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.feedback, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenFeedbackText),
+                          title: const Text(Constants.moreScreenFeedbackText, style: TextStyle(fontWeight: FontWeight.w500),),
                           onTap: () {},
                         ),
                         const Divider(
@@ -310,7 +310,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.rating, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenRateText),
+                          title: const Text(Constants.moreScreenRateText, style: TextStyle(fontWeight: FontWeight.w500),),
                           onTap: () {},
                         ),
                         const Divider(
@@ -327,7 +327,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.share, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenShareText),
+                          title: const Text(Constants.moreScreenShareText, style: TextStyle(fontWeight: FontWeight.w500),),
                           onTap: () {},
                         ),
                         const Divider(
@@ -344,7 +344,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             radius: 20.0,
                             child: SvgIcon(AllScreenIcon.about, color: Colors.white,),
                           ),
-                          title: const Text(Constants.moreScreenAboutText),
+                          title: const Text(Constants.moreScreenAboutText, style: TextStyle(fontWeight: FontWeight.w500),),
                           onTap: () {},
                         ),
                       ],

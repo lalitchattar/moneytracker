@@ -70,7 +70,7 @@ class _BaseScreenState extends State<BaseScreen> {
       body: screens[index],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-          indicatorColor: Colors.blue.shade100,
+          indicatorColor: ThemeUtil.getDefaultThemeColor(),
           labelTextStyle: MaterialStateProperty.all(
               const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
         ),
@@ -95,11 +95,11 @@ class _BaseScreenState extends State<BaseScreen> {
             }
           },
           destinations: const [
-            NavigationDestination(icon: Icon(Icons.home,), label: "Home"),
-            NavigationDestination(icon: Icon(Icons.money), label: "Budget"),
+            NavigationDestination(icon: Icon(Icons.home_outlined,), label: "Home",selectedIcon: Icon(Icons.home_outlined, color: Colors.white,),),
+            NavigationDestination(icon: Icon(Icons.money), label: "Budget", selectedIcon: Icon(Icons.money, color: Colors.white,),),
             NavigationDestination(
-                icon: Icon(Icons.arrow_back), label: "Transactions"),
-            NavigationDestination(icon: Icon(Icons.more_horiz), label: "More")
+                icon: Icon(Icons.compare_arrows), label: "Transactions", selectedIcon: Icon(Icons.compare_arrows, color: Colors.white,)),
+            NavigationDestination(icon: Icon(Icons.more_horiz), label: "More", selectedIcon: Icon(Icons.more_horiz, color: Colors.white,))
           ],
         ),
       ),
