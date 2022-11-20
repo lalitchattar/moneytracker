@@ -29,7 +29,11 @@ class Application extends StatelessWidget {
         primarySwatch: generateMaterialColor(color: ThemeUtil.getDefaultThemeColor()),
         backgroundColor: generateMaterialColor(color: ThemeUtil.getDefaultThemeColor()),
         iconTheme: IconThemeData(color: ThemeUtil.getDefaultThemeColor()),
-        listTileTheme: ListTileThemeData(iconColor: ThemeUtil.getDefaultThemeColor())
+        listTileTheme: ListTileThemeData(iconColor: ThemeUtil.getDefaultThemeColor()),
+          scaffoldBackgroundColor: generateMaterialColor(color: ThemeUtil.getDefaultThemeScaffoldBackgroundColor()),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(color: ThemeUtil.getDefaultThemeAppBarTextColor(), fontSize: 20.0, fontWeight: FontWeight.w500)
+        )
       ),
       localizationsDelegates: const [
         FormBuilderLocalizations.delegate,

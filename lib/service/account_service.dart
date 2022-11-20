@@ -133,4 +133,16 @@ class AccountService {
     var result = await database
         .rawQuery('UPDATE ACCOUNT SET IS_SUSPENDED = ? WHERE ID = ?', [flag, id]);
   }
+
+  Future<List> getTotalBalance() async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    Database database = await databaseHelper.database;
+    String resultQuery = """
+        SELECT SUM(AVAILABLE_BALANCE) AS AVAILABLE_BALANCE FROM ACCOUNT WHERE IS_DELETED = ? AND IS_SUSPENDED = ? AND EXCLUDED_FROM_SUMMARY = ? AND IS_CREDIT_CARD = ?
+      """;
+    var result = await database
+        .rawQuery(resultQuery, [0, 0, 0, 0]);
+    return result.toList();
+  }
+
 }

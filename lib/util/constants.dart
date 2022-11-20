@@ -40,6 +40,8 @@ class Constants {
   static const String saveButton = "Save";
   static const String addButton = "Add";
   static const String updateButton = "Update";
+  static const String totalBalance = "Total Balance";
+  static const String initialBalance = "0.00";
 
   /** Account Screen **/
 
@@ -227,7 +229,7 @@ class Constants {
   static const String addTransactionScreenFromAccount = "FROM_ACCOUNT";
   static const String fromAccountLabel = "From Account";
 
-  static const String addTransactionScreenFinalAmount = "FINAL_AMOUNT";
+  static const String finalAmount = "FINAL_AMOUNT";
   static const String addTransactionScreenFinalAmountLabel = "Amount";
   static const String enterFinalAmount = "Enter final amount";
   static const String enterValidAmount = "Enter valid amount";
@@ -241,15 +243,18 @@ class Constants {
   static const String income = "Income";
   static const String expense = "Expense";
   static const String transfer = "Transfer";
+  static const String budget = "Budget";
   static const String incomeCode = "I";
   static const String expenseCode = "E";
   static const String transferCode = "T";
   static const String transactionDate = "Transaction Date";
   static const String transactionTime = "Time";
   static const String transactionAmount = "Amount";
+  static const String transactionType = "TRANSACTION_TYPE";
 
   static const String from = "From: ";
   static const String to = "To: ";
+  static const String latestTransaction = "Latest Transactions";
 
 
 }

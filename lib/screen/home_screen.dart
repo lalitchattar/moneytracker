@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moneytracker/model/transactions.dart';
+import 'package:moneytracker/screen/transaction/expense/add_expense_transaction_screen.dart';
+import 'package:moneytracker/screen/transaction/income/add_income_transaction_screen.dart';
+import 'package:moneytracker/screen/transaction/transaction_details_screen.dart';
+import 'package:moneytracker/screen/transaction/transfer/add_transfer_transaction_screen.dart';
+import 'package:moneytracker/service/account_service.dart';
+import 'package:moneytracker/util/ThemeUtil.dart';
 import 'package:svg_icon/svg_icon.dart';
 
 import '../service/transaction_service.dart';
@@ -16,32 +23,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TransactionService _transactionService = TransactionService();
+  final AccountService _accountService = AccountService();
+
+  final String _fromDate =
+      "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-01";
+  final String _toDate =
+      "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-31";
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           elevation: 0.0,
-          title: Text(
+          title: const Text(
             Constants.appName,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(
-                  Constants.defaultThemeAppBarTitleColor),
-            ),
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
-            onPressed: () {
-              Navigator.pop(context);
-            },
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.defaultThemeColor),
         ),
         body: SingleChildScrollView(
           child: Stack(
@@ -49,8 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 height: 150.0,
                 decoration: BoxDecoration(
-                  color:
-                      Utils.getColorFromColorCode(Constants.defaultThemeColor),
+                  color: ThemeUtil.getDefaultThemeColor(),
                 ),
               ),
               Padding(
@@ -60,37 +57,55 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Card(
                       elevation: 1.0,
-                      color: Utils.getColorFromColorCode(
-                          Constants.defaultHomePageMainContainerColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        side: const BorderSide(width: 0, color: Colors.grey),
+                        side: const BorderSide(width: 0),
                       ),
                       child: SizedBox(
                         height: 250.0,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10.0, vertical: 18.0),
                               child: ListTile(
-                                title: Text(
-                                  "Total Balance",
+                                title: const Text(
+                                  Constants.totalBalance,
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w500,
                                       letterSpacing: 1.0),
                                 ),
                                 subtitle: Padding(
-                                  padding: EdgeInsets.only(top: 5.0),
-                                  child: Text(
-                                    "3435.00",
-                                    style: TextStyle(
-                                        fontSize: 30.0,
-                                        color: Colors.black,
-                                        letterSpacing: 1.0,
-                                        fontWeight: FontWeight.w500),
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: FutureBuilder<List>(
+                                    future: _accountService.getTotalBalance(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<List> snapshot) {
+                                      if (snapshot.hasData) {
+                                        String balance = Utils.formatNumber(
+                                                snapshot.data?.first[Constants
+                                                    .addAccountFormAvailableBalance]) ??
+                                            Constants.initialBalance;
+                                        return Text(
+                                          balance,
+                                          style: const TextStyle(
+                                              fontSize: 30.0,
+                                              color: Colors.black,
+                                              letterSpacing: 1.0,
+                                              fontWeight: FontWeight.w500),
+                                        );
+                                      } else {
+                                        return const Text(
+                                            Constants.initialBalance,
+                                            style: TextStyle(
+                                                fontSize: 30.0,
+                                                color: Colors.black,
+                                                letterSpacing: 1.0,
+                                                fontWeight: FontWeight.w500));
+                                      }
+                                    },
                                   ),
                                 ),
                               ),
@@ -106,20 +121,105 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Column(
                                     children: [
-                                      Container(
-                                        height: 60.0,
-                                        width: 60.0,
-                                        decoration: const BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child:
-                                            const Icon(Icons.account_balance),
+                                      GestureDetector(
+                                        child: Container(
+                                          height: 60.0,
+                                          width: 60.0,
+                                          decoration: const BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: const CircleAvatar(
+                                            backgroundColor: Colors.transparent,
+                                            child: SvgIcon(
+                                              "assets/icons/expense.svg",
+                                              color: Colors.white,
+                                              width: 30, height: 30,
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const AddExpenseTransactionScreen()))
+                                              .then((value) => setState(() {}));
+                                        },
                                       ),
                                       const SizedBox(
                                         height: 5.0,
                                       ),
-                                      const Text("Expense")
+                                      const Text(Constants.expense)
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      GestureDetector(
+                                        child: Container(
+                                          height: 60.0,
+                                          width: 60.0,
+                                          decoration: const BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: const CircleAvatar(
+                                            backgroundColor: Colors.transparent,
+                                            child: SvgIcon(
+                                              "assets/icons/income.svg",
+                                              color: Colors.white,
+                                              width: 30,
+                                              height: 30,
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const AddIncomeTransactionScreen()))
+                                              .then((value) => setState(() {}));
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      const Text(Constants.income)
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      GestureDetector(
+                                        child: Container(
+                                          height: 60.0,
+                                          width: 60.0,
+                                          decoration: const BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: const CircleAvatar(
+                                            backgroundColor: Colors.transparent,
+                                            child: SvgIcon(
+                                              "assets/icons/transfer.svg",
+                                              color: Colors.white,
+                                              width: 30, height: 30,
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const AddTransferTransactionScreen()))
+                                              .then((value) => setState(() {}));
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      const Text(Constants.transfer)
                                     ],
                                   ),
                                   Column(
@@ -128,52 +228,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 60.0,
                                         width: 60.0,
                                         decoration: const BoxDecoration(
-                                            color: Colors.green,
+                                            color: Colors.pink,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
-                                        child:
-                                            const Icon(Icons.account_balance),
+                                        child: const CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          child: SvgIcon(
+                                            "assets/icons/budget.svg",
+                                            color: Colors.white,
+                                            width: 30,
+                                            height: 30,
+                                          ),
+                                        ),
                                       ),
                                       const SizedBox(
                                         height: 5.0,
                                       ),
-                                      const Text("Income")
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        height: 60.0,
-                                        width: 60.0,
-                                        decoration: const BoxDecoration(
-                                            color: Colors.blue,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child:
-                                            const Icon(Icons.account_balance),
-                                      ),
-                                      const SizedBox(
-                                        height: 5.0,
-                                      ),
-                                      const Text("Transfer")
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        height: 60.0,
-                                        width: 60.0,
-                                        decoration: const BoxDecoration(
-                                            color: Colors.yellow,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child:
-                                            const Icon(Icons.account_balance),
-                                      ),
-                                      const SizedBox(
-                                        height: 5.0,
-                                      ),
-                                      const Text("Budget")
+                                      const Text(Constants.budget)
                                     ],
                                   ),
                                 ],
@@ -189,92 +260,120 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Card(
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side:
-                                const BorderSide(width: 0, color: Colors.grey),
-                          ),
-                          child: Container(
-                            width: 180.0,
-                            height: 90.0,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 20.0,
-                                    top: 20.0,
-                                  ),
-                                  child: Text(
-                                    "Income",
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey,
-                                        letterSpacing: 1.0),
+                        FutureBuilder(
+                          future: _transactionService
+                              .getTotalIncomeAndExpenseInDateRange(
+                                  _fromDate, _toDate, Constants.incomeCode),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List> snapshot) {
+                            if (snapshot.hasData) {
+                              List? totalIncomeExpense = snapshot.data;
+                              return Card(
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: const BorderSide(
+                                      width: 0, color: Colors.grey),
+                                ),
+                                child: SizedBox(
+                                  width: 180.0,
+                                  height: 90.0,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 20.0,
+                                          top: 20.0,
+                                        ),
+                                        child: Text(
+                                          Constants.income,
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey,
+                                              letterSpacing: 1.0),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20.0, top: 10.0),
+                                        child: Text(
+                                          _getBalance(totalIncomeExpense!),
+                                          style: const TextStyle(
+                                              fontSize: 25.0,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.green,
+                                              letterSpacing: 1.0),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 20.0, top: 10.0),
-                                  child: Text(
-                                    "80000.00",
-                                    style: TextStyle(
-                                        fontSize: 25.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.green,
-                                        letterSpacing: 1.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
                         ),
-                        Card(
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side:
-                                const BorderSide(width: 0, color: Colors.grey),
-                          ),
-                          child: SizedBox(
-                            width: 180.0,
-                            height: 90.0,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 20.0,
-                                    top: 20.0,
-                                  ),
-                                  child: Text(
-                                    "Expenses",
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey,
-                                        letterSpacing: 1.0),
+                        FutureBuilder(
+                          future: _transactionService
+                              .getTotalIncomeAndExpenseInDateRange(
+                                  _fromDate, _toDate, Constants.expenseCode),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List> snapshot) {
+                            if (snapshot.hasData) {
+                              List? totalIncomeExpense = snapshot.data;
+                              return Card(
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: const BorderSide(
+                                      width: 0, color: Colors.grey),
+                                ),
+                                child: SizedBox(
+                                  width: 180.0,
+                                  height: 90.0,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 20.0,
+                                          top: 20.0,
+                                        ),
+                                        child: Text(
+                                          Constants.expense,
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey,
+                                              letterSpacing: 1.0),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20.0, top: 10.0),
+                                        child: Text(
+                                          _getBalance(totalIncomeExpense!),
+                                          style: const TextStyle(
+                                              fontSize: 25.0,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.red,
+                                              letterSpacing: 1.0),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 20.0, top: 10.0),
-                                  child: Text(
-                                    "80000.00",
-                                    style: TextStyle(
-                                        fontSize: 25.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.red,
-                                        letterSpacing: 1.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -283,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text(
-                        "Latest Transactions",
+                        Constants.latestTransaction,
                         style: TextStyle(
                             fontSize: 20.0, fontWeight: FontWeight.w500),
                       ),
@@ -295,44 +394,66 @@ class _HomeScreenState extends State<HomeScreen> {
                       future: _transactionService.getTransactionsPageWise(5, 0),
                       builder: (BuildContext context,
                           AsyncSnapshot<List<Transactions>> snapshot) {
-                        if(snapshot.hasData) {
+                        if (snapshot.hasData) {
                           List<Widget> item = [];
-                          snapshot.data?.forEach((transaction) {
-                            item.add(
-                                Card(
+                          snapshot.data?.forEach(
+                            (transaction) {
+                              item.add(GestureDetector(
+                                child: Card(
                                   child: ListTile(
-                                    visualDensity: const VisualDensity(vertical: 4),
+                                    visualDensity:
+                                        const VisualDensity(vertical: 4),
                                     leading: SizedBox(
                                       width: 60.0,
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           CircleAvatar(
-                                            backgroundColor: Utils.getColorFromColorCode(Constants.defaultThemeColor),
-                                            child: _getSVGIconOrLetter(transaction),
+                                            backgroundColor:
+                                                Utils.getColorFromColorCode(
+                                                    Constants
+                                                        .defaultThemeColor),
+                                            child: _getSVGIconOrLetter(
+                                                transaction),
                                           ),
                                           Text(
-                                            transaction.transactionCategoryName!,
+                                            transaction
+                                                .transactionCategoryName!,
                                             style: const TextStyle(
-                                                fontSize: 12.0, fontWeight: FontWeight.w500),
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
                                     ),
                                     title: _getTransactionTitle(transaction),
                                     trailing: Text(
-                                      Utils.formatNumber(transaction.finalAmount),
+                                      Utils.formatNumber(
+                                          transaction.finalAmount),
                                       style: TextStyle(
                                           color: _getBalanceColor(transaction),
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                )
-                            );
-                          },);
-                         return Column(children: item,);
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              TransactionDetailScreen(
+                                                  transaction.id)));
+                                },
+                              ));
+                            },
+                          );
+                          return Column(
+                            children: item,
+                          );
                         } else {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
                       },
                     )
@@ -347,12 +468,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   MaterialColor _getBalanceColor(Transactions transaction) {
-    if(transaction.transactionType == "T") {
+    if (transaction.transactionType == Constants.transferCode) {
       return Colors.deepPurple;
-    } else if(transaction.transactionType == "I") {
+    } else if (transaction.transactionType == Constants.incomeCode) {
       return Colors.green;
     } else {
-      return Colors.red;;
+      return Colors.red;
+      ;
     }
   }
 
@@ -368,16 +490,33 @@ class _HomeScreenState extends State<HomeScreen> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(Constants.from + transaction.fromAccountName.toString(), style: const TextStyle(
-              fontSize: 15.0, fontWeight: FontWeight.w500),),
-          const SizedBox(height: 10,),
-          Text(Constants.to + transaction.toAccountName.toString(), style: const TextStyle(
-              fontSize: 15.0, fontWeight: FontWeight.w500),),
+          Text(
+            Constants.from + transaction.fromAccountName.toString(),
+            style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            Constants.to + transaction.toAccountName.toString(),
+            style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+          ),
         ],
       );
     } else {
-      return Text(transaction.fromAccountName!.isEmpty ? transaction.toAccountName! : transaction.fromAccountName!, style: const TextStyle(
-          fontSize: 15.0, fontWeight: FontWeight.w500),);
+      return Text(
+        transaction.fromAccountName!.isEmpty
+            ? transaction.toAccountName!
+            : transaction.fromAccountName!,
+        style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+      );
     }
+  }
+
+  String _getBalance(List balanceList) {
+    if (balanceList.isNotEmpty) {
+      return Utils.formatNumber(balanceList[0][Constants.finalAmount]);
+    }
+    return Constants.initialBalance;
   }
 }

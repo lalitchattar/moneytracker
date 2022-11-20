@@ -43,22 +43,16 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
         backgroundColor:
             Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             Constants.addIncomeScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -147,13 +141,13 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                           height: 25.0,
                         ),
                         FormBuilderTextField(
-                          name: Constants.addTransactionScreenFinalAmount,
+                          name: Constants.finalAmount,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
                             _formKey
                                 .currentState
                                 ?.fields[
-                                    Constants.addTransactionScreenFinalAmount]
+                                    Constants.finalAmount]
                                 ?.validate();
                           },
                           decoration: const InputDecoration(
@@ -188,8 +182,6 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                           width: double.infinity,
                           height: 50.0,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepPurple),
                             onPressed: () {
                               _saveIncomeTransaction();
                             },
@@ -265,7 +257,6 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
               tileColor:
                   Utils.getColorFromColorCode(Constants.lisListTileColor),
               leading: CircleAvatar(
-                backgroundColor: Colors.deepPurple,
                 child: _getAccountTypeIcon(account),
               ),
               title: Text(account.accountName,
@@ -349,7 +340,6 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
               tileColor:
                   Utils.getColorFromColorCode(Constants.lisListTileColor),
               leading: CircleAvatar(
-                backgroundColor: Colors.deepPurple,
                 child: _getSVGIconOrLetter(category),
               ),
               title: Text(category.categoryName,
@@ -394,12 +384,12 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
               account.availableBalance = account.availableBalance +
                   double.parse(_formKey
                       .currentState
-                      ?.fields[Constants.addTransactionScreenFinalAmount]
+                      ?.fields[Constants.finalAmount]
                       ?.value);
               account.creditedAmount = account.creditedAmount +
                   double.parse(_formKey
                       .currentState
-                      ?.fields[Constants.addTransactionScreenFinalAmount]
+                      ?.fields[Constants.finalAmount]
                       ?.value);
               account.inTransaction = account.inTransaction + 1;
               await _accountService
@@ -414,7 +404,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                           double.parse(_formKey
                               .currentState
                               ?.fields[
-                                  Constants.addTransactionScreenFinalAmount]
+                                  Constants.finalAmount]
                               ?.value);
                       category.inTransaction = category.inTransaction + 1;
                       await _categoryService

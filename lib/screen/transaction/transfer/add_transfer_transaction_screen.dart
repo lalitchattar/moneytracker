@@ -36,22 +36,16 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
         backgroundColor:
             Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             Constants.addIncomeScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -140,13 +134,13 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                           height: 25.0,
                         ),
                         FormBuilderTextField(
-                          name: Constants.addTransactionScreenFinalAmount,
+                          name: Constants.finalAmount,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
                             _formKey
                                 .currentState
                                 ?.fields[
-                                    Constants.addTransactionScreenFinalAmount]
+                                    Constants.finalAmount]
                                 ?.validate();
                           },
                           decoration: const InputDecoration(
@@ -181,8 +175,6 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                           width: double.infinity,
                           height: 50.0,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepPurple),
                             onPressed: () {
                               _saveIncomeTransaction();
                             },
@@ -318,12 +310,10 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
         ? const Icon(
             Icons.credit_card,
             size: 30,
-            color: Colors.deepPurple,
           )
         : const Icon(
             Icons.account_balance,
             size: 30,
-            color: Colors.deepPurple,
           );
   }
 
@@ -344,19 +334,19 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
               account.availableBalance = account.availableBalance -
                   double.parse(_formKey
                       .currentState
-                      ?.fields[Constants.addTransactionScreenFinalAmount]
+                      ?.fields[Constants.finalAmount]
                       ?.value);
               account.debitedAmount = account.debitedAmount +
                   double.parse(_formKey
                       .currentState
-                      ?.fields[Constants.addTransactionScreenFinalAmount]
+                      ?.fields[Constants.finalAmount]
                       ?.value);
               account.outTransaction = account.outTransaction + 1;
               if (account.isCreditCard == 1) {
                 account.outstandingBalance = account.outstandingBalance! +
                     double.parse(_formKey
                         .currentState
-                        ?.fields[Constants.addTransactionScreenFinalAmount]
+                        ?.fields[Constants.finalAmount]
                         ?.value);
               }
               await _accountService
@@ -371,13 +361,13 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                           double.parse(_formKey
                               .currentState
                               ?.fields[
-                                  Constants.addTransactionScreenFinalAmount]
+                                  Constants.finalAmount]
                               ?.value);
                       account.creditedAmount = account.creditedAmount +
                           double.parse(_formKey
                               .currentState
                               ?.fields[
-                                  Constants.addTransactionScreenFinalAmount]
+                                  Constants.finalAmount]
                               ?.value);
                       account.inTransaction = account.inTransaction + 1;
                       if (account.isCreditCard == 1) {
@@ -386,7 +376,7 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                             double.parse(_formKey
                                 .currentState
                                 ?.fields[
-                                    Constants.addTransactionScreenFinalAmount]
+                                    Constants.finalAmount]
                                 ?.value);
                       }
 
