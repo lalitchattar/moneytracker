@@ -9,6 +9,7 @@ import 'package:moneytracker/util/all_screen_icon.dart';
 import 'package:svg_icon/svg_icon.dart';
 import '../../service/account_service.dart';
 
+import '../../util/ThemeUtil.dart';
 import '../../util/constants.dart';
 import '../../util/utils.dart';
 import 'add_account.dart';
@@ -30,22 +31,16 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
         backgroundColor:
             Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             Constants.listAccountScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
         ),
         body: FutureBuilder<List<Account>>(
           future: _accountService.getAllAccounts(true),
@@ -72,7 +67,6 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
                             tileColor: _getTileColor(account),
                             leading: CircleAvatar(
                               radius: 20.0,
-                              backgroundColor: Colors.deepPurple,
                               child: _getAccountTypeIcon(account),
                             ),
                             title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500)),
@@ -80,7 +74,7 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
                               Utils.formatNumber(account.availableBalance),
                               style: TextStyle(
                                 color: _getBalanceColor(account),
-                                fontWeight: FontWeight.w600
+                                fontWeight: FontWeight.w500
                               ),
                             ),
                           ),
@@ -103,7 +97,6 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
         floatingActionButton: SpeedDial(
           spacing: 5.0,
           icon: Icons.add,
-          backgroundColor: Colors.deepPurple,
           onPress: () {
             Navigator.push(
                     context,

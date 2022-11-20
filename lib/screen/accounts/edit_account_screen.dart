@@ -30,22 +30,16 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         backgroundColor:
         Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
-            Constants.addAccountScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
+          title: const Text(
+            Constants.addAccountScreenAppBarTitle
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           centerTitle: true,
-          backgroundColor:
-          Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
         ),
         body: FutureBuilder<List<Account>>(
           future: _accountService.getAccountById(widget.id),
@@ -226,8 +220,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                   width: double.infinity,
                                   height: 50.0,
                                   child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.deepPurple),
                                     onPressed: () {
                                       _updateAccount(account);
                                     },

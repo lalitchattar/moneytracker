@@ -29,22 +29,16 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
         backgroundColor:
             Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             Constants.listCategoriesScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
         ),
         body: FutureBuilder<List<Category>>(
           future: _categoryService.getAllCategories(true),
@@ -71,7 +65,6 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
                             tileColor: _getTileColor(category),
                             leading: CircleAvatar(
                               radius: 20.0,
-                              backgroundColor: Colors.deepPurple,
                               child: _getSVGIconOrLetter(category),
                             ),
                             title: Text(
@@ -107,7 +100,6 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
           },
         ),
         floatingActionButton: SpeedDial(
-          backgroundColor: Colors.deepPurple,
           spacing: 5.0,
           icon: Icons.add,
           onPress: () {

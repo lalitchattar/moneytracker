@@ -28,22 +28,16 @@ class _SuspendDetailCategoryScreenState extends State<SuspendDetailCategoryScree
         backgroundColor:
         Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             Constants.detailCategoryScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           centerTitle: true,
-          backgroundColor:
-          Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
           actions: [
             _buildPopupMenuButton()
           ],
@@ -68,7 +62,6 @@ class _SuspendDetailCategoryScreenState extends State<SuspendDetailCategoryScree
                                 padding: const EdgeInsets.only(top: 20.0),
                                 child: CircleAvatar(
                                   radius: 40.0,
-                                  backgroundColor: Colors.deepPurple,
                                   child: Text(category!.categoryName
                                       .substring(0, 1)
                                       .toUpperCase()),

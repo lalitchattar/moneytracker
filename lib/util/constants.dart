@@ -11,6 +11,14 @@ class Constants {
   static const String listSuspendedListTileColor = "#BDBDBD";
   static const String detailCategorySubCategoryListTileColor = "#EEEEEE";
 
+  //Theming
+  static const String defaultThemeColor = "#5730E3";
+  static const String defaultThemeAppBarTitleColor = "#FFFFFF";
+  static const String defaultHomePageMainContainerColor = "#FFFFFF";
+
+
+  static const String appName = "FinApp";
+
   /* Text Constsnts */
 
   /// More Screen

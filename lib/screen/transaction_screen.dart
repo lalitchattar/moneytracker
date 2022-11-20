@@ -53,15 +53,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
         backgroundColor:
             Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             Constants.listTransactionScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
         ),
         body: RefreshIndicator(
           onRefresh: () => Future.sync(
@@ -88,7 +83,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CircleAvatar(
-                              backgroundColor: Colors.deepPurple,
                               child: _getSVGIconOrLetter(transaction),
                             ),
                             Text(

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_color_generator/material_color_generator.dart';
 import 'package:moneytracker/screen/budget.dart';
 import 'package:moneytracker/screen/home.dart';
+import 'package:moneytracker/screen/home_screen.dart';
 import 'package:moneytracker/screen/more.dart';
 import 'package:moneytracker/screen/more_screen.dart';
 import 'package:moneytracker/screen/transaction_screen.dart';
 import 'package:moneytracker/service/budget_service.dart';
+import 'package:moneytracker/util/ThemeUtil.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -23,7 +26,10 @@ class Application extends StatelessWidget {
     return MaterialApp(
       title: 'Money Tracker',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: generateMaterialColor(color: ThemeUtil.getDefaultThemeColor()),
+        backgroundColor: generateMaterialColor(color: ThemeUtil.getDefaultThemeColor()),
+        iconTheme: IconThemeData(color: ThemeUtil.getDefaultThemeColor()),
+        listTileTheme: ListTileThemeData(iconColor: ThemeUtil.getDefaultThemeColor())
       ),
       localizationsDelegates: const [
         FormBuilderLocalizations.delegate,
@@ -54,7 +60,7 @@ class _BaseScreenState extends State<BaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = [const Home(), Budget(_isBudgetExists, _forYear, _noTransaction), const TransactionScreen(), const MoreScreen()];
+    List<Widget> screens = [const HomeScreen(), Budget(_isBudgetExists, _forYear, _noTransaction), const TransactionScreen(), const MoreScreen()];
 
     return Scaffold(
       body: screens[index],

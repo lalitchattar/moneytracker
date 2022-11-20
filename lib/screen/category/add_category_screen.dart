@@ -32,22 +32,16 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
         backgroundColor:
             Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             Constants.addCategoriesScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -152,8 +146,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                           width: double.infinity,
                           height: 50.0,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepPurple),
                             onPressed: () {
                               _saveCategory();
                             },

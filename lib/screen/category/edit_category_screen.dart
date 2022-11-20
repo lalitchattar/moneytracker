@@ -32,22 +32,16 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
           backgroundColor:
               Utils.getColorFromColorCode(Constants.screenBackgroundColor),
           appBar: AppBar(
-            title: Text(
+            title: const Text(
               Constants.editCategoriesScreenAppBarTitle,
-              style: TextStyle(
-                color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-              ),
             ),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              color: Colors.deepPurple,
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             centerTitle: true,
-            backgroundColor:
-                Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
           ),
           body: FutureBuilder<List<Category>>(
             future: _categoryService.getCategoryByIdWithParent(widget.id),
@@ -167,8 +161,6 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
                                     width: double.infinity,
                                     height: 50.0,
                                     child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.deepPurple),
                                       onPressed: () async {
                                         await _updateCategory();
                                       },

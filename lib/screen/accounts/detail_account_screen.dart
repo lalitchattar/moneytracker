@@ -29,29 +29,22 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
           backgroundColor:
               Utils.getColorFromColorCode(Constants.screenBackgroundColor),
           appBar: AppBar(
-            title: Text(
+            title: const Text(
               Constants.detailAccountScreenAppBarTitle,
-              style: TextStyle(
-                color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-              ),
             ),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              color: Colors.deepPurple,
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             centerTitle: true,
-            backgroundColor:
-                Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
             actions: [
               IconButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccountScreen(widget.id))).then((value) => setState((){}));
                 },
                 icon: const Icon(Icons.edit),
-                color: Colors.deepPurple,
               ),
               _buildPopupMenuButton()
             ],
@@ -76,7 +69,6 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                   padding: const EdgeInsets.only(top: 20.0),
                                   child: CircleAvatar(
                                     radius: 40.0,
-                                    backgroundColor: Colors.deepPurple,
                                     child: _getAccountTypeIcon(account!),
                                   ),
                                 ),
@@ -478,7 +470,6 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
     return PopupMenuButton(
       icon: const Icon(
         Icons.more_vert,
-        color: Colors.deepPurple,
       ),
       itemBuilder: (context) {
         return const [

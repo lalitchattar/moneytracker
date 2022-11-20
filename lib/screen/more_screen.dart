@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneytracker/screen/category/list_category.dart';
+import 'package:moneytracker/util/ThemeUtil.dart';
 import 'package:moneytracker/util/all_screen_icon.dart';
 import 'package:moneytracker/util/constants.dart';
 import 'package:moneytracker/util/utils.dart';
@@ -24,15 +25,11 @@ class _MoreScreenState extends State<MoreScreen> {
         backgroundColor:
             Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
-            Constants.moreScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
+          title: const Text(
+            Constants.moreScreenAppBarTitle
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
+
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -53,15 +50,14 @@ class _MoreScreenState extends State<MoreScreen> {
                     contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
                     leading: CircleAvatar(
-                      backgroundColor: Colors.deepPurple,
                       radius: 50.0,
-                      child: Text("LA"),
+                      child: const Text("LA"),
                     ),
                     title: Text("Lalit Chattar"),
                     subtitle: Text("+91-9654402211"),
                     trailing: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Icon(Icons.arrow_forward_ios, color: Colors.deepPurple,),
+                      child: Icon(Icons.arrow_forward_ios,),
                     ),
                   ),
                 ),
@@ -104,11 +100,10 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Utils.getColorFromColorCode(Constants.moreScreenListTileColor),
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.bank, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenAccountMenuText),
-                          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurple,),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute( builder: (context) => const ListAccountScreen()));
                           },
@@ -125,11 +120,10 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.category, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenCategoryMenuText),
-                          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurple,),
+                          trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute( builder: (context) => const ListCategoryScreen()));
                           },
@@ -177,11 +171,10 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.reminder, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenReminderText),
-                          trailing: Switch(value: true, onChanged: (value){}, activeColor: Colors.deepPurple,),
+                          trailing: Switch(value: false, onChanged: (value){}, activeColor:  ThemeUtil.getDefaultThemeColor(),),
                           onTap: () {},
                         ),
                         const Divider(
@@ -197,7 +190,6 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.reminderTime, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenReminderTimeText),
@@ -216,11 +208,10 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.currency, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenCurrencyMenuText),
-                          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurple,),
+                          trailing: const Icon(Icons.arrow_forward_ios,),
                           onTap: () {},
                         ),
                         const Divider(
@@ -235,7 +226,6 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.backup, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenBackupText),
@@ -253,7 +243,6 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.reset, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenResetDataMenuText),
@@ -302,7 +291,6 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.feedback, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenFeedbackText),
@@ -320,7 +308,6 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.rating, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenRateText),
@@ -338,7 +325,6 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.share, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenShareText),
@@ -356,7 +342,6 @@ class _MoreScreenState extends State<MoreScreen> {
                           tileColor: Colors.white,
                           leading: const CircleAvatar(
                             radius: 20.0,
-                            backgroundColor: Colors.deepPurple,
                             child: SvgIcon(AllScreenIcon.about, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenAboutText),

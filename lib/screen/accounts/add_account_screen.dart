@@ -17,7 +17,7 @@ class AddAccountScreen extends StatefulWidget {
   State<AddAccountScreen> createState() => _AddAccountScreenState();
 }
 
-class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
+class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
   final AccountService _accountService = AccountService();
   final _formKey = GlobalKey<FormBuilderState>();
   bool _isCreditCard = false;
@@ -29,22 +29,16 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
         backgroundColor:
             Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             Constants.addAccountScreenAppBarTitle,
-            style: TextStyle(
-              color: Utils.getColorFromColorCode(Constants.appBarTitleColor),
-            ),
           ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.deepPurple,
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           centerTitle: true,
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.appBarBackgroundColor),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -83,7 +77,6 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                           ),
-                          activeColor: Colors.deepPurple,
                           onChanged: (value) {
                             setState(() {
                               _isCreditCard = value!;
@@ -100,8 +93,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
                             enabled: _isCreditCard,
                             name: Constants.addAccountFormCreditLimit,
                             decoration: const InputDecoration(
-                              labelText:
-                                  Constants.creditLimitLabel,
+                              labelText: Constants.creditLimitLabel,
                               border: OutlineInputBorder(),
                             ),
                             keyboardType: TextInputType.number,
@@ -129,8 +121,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
                             name: Constants.addAccountFormBillingDay,
                             readOnly: true,
                             decoration: const InputDecoration(
-                              labelText:
-                                  Constants.billingDayLabel,
+                              labelText: Constants.billingDayLabel,
                               border: OutlineInputBorder(),
                               suffixIcon: Icon(
                                 Icons.arrow_drop_down,
@@ -163,8 +154,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
                             name: Constants.addAccountFormGracePeriod,
                             readOnly: true,
                             decoration: const InputDecoration(
-                              labelText:
-                                  Constants.gracePeriodLabel,
+                              labelText: Constants.gracePeriodLabel,
                               border: OutlineInputBorder(),
                               suffixIcon: Icon(
                                 Icons.arrow_drop_down,
@@ -201,8 +191,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
                           name: Constants.addAccountFormAvailableBalance,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.availableBalanceLabel,
+                            labelText: Constants.availableBalanceLabel,
                             border: OutlineInputBorder(),
                           ),
                           validator: FormBuilderValidators.compose(
@@ -229,16 +218,15 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
                           height: 25.0,
                         ),
                         SizedBox(
-                            width: double.infinity,
-                            height: 50.0,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.deepPurple),
-                              onPressed: () {
-                                _saveAccount();
-                              },
-                              child: const Text(Constants.saveButton),
-                            )),
+                          width: double.infinity,
+                          height: 50.0,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _saveAccount();
+                            },
+                            child: const Text(Constants.saveButton),
+                          ),
+                        ),
                         const SizedBox(
                           height: 25.0,
                         ),
@@ -290,8 +278,8 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: Colors.grey)),
-              tileColor: Utils.getColorFromColorCode(
-                  Constants.lisListTileColor),
+              tileColor:
+                  Utils.getColorFromColorCode(Constants.lisListTileColor),
               title: Text(option),
             ),
           ),
@@ -347,9 +335,10 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware{
   }
 
   String? _getAvailableBalanceValue(String? value) {
-    if((value == null) && _isCreditCard) {
-      return _formKey.currentState!.fields[Constants.addAccountFormCreditLimit]?.value;
-    } else if(value == null && !_isCreditCard) {
+    if ((value == null) && _isCreditCard) {
+      return _formKey
+          .currentState!.fields[Constants.addAccountFormCreditLimit]?.value;
+    } else if (value == null && !_isCreditCard) {
       return "0.0";
     } else {
       return value;
