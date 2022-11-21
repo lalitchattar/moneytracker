@@ -159,7 +159,7 @@ class _BudgetState extends State<Budget> {
                         const Divider(thickness: 2),
                         ListTile(
                           leading: const Text("Lowest Spend"),
-                          trailing: Text(snapshot.data?.first.lowestAMount.toString() ?? ""),
+                          trailing: Text(snapshot.data?.first.lowestAmount.toString() ?? ""),
                           dense: true,
                           visualDensity: const VisualDensity(vertical: -3),
                         ),

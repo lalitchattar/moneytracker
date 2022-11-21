@@ -3,6 +3,7 @@ import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 import 'package:moneytracker/screen/budget.dart';
+import 'package:moneytracker/screen/budget_screen.dart';
 import 'package:moneytracker/screen/home.dart';
 import 'package:moneytracker/screen/home_screen.dart';
 import 'package:moneytracker/screen/more.dart';
@@ -56,15 +57,12 @@ class BaseScreen extends StatefulWidget {
 
 class _BaseScreenState extends State<BaseScreen> {
   int index = 0;
-  bool _isBudgetExists = false;
-  bool _forYear = false;
-  bool _noTransaction = false;
 
   final BudgetService _budgetService = BudgetService();
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = [const HomeScreen(), Budget(_isBudgetExists, _forYear, _noTransaction), const TransactionScreen(), const MoreScreen()];
+    List<Widget> screens = [const HomeScreen(), const BudgetScreen(), const TransactionScreen(), const MoreScreen()];
 
     return Scaffold(
       body: screens[index],
@@ -79,20 +77,9 @@ class _BaseScreenState extends State<BaseScreen> {
           height: 60,
           selectedIndex: index,
           onDestinationSelected: (index) {
-            if(index == 1) {
-              _budgetService.checkBudgetExists().then((budget) {
-                setState(() {
-                  budget.isNotEmpty  ? _isBudgetExists = true : _isBudgetExists = false;
-                  budget.isNotEmpty && budget.first.forYear == 1 ? _forYear = true : _forYear = false;
-                  budget.isEmpty ? _noTransaction = true : _noTransaction = false;
-                  this.index = index;
-                });
-              });
-            } else {
-              setState(() {
-                this.index = index;
-              });
-            }
+            setState(() {
+              this.index = index;
+            });
           },
           destinations: const [
             NavigationDestination(icon: Icon(Icons.home_outlined,), label: "Home",selectedIcon: Icon(Icons.home_outlined, color: Colors.white,),),

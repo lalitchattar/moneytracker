@@ -255,6 +255,21 @@ class Constants {
   static const String from = "From: ";
   static const String to = "To: ";
   static const String latestTransaction = "Latest Transactions";
-
-
+  static const String addBudget = "Add Budget";
+  static const String budgetFor = "Budget for month ";
+  static const String budgetAmount = "BUDGET_AMOUNT";
+  static const String enterBudgetAmount = "Enter budget amount";
+  static const String forYear = "FOR_YEAR";
+  static const String setBudgetForCompleteYear = "Set Budget for complete year";
+  static const String cancel = "Cancel";
+  static const String done = "Done";
+  static const String noTransactionFoundToSetBudget = "No Transaction found to calculate budget";
+  static const String domain = "domain";
+  static const String measure = "measure";
+  static const String spent = "Spent";
+  static const String remain = "Remain";
+  static const String exceed = "Exceed";
+  static const String transactions = "Transactions";
+  static const String highestSpend = "Highest Spend";
+  static const String lowestSpend = "Lowest Spend";
 }

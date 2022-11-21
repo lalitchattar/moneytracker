@@ -7,7 +7,7 @@ class BudgetModel {
   late double expense;
   late double avgExpense;
   late double highestAmount;
-  late double lowestAMount;
+  late double lowestAmount;
   late int isDeleted;
 
   BudgetModel.fromMapObject(Map<String, dynamic> map) {
@@ -23,7 +23,7 @@ class BudgetModel {
     budgetAmount = map["BUDGET_AMOUNT"];
     expense = map["EXPENSE"];
     highestAmount = map["HIGHEST"];
-    lowestAMount = map["LOWEST"];
+    lowestAmount = map["LOWEST"];
   }
 
 }

@@ -1,5 +1,4 @@
 import 'package:moneytracker/model/budget_model.dart';
-import 'package:moneytracker/screen/budget.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../util/database_helper.dart';
