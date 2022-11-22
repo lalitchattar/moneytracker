@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:moneytracker/model/account.dart';
-import 'package:moneytracker/screen/accounts/account_details_screen.dart';
 import 'package:moneytracker/screen/accounts/add_account_screen.dart';
 import 'package:moneytracker/screen/accounts/detail_account_screen.dart';
 import 'package:moneytracker/screen/accounts/suspended_detail_account_screen.dart';
@@ -9,10 +8,8 @@ import 'package:moneytracker/util/all_screen_icon.dart';
 import 'package:svg_icon/svg_icon.dart';
 import '../../service/account_service.dart';
 
-import '../../util/ThemeUtil.dart';
 import '../../util/constants.dart';
 import '../../util/utils.dart';
-import 'add_account.dart';
 
 class ListAccountScreen extends StatefulWidget {
   const ListAccountScreen({Key? key}) : super(key: key);

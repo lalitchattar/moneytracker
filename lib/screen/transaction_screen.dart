@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:material_color_generator/material_color_generator.dart';
-import 'package:moneytracker/screen/transaction/transaction_details.dart';
 import 'package:moneytracker/screen/transaction/transaction_details_screen.dart';
 import 'package:moneytracker/service/transaction_service.dart';
 import 'package:moneytracker/util/ThemeUtil.dart';

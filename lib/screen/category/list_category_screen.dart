@@ -10,7 +10,6 @@ import '../../service/category_service.dart';
 import '../../util/category_icon_mapping.dart';
 import '../../util/constants.dart';
 import '../../util/utils.dart';
-import 'category_details.dart';
 
 class ListCategoryScreen extends StatefulWidget {
   const ListCategoryScreen({Key? key}) : super(key: key);

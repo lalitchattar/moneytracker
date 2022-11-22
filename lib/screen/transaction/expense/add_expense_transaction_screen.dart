@@ -15,7 +15,6 @@ import '../../../util/all_screen_icon.dart';
 import '../../../util/category_icon_mapping.dart';
 import '../../../util/constants.dart';
 import '../../../util/utils.dart';
-import '../transaction_details.dart';
 import '../transaction_details_screen.dart';
 
 class AddExpenseTransactionScreen extends StatefulWidget {
