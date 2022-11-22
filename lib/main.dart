@@ -7,7 +7,11 @@ import 'package:moneytracker/screen/home_screen.dart';
 import 'package:moneytracker/screen/more_screen.dart';
 import 'package:moneytracker/screen/transaction_screen.dart';
 import 'package:moneytracker/service/budget_service.dart';
+import 'package:moneytracker/service/config_service.dart';
 import 'package:moneytracker/util/ThemeUtil.dart';
+import 'package:moneytracker/util/application_config.dart';
+
+import 'model/config.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -54,14 +58,30 @@ class BaseScreen extends StatefulWidget {
 
 class _BaseScreenState extends State<BaseScreen> {
   int index = 0;
+  bool isConfigLoaded = false;
+  final ConfigService _configService = ConfigService();
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
 
-  final BudgetService _budgetService = BudgetService();
+  @override
+  void initState() {
+    _configService.getConfigMap().then((configs) {
+      for(Config config in configs) {
+        var map = <String, String>{};
+        map[config.configKey] = config.configValue;
+        _applicationConfig.configMap?.addAll(map);
+        setState(() {
+          isConfigLoaded = true;
+        });
+      }
+    });
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [const HomeScreen(), const BudgetScreen(), const TransactionScreen(), const MoreScreen()];
-
-    return Scaffold(
+    return isConfigLoaded ? Scaffold(
       body: screens[index],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
@@ -87,6 +107,6 @@ class _BaseScreenState extends State<BaseScreen> {
           ],
         ),
       ),
-    );
+    ) : const CircularProgressIndicator();
   }
 }

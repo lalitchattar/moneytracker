@@ -272,4 +272,7 @@ class Constants {
   static const String transactions = "Transactions";
   static const String highestSpend = "Highest Spend";
   static const String lowestSpend = "Lowest Spend";
+  static const String reminderTime = "8:00 PM";
+  static const String currency = "INR";
+  static const String currencyCode = "₹";
 }

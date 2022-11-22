@@ -1,6 +1,8 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:moneytracker/util/ThemeUtil.dart';
 import 'package:moneytracker/util/all_screen_icon.dart';
+import 'package:moneytracker/util/application_config.dart';
 import 'package:moneytracker/util/constants.dart';
 import 'package:moneytracker/util/utils.dart';
 import 'package:svg_icon/svg_icon.dart';
@@ -16,6 +18,12 @@ class MoreScreen extends StatefulWidget {
 }
 
 class _MoreScreenState extends State<MoreScreen> {
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
+  @override
+  void initState() {
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -172,8 +180,9 @@ class _MoreScreenState extends State<MoreScreen> {
                             child: SvgIcon(AllScreenIcon.reminder, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenReminderText, style: TextStyle(fontWeight: FontWeight.w500),),
-                          trailing: Switch(value: false, onChanged: (value){}, activeColor:  ThemeUtil.getDefaultThemeColor(),),
-                          onTap: () {},
+                          trailing: Switch(value: _applicationConfig.getReminderSetting(), onChanged: (value){setState(() {
+                            _applicationConfig.setReminderSetting(value ? ApplicationConfig.reminderOne : ApplicationConfig.reminderZero);
+                          });}, activeColor:  ThemeUtil.getDefaultThemeColor(),),
                         ),
                         const Divider(
                           thickness: 1,
@@ -181,7 +190,7 @@ class _MoreScreenState extends State<MoreScreen> {
                         ),
                         ListTile(
                           visualDensity: const VisualDensity(vertical: 2),
-                          enabled: false,
+                          enabled: _applicationConfig.getReminderSetting(),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -191,8 +200,10 @@ class _MoreScreenState extends State<MoreScreen> {
                             child: SvgIcon(AllScreenIcon.reminderTime, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenReminderTimeText, style: TextStyle(fontWeight: FontWeight.w500),),
-                          trailing: const Text("12:30 PM", style: TextStyle(fontWeight: FontWeight.w500),),
-                          onTap: () {},
+                          trailing: const Text(Constants.reminderTime, style: TextStyle(fontWeight: FontWeight.w500),),
+                          onTap: () {
+
+                          },
                         ),
                         const Divider(
                           thickness: 1,
@@ -209,8 +220,22 @@ class _MoreScreenState extends State<MoreScreen> {
                             child: SvgIcon(AllScreenIcon.currency, color: Colors.white,),
                           ),
                           title: const Text(Constants.moreScreenCurrencyMenuText, style: TextStyle(fontWeight: FontWeight.w500),),
-                          trailing: const Icon(Icons.arrow_forward_ios,),
-                          onTap: () {},
+                          trailing: Text(_applicationConfig.configMap!["CURRENCY"].toString(), style: const TextStyle(fontWeight: FontWeight.w500),),
+                          onTap: () {
+                            showCurrencyPicker(
+                              context: context,
+                              showFlag: true,
+                              showSearchField: true,
+                              showCurrencyName: true,
+                              showCurrencyCode: true,
+                              onSelect: (Currency currency) {
+                                setState(() {
+                                 _applicationConfig.setCurrencySetting("${currency.code} (${currency.symbol})");
+                                });
+                              },
+                              favorite: [Constants.currency],
+                            );
+                          },
                         ),
                         const Divider(
                           thickness: 1,

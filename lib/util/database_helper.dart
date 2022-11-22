@@ -27,7 +27,7 @@ class DatabaseHelper {
       )
       """;
 
-  static const String _defaultAccount = """INSERT INTO ACCOUNT(ACCOUNT_NAME, DESCRIPTION) VALUES("Cash", "Cash")""";
+  static const String _defaultAccount = """INSERT INTO ACCOUNT(ACCOUNT_NAME, DESCRIPTION) VALUES('Cash', 'Cash')""";
 
   static const String _category = """ CREATE TABLE CATEGORY (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -109,6 +109,19 @@ class DatabaseHelper {
       )""";
 
 
+  static const String _config = """ CREATE TABLE CONFIG (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        CONFIG_KEY TEXT NOT NULL,
+        CONFIG_VALUE TEXT NOT NULL
+      )""";
+
+  static const _configInsert = """ INSERT INTO CONFIG(
+      CONFIG_KEY, CONFIG_VALUE
+      ) SELECT 'CURRENCY', 'INR (₹)' UNION ALL
+      SELECT 'IS_REMINDER_SET', '0' UNION ALL
+      SELECT 'REMINDER_TIME', '20:00 PM' """;
+
+
 
   DatabaseHelper._createInstance();
 
@@ -127,6 +140,8 @@ class DatabaseHelper {
     await database.execute(_categoryInsert);
     await database.execute(_transaction);
     await database.execute(_budget);
+    await database.execute(_config);
+    await database.execute(_configInsert);
   }
 
   Future<Database> initializeDatabase() async {
