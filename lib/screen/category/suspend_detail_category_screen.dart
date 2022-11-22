@@ -337,7 +337,6 @@ class _SuspendDetailCategoryScreenState extends State<SuspendDetailCategoryScree
     return PopupMenuButton(
       icon: const Icon(
         Icons.more_vert,
-        color: Colors.deepPurple,
       ),
       itemBuilder: (context) {
         return const [

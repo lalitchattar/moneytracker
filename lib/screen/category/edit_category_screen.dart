@@ -297,7 +297,6 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
               tileColor: Utils.getColorFromColorCode(
                   Constants.lisListTileColor),
               leading: CircleAvatar(
-                backgroundColor: Colors.deepPurple,
                 child: Text(
                   category.categoryName.substring(0, 1).toUpperCase(),
                   style: const TextStyle(fontWeight: FontWeight.w500),

@@ -248,7 +248,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
               tileColor:
                   Utils.getColorFromColorCode(Constants.lisListTileColor),
               leading: CircleAvatar(
-                backgroundColor: Colors.deepPurple,
                 child: _getSVGIconOrLetter(category)
               ),
               title: Text(category.categoryName,

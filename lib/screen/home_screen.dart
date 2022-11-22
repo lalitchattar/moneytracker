@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_color_generator/material_color_generator.dart';
 import 'package:moneytracker/model/transactions.dart';
 import 'package:moneytracker/screen/transaction/expense/add_expense_transaction_screen.dart';
 import 'package:moneytracker/screen/transaction/income/add_income_transaction_screen.dart';
@@ -10,6 +11,7 @@ import 'package:moneytracker/util/ThemeUtil.dart';
 import 'package:svg_icon/svg_icon.dart';
 
 import '../service/transaction_service.dart';
+import '../util/all_screen_icon.dart';
 import '../util/category_icon_mapping.dart';
 import '../util/constants.dart';
 import '../util/utils.dart';
@@ -91,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         return Text(
                                           balance,
                                           style: const TextStyle(
-                                              fontSize: 30.0,
+                                              fontSize: 25.0,
                                               color: Colors.black,
                                               letterSpacing: 1.0,
                                               fontWeight: FontWeight.w500),
@@ -132,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: const CircleAvatar(
                                             backgroundColor: Colors.transparent,
                                             child: SvgIcon(
-                                              "assets/icons/expense.svg",
+                                              AllScreenIcon.expense,
                                               color: Colors.white,
                                               width: 30, height: 30,
                                             ),
@@ -166,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: const CircleAvatar(
                                             backgroundColor: Colors.transparent,
                                             child: SvgIcon(
-                                              "assets/icons/income.svg",
+                                              AllScreenIcon.income,
                                               color: Colors.white,
                                               width: 30,
                                               height: 30,
@@ -201,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: const CircleAvatar(
                                             backgroundColor: Colors.transparent,
                                             child: SvgIcon(
-                                              "assets/icons/transfer.svg",
+                                              AllScreenIcon.transfer,
                                               color: Colors.white,
                                               width: 30, height: 30,
                                             ),
@@ -220,31 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 5.0,
                                       ),
                                       const Text(Constants.transfer)
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        height: 60.0,
-                                        width: 60.0,
-                                        decoration: const BoxDecoration(
-                                            color: Colors.pink,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child: const CircleAvatar(
-                                          backgroundColor: Colors.transparent,
-                                          child: SvgIcon(
-                                            "assets/icons/budget.svg",
-                                            color: Colors.white,
-                                            width: 30,
-                                            height: 30,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 5.0,
-                                      ),
-                                      const Text(Constants.budget)
                                     ],
                                   ),
                                 ],
@@ -302,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Text(
                                           _getBalance(totalIncomeExpense!),
                                           style: const TextStyle(
-                                              fontSize: 25.0,
+                                              fontSize: 20.0,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.green,
                                               letterSpacing: 1.0),
@@ -359,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Text(
                                           _getBalance(totalIncomeExpense!),
                                           style: const TextStyle(
-                                              fontSize: 25.0,
+                                              fontSize: 20.0,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.red,
                                               letterSpacing: 1.0),
@@ -469,7 +446,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   MaterialColor _getBalanceColor(Transactions transaction) {
     if (transaction.transactionType == Constants.transferCode) {
-      return Colors.deepPurple;
+      return generateMaterialColor(color: ThemeUtil.getDefaultThemeColor());
     } else if (transaction.transactionType == Constants.incomeCode) {
       return Colors.green;
     } else {

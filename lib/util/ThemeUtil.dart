@@ -6,25 +6,25 @@ import 'package:moneytracker/util/utils.dart';
 class ThemeUtil {
 
   //Theming
-  static const String _defaultThemeColor = "#5730E3";
-  static const String _defaultThemeAppBarTextColor = "#FFFFFF";
-  static const String _defaultExpenseColor = "#E33363";
-  static const String _defaultThemeScaffoldBackgroundColor = "#D3D3DB";
+  static const String defaultThemeColor = "#5730E3";
+  static const String defaultThemeAppBarTextColor = "#FFFFFF";
+  static const String defaultExpenseColor = "#E33363";
+  static const String defaultThemeScaffoldBackgroundColor = "#D3D3DB";
 
   static Color getDefaultThemeColor() {
-    return Utils.getColorFromColorCode(_defaultThemeColor);
+    return Utils.getColorFromColorCode(defaultThemeColor);
   }
 
   static Color getDefaultThemeExpenseColor() {
-    return Utils.getColorFromColorCode(_defaultExpenseColor);
+    return Utils.getColorFromColorCode(defaultExpenseColor);
   }
 
   static Color getDefaultThemeScaffoldBackgroundColor() {
-    return Utils.getColorFromColorCode(_defaultThemeScaffoldBackgroundColor);
+    return Utils.getColorFromColorCode(defaultThemeScaffoldBackgroundColor);
   }
 
   static Color getDefaultThemeAppBarTextColor() {
-    return Utils.getColorFromColorCode(_defaultThemeAppBarTextColor);
+    return Utils.getColorFromColorCode(defaultThemeAppBarTextColor);
   }
 
 }

@@ -11,4 +11,7 @@ class AllScreenIcon {
   static const String share = "assets/icons/share.svg";
   static const String about = "assets/icons/about.svg";
   static const String creditCard = "assets/icons/creditcard.svg";
+  static const String expense = "assets/icons/expense.svg";
+  static const String income = "assets/icons/income.svg";
+  static const String transfer = "assets/icons/transfer.svg";
 }

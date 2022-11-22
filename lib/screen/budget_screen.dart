@@ -417,8 +417,8 @@ class _BudgetScreenState extends State<BudgetScreen> {
   }
 
   double _getRemainMeasure(BudgetModel budgetModel) {
-    return (100 - Utils.calculateExceedAmount(budgetModel.expense, budgetModel.budgetAmount)) <=
-      0 ? 0 : (100 - Utils.calculateExceedAmount(budgetModel.expense, budgetModel.budgetAmount));
+    return (100 - Utils.calculateXPercentageOfY(budgetModel.expense, budgetModel.budgetAmount)) <=
+      0 ? 0 : (100 - Utils.calculateXPercentageOfY(budgetModel.expense, budgetModel.budgetAmount));
   }
 
   double _calculateExceedAmount(BudgetModel budgetModel) {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:material_color_generator/material_color_generator.dart';
 import 'package:moneytracker/screen/transaction/transaction_details.dart';
 import 'package:moneytracker/screen/transaction/transaction_details_screen.dart';
 import 'package:moneytracker/service/transaction_service.dart';
+import 'package:moneytracker/util/ThemeUtil.dart';
 import 'package:moneytracker/util/category_icon_mapping.dart';
 import 'package:svg_icon/svg_icon.dart';
 
@@ -79,18 +81,21 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     child: Card(
                       child: ListTile(
                         visualDensity: const VisualDensity(vertical: 4),
-                        leading: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CircleAvatar(
-                              child: _getSVGIconOrLetter(transaction),
-                            ),
-                            Text(
-                              transaction.transactionCategoryName!,
-                              style: const TextStyle(
-                                  fontSize: 10.0, fontWeight: FontWeight.w500),
-                            )
-                          ],
+                        leading: SizedBox(
+                          width: 60.0,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CircleAvatar(
+                                child: _getSVGIconOrLetter(transaction),
+                              ),
+                              Text(
+                                transaction.transactionCategoryName!,
+                                style: const TextStyle(
+                                    fontSize: 12.0, fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
                         ),
                         title: _getTransactionTitle(transaction),
                         trailing: Text(
@@ -113,7 +118,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   MaterialColor _getBalanceColor(Transactions transaction) {
     if(transaction.transactionType == "T") {
-      return Colors.deepPurple;
+      return generateMaterialColor(color: ThemeUtil.getDefaultThemeColor());
     } else if(transaction.transactionType == "I") {
       return Colors.green;
     } else {
@@ -134,15 +139,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(Constants.from + transaction.fromAccountName.toString(), style: const TextStyle(
-              fontSize: 12.0, fontWeight: FontWeight.w500),),
+              fontSize: 15.0, fontWeight: FontWeight.w500),),
           const SizedBox(height: 10,),
           Text(Constants.to + transaction.toAccountName.toString(), style: const TextStyle(
-              fontSize: 12.0, fontWeight: FontWeight.w500),),
+              fontSize: 15.0, fontWeight: FontWeight.w500),),
         ],
       );
     } else {
       return Padding(padding: const EdgeInsets.only(left: 5.0), child: Text(transaction.fromAccountName!.isEmpty ? transaction.toAccountName! : transaction.fromAccountName!, style: const TextStyle(
-          fontSize: 12.0, fontWeight: FontWeight.w500),),);
+          fontSize: 15.0, fontWeight: FontWeight.w500),),);
     }
   }
 
