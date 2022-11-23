@@ -3,7 +3,6 @@ import 'package:moneytracker/service/config_service.dart';
 import '../model/config.dart';
 
 class ApplicationConfig {
-
   static const isReminderSet = "IS_REMINDER_SET";
   static const currency = "CURRENCY";
   static const reminderZero = "0";
@@ -23,7 +22,7 @@ class ApplicationConfig {
   }
 
   bool getReminderSetting() {
-    return _configMap[isReminderSet] == reminderZero ?  false :  true;
+    return _configMap[isReminderSet] == reminderZero ? false : true;
   }
 
   void setReminderSetting(String value) {

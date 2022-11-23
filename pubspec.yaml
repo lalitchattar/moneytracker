@@ -43,6 +43,7 @@ dependencies:
   infinite_scroll_pagination: ^3.2.0
   material_color_generator: ^1.1.0
   currency_picker: ^2.0.12
+  money2: ^3.3.0
   svg_icon: ^0.0.1
   d_chart: ^0.1.0
   flutter_localizations:

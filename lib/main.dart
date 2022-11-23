@@ -28,15 +28,16 @@ class Application extends StatelessWidget {
     return MaterialApp(
       title: 'Money Tracker',
       theme: ThemeData(
-        primarySwatch: generateMaterialColor(color: ThemeUtil.getDefaultThemeColor()),
-        backgroundColor: generateMaterialColor(color: ThemeUtil.getDefaultThemeColor()),
-        iconTheme: IconThemeData(color: ThemeUtil.getDefaultThemeColor()),
-        listTileTheme: ListTileThemeData(iconColor: ThemeUtil.getDefaultThemeColor()),
+          primarySwatch: generateMaterialColor(color: ThemeUtil.getDefaultThemeColor()),
+          backgroundColor: generateMaterialColor(color: ThemeUtil.getDefaultThemeColor()),
+          iconTheme: IconThemeData(color: ThemeUtil.getDefaultThemeColor()),
+          listTileTheme: ListTileThemeData(iconColor: ThemeUtil.getDefaultThemeColor()),
           scaffoldBackgroundColor: generateMaterialColor(color: ThemeUtil.getDefaultThemeScaffoldBackgroundColor()),
-        appBarTheme: AppBarTheme(
-          titleTextStyle: TextStyle(color: ThemeUtil.getDefaultThemeAppBarTextColor(), fontSize: 20.0, fontWeight: FontWeight.w500)
-        )
-      ),
+          appBarTheme:
+              AppBarTheme(titleTextStyle: TextStyle(color: ThemeUtil.getDefaultThemeAppBarTextColor(), fontSize: 20.0, fontWeight: FontWeight.w500)),
+          textTheme: const TextTheme(
+              bodyMedium: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal, letterSpacing: 1.0),
+              titleMedium: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal, letterSpacing: 1.0))),
       localizationsDelegates: const [
         FormBuilderLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -65,7 +66,7 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     _configService.getConfigMap().then((configs) {
-      for(Config config in configs) {
+      for (Config config in configs) {
         var map = <String, String>{};
         map[config.configKey] = config.configValue;
         _applicationConfig.configMap?.addAll(map);
@@ -77,36 +78,63 @@ class _BaseScreenState extends State<BaseScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [const HomeScreen(), const BudgetScreen(), const TransactionScreen(), const MoreScreen()];
-    return isConfigLoaded ? Scaffold(
-      body: screens[index],
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: ThemeUtil.getDefaultThemeColor(),
-          labelTextStyle: MaterialStateProperty.all(
-              const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
-        ),
-        child: NavigationBar(
-          backgroundColor: Colors.white,
-          height: 60,
-          selectedIndex: index,
-          onDestinationSelected: (index) {
-            setState(() {
-              this.index = index;
-            });
-          },
-          destinations: const [
-            NavigationDestination(icon: Icon(Icons.home_outlined,), label: "Home",selectedIcon: Icon(Icons.home_outlined, color: Colors.white,),),
-            NavigationDestination(icon: Icon(Icons.money), label: "Budget", selectedIcon: Icon(Icons.money, color: Colors.white,),),
-            NavigationDestination(
-                icon: Icon(Icons.compare_arrows), label: "Transactions", selectedIcon: Icon(Icons.compare_arrows, color: Colors.white,)),
-            NavigationDestination(icon: Icon(Icons.more_horiz), label: "More", selectedIcon: Icon(Icons.more_horiz, color: Colors.white,))
-          ],
-        ),
-      ),
-    ) : const CircularProgressIndicator();
+    return isConfigLoaded
+        ? Scaffold(
+            body: screens[index],
+            bottomNavigationBar: NavigationBarTheme(
+              data: NavigationBarThemeData(
+                indicatorColor: ThemeUtil.getDefaultThemeColor(),
+                labelTextStyle: MaterialStateProperty.all(const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+              ),
+              child: NavigationBar(
+                backgroundColor: Colors.white,
+                height: 60,
+                selectedIndex: index,
+                onDestinationSelected: (index) {
+                  setState(() {
+                    this.index = index;
+                  });
+                },
+                destinations: const [
+                  NavigationDestination(
+                    icon: Icon(
+                      Icons.home_outlined,
+                    ),
+                    label: "Home",
+                    selectedIcon: Icon(
+                      Icons.home_outlined,
+                      color: Colors.white,
+                    ),
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.money),
+                    label: "Budget",
+                    selectedIcon: Icon(
+                      Icons.money,
+                      color: Colors.white,
+                    ),
+                  ),
+                  NavigationDestination(
+                      icon: Icon(Icons.compare_arrows),
+                      label: "Transactions",
+                      selectedIcon: Icon(
+                        Icons.compare_arrows,
+                        color: Colors.white,
+                      )),
+                  NavigationDestination(
+                      icon: Icon(Icons.more_horiz),
+                      label: "More",
+                      selectedIcon: Icon(
+                        Icons.more_horiz,
+                        color: Colors.white,
+                      ))
+                ],
+              ),
+            ),
+          )
+        : const CircularProgressIndicator();
   }
 }

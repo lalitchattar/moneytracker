@@ -11,7 +11,7 @@ class CategoryService {
     Database database = await databaseHelper.database;
     var result = await database.rawQuery(
         "SELECT C.*, (SELECT COUNT(*) FROM CATEGORY C2 WHERE C2.PARENT_CATEGORY = C.ID AND C2.IS_DELETED = ?) AS CHILD_COUNT FROM CATEGORY C WHERE C.IS_DELETED = ? AND C.IS_SUSPENDED <= ? ORDER BY IS_SUSPENDED ASC",
-        [0, 0, fetchSuspended ? 1: 0]);
+        [0, 0, fetchSuspended ? 1 : 0]);
     return result.map((account) => Category.fromMapObject(account)).toList();
   }
 
@@ -34,9 +34,7 @@ class CategoryService {
   Future<List<Category>> getCategoryByName(String name) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
-    var result = await database.rawQuery(
-        'SELECT * FROM CATEGORY WHERE CATEGORY_NAME = ? AND IS_DELETED = ? COLLATE NOCASE',
-        [name.trim(), 0]);
+    var result = await database.rawQuery('SELECT * FROM CATEGORY WHERE CATEGORY_NAME = ? AND IS_DELETED = ? COLLATE NOCASE', [name.trim(), 0]);
     return result.map((category) => Category.fromMapObject(category)).toList();
   }
 
@@ -44,8 +42,7 @@ class CategoryService {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database.rawQuery(
-        'SELECT C.*, (SELECT COUNT(*) FROM CATEGORY C2 WHERE C2.PARENT_CATEGORY = ?) AS CHILD_COUNT FROM CATEGORY C WHERE C.ID = ?',
-        [id, id]);
+        'SELECT C.*, (SELECT COUNT(*) FROM CATEGORY C2 WHERE C2.PARENT_CATEGORY = ?) AS CHILD_COUNT FROM CATEGORY C WHERE C.ID = ?', [id, id]);
     return result.map((category) => Category.fromMapObject(category)).toList();
   }
 
@@ -77,7 +74,7 @@ class CategoryService {
     String updateQuery = """
       UPDATE CATEGORY SET CATEGORY_NAME = ?, CATEGORY_TYPE = ?, PARENT_CATEGORY = ?, DESCRIPTION = ? WHERE ID = ?
       """;
-    List<dynamic> params = [category!["CATEGORY_NAME"],category!["CATEGORY_TYPE"], category!["PARENT_CATEGORY"], category!["DESCRIPTION"], id];
+    List<dynamic> params = [category!["CATEGORY_NAME"], category!["CATEGORY_TYPE"], category!["PARENT_CATEGORY"], category!["DESCRIPTION"], id];
 
     await database.rawQuery(updateQuery, params);
   }
@@ -85,11 +82,10 @@ class CategoryService {
   void deleteCategory(int id) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
-    var result = await database
-        .rawQuery('UPDATE CATEGORY SET IS_DELETED = ? WHERE ID = ?', [1, id]);
+    var result = await database.rawQuery('UPDATE CATEGORY SET IS_DELETED = ? WHERE ID = ?', [1, id]);
   }
 
-  Future<bool> isHavingChildCategory(int id) async{
+  Future<bool> isHavingChildCategory(int id) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
     var result = await database.rawQuery("SELECT * FROM CATEGORY WHERE PARENT_CATEGORY = ?", [id]);
@@ -99,12 +95,12 @@ class CategoryService {
   Future<void> updateCategoryForInTransaction(Map<String, dynamic>? category, int id) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
-      String updateQuery = """
+    String updateQuery = """
       UPDATE CATEGORY SET CREDITED_AMOUNT = ?, 
       IN_TRANSACTION = ? WHERE ID = ?
       """;
-      List<dynamic> params = [category!["CREDITED_AMOUNT"], category!["IN_TRANSACTION"], id];
-      await database.rawQuery(updateQuery, params);
+    List<dynamic> params = [category!["CREDITED_AMOUNT"], category!["IN_TRANSACTION"], id];
+    await database.rawQuery(updateQuery, params);
   }
 
   Future<void> updateCategoryForOutTransaction(Map<String, dynamic>? category, int id) async {
@@ -121,7 +117,6 @@ class CategoryService {
   void toggleSuspendCategory(int id, int flag) async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     Database database = await databaseHelper.database;
-    var result = await database
-        .rawQuery('UPDATE CATEGORY SET IS_SUSPENDED = ? WHERE ID = ?', [flag, id]);
+    var result = await database.rawQuery('UPDATE CATEGORY SET IS_SUSPENDED = ? WHERE ID = ?', [flag, id]);
   }
 }

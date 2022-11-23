@@ -21,12 +21,10 @@ class AddExpenseTransactionScreen extends StatefulWidget {
   const AddExpenseTransactionScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddExpenseTransactionScreen> createState() =>
-      _AddExpenseTransactionScreenState();
+  State<AddExpenseTransactionScreen> createState() => _AddExpenseTransactionScreenState();
 }
 
-class _AddExpenseTransactionScreenState
-    extends State<AddExpenseTransactionScreen> with RouteAware {
+class _AddExpenseTransactionScreenState extends State<AddExpenseTransactionScreen> with RouteAware {
   final CategoryService _categoryService = CategoryService();
   final TransactionService _transactionService = TransactionService();
   final AccountService _accountService = AccountService();
@@ -39,8 +37,7 @@ class _AddExpenseTransactionScreenState
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           title: const Text(
             Constants.addExpenseScreenAppBarTitle,
@@ -72,14 +69,12 @@ class _AddExpenseTransactionScreenState
                           initialValue: DateTime.now(),
                           inputType: InputType.both,
                           decoration: const InputDecoration(
-                            labelText: Constants
-                                .addTransactionScreenTransactionDateLabel,
+                            labelText: Constants.addTransactionScreenTransactionDateLabel,
                             border: OutlineInputBorder(),
                           ),
                           initialTime: const TimeOfDay(hour: 8, minute: 0),
                           valueTransformer: (value) {
-                            final DateFormat formatter =
-                                DateFormat(Constants.dateTimeFormat);
+                            final DateFormat formatter = DateFormat(Constants.dateTimeFormat);
                             return formatter.format(value!);
                           },
                           // locale: const Locale.fromSubtags(languageCode: 'fr'),
@@ -91,15 +86,13 @@ class _AddExpenseTransactionScreenState
                           initialValue: null,
                           name: Constants.addTransactionScreenFromAccount,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.fromAccountLabel,
+                            labelText: Constants.fromAccountLabel,
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.arrow_drop_down),
                           ),
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.selectAccount),
+                              FormBuilderValidators.required(errorText: Constants.selectAccount),
                             ],
                           ),
                           readOnly: true,
@@ -117,8 +110,7 @@ class _AddExpenseTransactionScreenState
                           initialValue: null,
                           name: Constants.addTransactionScreenCategory,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addTransactionScreenCategoryLabel,
+                            labelText: Constants.addTransactionScreenCategoryLabel,
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.arrow_drop_down),
                           ),
@@ -128,8 +120,7 @@ class _AddExpenseTransactionScreenState
                           },
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.selectCategory),
+                              FormBuilderValidators.required(errorText: Constants.selectCategory),
                             ],
                           ),
                           valueTransformer: (value) {
@@ -143,23 +134,16 @@ class _AddExpenseTransactionScreenState
                           name: Constants.finalAmount,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            _formKey
-                                .currentState
-                                ?.fields[
-                                    Constants.finalAmount]
-                                ?.validate();
+                            _formKey.currentState?.fields[Constants.finalAmount]?.validate();
                           },
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addTransactionScreenFinalAmountLabel,
+                            labelText: Constants.addTransactionScreenFinalAmountLabel,
                             border: OutlineInputBorder(),
                           ),
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.enterFinalAmount),
-                              FormBuilderValidators.numeric(
-                                  errorText: Constants.enterValidAmount)
+                              FormBuilderValidators.required(errorText: Constants.enterFinalAmount),
+                              FormBuilderValidators.numeric(errorText: Constants.enterValidAmount)
                             ],
                           ),
                         ),
@@ -169,8 +153,7 @@ class _AddExpenseTransactionScreenState
                         FormBuilderTextField(
                           name: Constants.addTransactionScreenDescription,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addTransactionScreenDetailsLabel,
+                            labelText: Constants.addTransactionScreenDetailsLabel,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -204,9 +187,7 @@ class _AddExpenseTransactionScreenState
 
   Future<void> _openAccountSelectionDialog() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    await _accountService
-        .getAllAccounts(false)
-        .then((accounts) => openAccountSelectionScreen(accounts));
+    await _accountService.getAllAccounts(false).then((accounts) => openAccountSelectionScreen(accounts));
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
@@ -235,9 +216,7 @@ class _AddExpenseTransactionScreenState
       onApplyButtonClick: (list) {
         setState(
           () {
-            _formKey
-                .currentState!.fields[Constants.addTransactionScreenFromAccount]
-                ?.didChange(list?.first.accountName);
+            _formKey.currentState!.fields[Constants.addTransactionScreenFromAccount]?.didChange(list?.first.accountName);
             _accountId = list!.first.id!;
           },
         );
@@ -253,18 +232,12 @@ class _AddExpenseTransactionScreenState
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
               ),
-              tileColor:
-                  Utils.getColorFromColorCode(Constants.lisListTileColor),
-              leading: CircleAvatar(
-                  child: _getAccountTypeIcon(account)
-              ),
-              title: Text(account.accountName,
-                  style: const TextStyle(fontWeight: FontWeight.w500)),
+              tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
+              leading: CircleAvatar(child: _getAccountTypeIcon(account)),
+              title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: Text(
                 Utils.formatNumber(account.availableBalance),
-                style: TextStyle(
-                    color: _getBalanceColor(account),
-                    fontWeight: FontWeight.w600),
+                style: TextStyle(color: _getBalanceColor(account), fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -279,15 +252,19 @@ class _AddExpenseTransactionScreenState
 
   SvgIcon _getAccountTypeIcon(Account account) {
     return account.isCreditCard == 1
-        ? const SvgIcon(AllScreenIcon.creditCard, color: Colors.white,)
-        : const SvgIcon(AllScreenIcon.bank, color: Colors.white,);
+        ? const SvgIcon(
+            AllScreenIcon.creditCard,
+            color: Colors.white,
+          )
+        : const SvgIcon(
+            AllScreenIcon.bank,
+            color: Colors.white,
+          );
   }
 
   Future<void> _openCategorySelectionDialog() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    await _categoryService
-        .getCategoriesByType(Constants.expenseCategoryCode)
-        .then((categories) => openCategorySelectionScreen(categories));
+    await _categoryService.getCategoriesByType(Constants.expenseCategoryCode).then((categories) => openCategorySelectionScreen(categories));
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
@@ -308,9 +285,7 @@ class _AddExpenseTransactionScreenState
       ),
       // enableOnlySingleSelection: true,
       onItemSearch: (category, query) {
-        return category.categoryName!
-            .toLowerCase()
-            .contains(query.toLowerCase());
+        return category.categoryName!.toLowerCase().contains(query.toLowerCase());
       },
       emptySearchChild: const Center(child: Text(Constants.noCategoryFound)),
       searchFieldHint: Constants.searchHere,
@@ -318,9 +293,7 @@ class _AddExpenseTransactionScreenState
       onApplyButtonClick: (list) {
         setState(
           () {
-            _formKey
-                .currentState!.fields[Constants.addTransactionScreenCategory]
-                ?.didChange(list?.first.categoryName);
+            _formKey.currentState!.fields[Constants.addTransactionScreenCategory]?.didChange(list?.first.categoryName);
             _categoryId = list!.first.id!;
           },
         );
@@ -336,13 +309,9 @@ class _AddExpenseTransactionScreenState
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
               ),
-              tileColor:
-                  Utils.getColorFromColorCode(Constants.lisListTileColor),
-              leading: CircleAvatar(
-                child: _getSVGIconOrLetter(category)
-              ),
-              title: Text(category.categoryName,
-                  style: const TextStyle(fontWeight: FontWeight.w500)),
+              tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
+              leading: CircleAvatar(child: _getSVGIconOrLetter(category)),
+              title: Text(category.categoryName, style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: _getChildCountBadge(category),
             ),
           ),
@@ -351,9 +320,13 @@ class _AddExpenseTransactionScreenState
     );
   }
 
-
   Widget _getSVGIconOrLetter(Category category) {
-    return category.iconId == 0 ? Text(category.categoryName.substring(0, 1)) : SvgIcon(CategoryIcon.icon[category.iconId]!, color: Colors.white,);
+    return category.iconId == 0
+        ? Text(category.categoryName.substring(0, 1))
+        : SvgIcon(
+            CategoryIcon.icon[category.iconId]!,
+            color: Colors.white,
+          );
   }
 
   Widget _getChildCountBadge(Category category) {
@@ -374,48 +347,24 @@ class _AddExpenseTransactionScreenState
     final navigator = Navigator.of(context);
     int? transactionId;
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      await _transactionService
-          .createTransaction(
-              _formKey.currentState?.value, Constants.expenseCategoryCode)
-          .then(
+      await _transactionService.createTransaction(_formKey.currentState?.value, Constants.expenseCategoryCode).then(
         (value) async {
           transactionId = value;
           await _accountService.getAccountById(_accountId!).then(
             (accountList) async {
               Account account = accountList.first;
-              account.availableBalance = account.availableBalance -
-                  double.parse(_formKey
-                      .currentState
-                      ?.fields[Constants.finalAmount]
-                      ?.value);
-              account.debitedAmount = account.debitedAmount +
-                  double.parse(_formKey
-                      .currentState
-                      ?.fields[Constants.finalAmount]
-                      ?.value);
+              account.availableBalance = account.availableBalance - double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
+              account.debitedAmount = account.debitedAmount + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
               account.outTransaction = account.outTransaction + 1;
-              account.outstandingBalance = account.outstandingBalance! +
-                  double.parse(_formKey
-                      .currentState
-                      ?.fields[Constants.finalAmount]
-                      ?.value);
-              await _accountService
-                  .updateAccountForOutTransaction(account.toMap(),
-                      account.isCreditCard == 1 ? true : false, account.id!)
-                  .then(
+              account.outstandingBalance = account.outstandingBalance! + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
+              await _accountService.updateAccountForOutTransaction(account.toMap(), account.isCreditCard == 1 ? true : false, account.id!).then(
                 (value) async {
                   await _categoryService.getCategoryById(_categoryId!).then(
                     (categoryList) async {
                       Category category = categoryList.first;
-                      category.debitedAmount = category.debitedAmount +
-                          double.parse(_formKey
-                              .currentState
-                              ?.fields[
-                                  Constants.finalAmount]
-                              ?.value);
+                      category.debitedAmount = category.debitedAmount + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
                       category.outTransaction = category.outTransaction + 1;
-                      await _categoryService.updateCategoryForOutTransaction(
-                          category.toMap(), category.id!);
+                      await _categoryService.updateCategoryForOutTransaction(category.toMap(), category.id!);
                     },
                   );
                 },
@@ -425,8 +374,7 @@ class _AddExpenseTransactionScreenState
         },
       );
       navigator.pop();
-      navigator.push(MaterialPageRoute(
-          builder: (context) => TransactionDetailScreen(transactionId!)));
+      navigator.push(MaterialPageRoute(builder: (context) => TransactionDetailScreen(transactionId!)));
     }
   }
 

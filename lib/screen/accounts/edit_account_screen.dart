@@ -19,7 +19,6 @@ class EditAccountScreen extends StatefulWidget {
 }
 
 class _EditAccountScreenState extends State<EditAccountScreen> {
-
   final AccountService _accountService = AccountService();
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -27,12 +26,9 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-        Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
-          title: const Text(
-            Constants.addAccountScreenAppBarTitle
-          ),
+          title: const Text(Constants.addAccountScreenAppBarTitle),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -44,7 +40,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         body: FutureBuilder<List<Account>>(
           future: _accountService.getAccountById(widget.id),
           builder: (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
-            if(snapshot.hasData) {
+            if (snapshot.hasData) {
               Account? account = snapshot.data?.first;
               return SingleChildScrollView(
                 child: Padding(
@@ -67,11 +63,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                   border: OutlineInputBorder(),
                                 ),
                                 validator: FormBuilderValidators.compose(
-                                  [
-                                    FormBuilderValidators.required(
-                                        errorText: Constants
-                                            .addAccountFormAccountNameRequired)
-                                  ],
+                                  [FormBuilderValidators.required(errorText: Constants.addAccountFormAccountNameRequired)],
                                 ),
                               ),
                               Visibility(
@@ -87,18 +79,14 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                   initialValue: account.creditLimit.toString(),
                                   name: Constants.addAccountFormCreditLimit,
                                   decoration: const InputDecoration(
-                                    labelText:
-                                    Constants.creditLimitLabel,
+                                    labelText: Constants.creditLimitLabel,
                                     border: OutlineInputBorder(),
                                   ),
                                   keyboardType: TextInputType.number,
                                   validator: FormBuilderValidators.compose(
                                     [
-                                      FormBuilderValidators.required(
-                                          errorText: Constants
-                                              .addAccountFormCreditLimitRequired),
-                                      FormBuilderValidators.numeric(
-                                          errorText: Constants.enterValidNumber)
+                                      FormBuilderValidators.required(errorText: Constants.addAccountFormCreditLimitRequired),
+                                      FormBuilderValidators.numeric(errorText: Constants.enterValidNumber)
                                     ],
                                   ),
                                 ),
@@ -117,23 +105,19 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                   name: Constants.addAccountFormBillingDay,
                                   readOnly: true,
                                   decoration: const InputDecoration(
-                                    labelText:
-                                    Constants.billingDayLabel,
+                                    labelText: Constants.billingDayLabel,
                                     border: OutlineInputBorder(),
                                     suffixIcon: Icon(
                                       Icons.arrow_drop_down,
                                       color: Colors.grey,
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.grey, width: 1.0),
+                                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                                     ),
                                   ),
                                   onTap: () async {
                                     FocusManager.instance.primaryFocus?.unfocus();
-                                    await _openDropdownOptionScreen(
-                                        Constants.billingDaysOption,
-                                        Constants.addAccountFormBillingDay);
+                                    await _openDropdownOptionScreen(Constants.billingDaysOption, Constants.addAccountFormBillingDay);
                                     FocusManager.instance.primaryFocus?.unfocus();
                                   },
                                 ),
@@ -152,30 +136,24 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                   name: Constants.addAccountFormGracePeriod,
                                   readOnly: true,
                                   decoration: const InputDecoration(
-                                    labelText:
-                                    Constants.gracePeriodLabel,
+                                    labelText: Constants.gracePeriodLabel,
                                     border: OutlineInputBorder(),
                                     suffixIcon: Icon(
                                       Icons.arrow_drop_down,
                                       color: Colors.grey,
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(color: Colors.grey, width: 1.0),
+                                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                                     ),
                                   ),
                                   onTap: () async {
                                     if (_getBillingDayValue() == null) {
-                                      _formKey.currentState
-                                          ?.fields[Constants.addAccountFormBillingDay]
-                                          ?.invalidate(Constants.selectBillingDay);
+                                      _formKey.currentState?.fields[Constants.addAccountFormBillingDay]?.invalidate(Constants.selectBillingDay);
                                       FocusManager.instance.primaryFocus?.unfocus();
                                       return;
                                     }
                                     FocusManager.instance.primaryFocus?.unfocus();
-                                    await _openDropdownOptionScreen(
-                                        Constants.gracePeriodOption,
-                                        Constants.addAccountFormGracePeriod);
+                                    await _openDropdownOptionScreen(Constants.gracePeriodOption, Constants.addAccountFormGracePeriod);
                                     FocusManager.instance.primaryFocus?.unfocus();
                                   },
                                 ),
@@ -188,15 +166,11 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                 initialValue: account.availableBalance.toString(),
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
-                                  labelText:
-                                  Constants.availableBalanceLabel,
+                                  labelText: Constants.availableBalanceLabel,
                                   border: OutlineInputBorder(),
                                 ),
                                 validator: FormBuilderValidators.compose(
-                                  [
-                                    FormBuilderValidators.numeric(
-                                        errorText: Constants.enterValidNumber)
-                                  ],
+                                  [FormBuilderValidators.numeric(errorText: Constants.enterValidNumber)],
                                 ),
                                 valueTransformer: (value) {
                                   return _getAvailableBalanceValue(value, account);
@@ -249,8 +223,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return account.isCreditCard == 1 ? true : false;
   }
 
-  Future<void> _openDropdownOptionScreen(
-      List<String> options, String dropdownName) async {
+  Future<void> _openDropdownOptionScreen(List<String> options, String dropdownName) async {
     await FilterListDelegate.show<String>(
       context: context,
       list: options,
@@ -265,13 +238,11 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       enableOnlySingleSelection: true,
       onApplyButtonClick: (list) {
         setState(
-              () {
+          () {
             if (dropdownName == Constants.addAccountFormBillingDay) {
-              _formKey.currentState!.fields[Constants.addAccountFormBillingDay]
-                  ?.didChange(list?.first);
+              _formKey.currentState!.fields[Constants.addAccountFormBillingDay]?.didChange(list?.first);
             } else {
-              _formKey.currentState!.fields[Constants.addAccountFormGracePeriod]
-                  ?.didChange(list?.first);
+              _formKey.currentState!.fields[Constants.addAccountFormGracePeriod]?.didChange(list?.first);
             }
           },
         );
@@ -282,11 +253,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           child: Card(
             elevation: 0,
             child: ListTile(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  side: const BorderSide(color: Colors.grey)),
-              tileColor: Utils.getColorFromColorCode(
-                  Constants.lisListTileColor),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5), side: const BorderSide(color: Colors.grey)),
+              tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
               title: Text(option),
             ),
           ),
@@ -296,20 +264,17 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   }
 
   List<String> _getOptionListByDropdownName(String dropdownName) {
-    return dropdownName == Constants.addAccountFormBillingDay
-        ? Constants.billingDaysOption
-        : Constants.gracePeriodOption;
+    return dropdownName == Constants.addAccountFormBillingDay ? Constants.billingDaysOption : Constants.gracePeriodOption;
   }
 
   String? _getBillingDayValue() {
-    return _formKey
-        .currentState?.fields[Constants.addAccountFormBillingDay]?.value;
+    return _formKey.currentState?.fields[Constants.addAccountFormBillingDay]?.value;
   }
 
   String? _getAvailableBalanceValue(String? value, Account account) {
-    if((value == null) && _isCreditCard(account)) {
+    if ((value == null) && _isCreditCard(account)) {
       return _formKey.currentState!.fields[Constants.addAccountFormCreditLimit]?.value;
-    } else if(value == null && !_isCreditCard(account)) {
+    } else if (value == null && !_isCreditCard(account)) {
       return "0.0";
     } else {
       return value;
@@ -320,34 +285,24 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       debugPrint(_formKey.currentState?.value.toString());
 
-      _accountService
-          .getAccountByName(
-          _formKey.currentState?.fields[Constants.addAccountFormAccountName]?.value)
-          .then(
-            (accountList) async {
+      _accountService.getAccountByName(_formKey.currentState?.fields[Constants.addAccountFormAccountName]?.value).then(
+        (accountList) async {
           if (accountList.isNotEmpty && accountList[0].id != widget.id) {
-            showDialog(
-                context: context,
-                builder: (context) => const ErrorDialogWidget(
-                    Constants.accountNameAlreadyExists));
+            showDialog(context: context, builder: (context) => const ErrorDialogWidget(Constants.accountNameAlreadyExists));
           } else {
-            await _accountService
-                .updateAccount(_formKey.currentState?.value,
-                _isCreditCard(account), widget.id)
-                .then(
+            await _accountService.updateAccount(_formKey.currentState?.value, _isCreditCard(account), widget.id).then(
                   (value) => {
-                Navigator.pop(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailAccountScreen(widget.id),
-                  ),
-                )
-              },
-            );
+                    Navigator.pop(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailAccountScreen(widget.id),
+                      ),
+                    )
+                  },
+                );
           }
         },
       );
-
     }
   }
 }

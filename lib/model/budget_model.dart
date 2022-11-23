@@ -25,5 +25,4 @@ class BudgetModel {
     highestAmount = map["HIGHEST"];
     lowestAmount = map["LOWEST"];
   }
-
 }

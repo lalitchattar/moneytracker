@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:money2/money2.dart';
 
 class Utils {
   /*static dynamic formatNumber(dynamic number) {
@@ -25,22 +27,22 @@ class Utils {
   }
 
   static double calculateXPercentageOfY(double x, double y) {
-    return double.parse(formatNumber(((x/y) * 100)));
+    return double.parse(formatNumber(((x / y) * 100)));
   }
 
   static double calculateExceedAmount(double expense, double budget) {
-      return double.parse(formatNumber((expense - budget) > 0 ? (expense - budget) : 0));
+    return double.parse(formatNumber((expense - budget) > 0 ? (expense - budget) : 0));
   }
 
   ///////////////////////////////////////////////////////////////
 
-  static Color getColorFromColorCode(String code){
+  static Color getColorFromColorCode(String code) {
     return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
 
   static String formatNumber(double number) {
     NumberFormat formatPattern;
-    if(number == 0) {
+    if (number == 0) {
       formatPattern = NumberFormat("0.00", "en_US");
     } else {
       formatPattern = NumberFormat("###.00", "en_US");
@@ -54,4 +56,8 @@ class Utils {
     return formatter.format(dateTimeObj);
   }
 
+  static void formattedMoney(num amount, String code) {
+    Money money = Money.fromNum(amount, code: code);
+    debugPrint(money.toString());
+  }
 }

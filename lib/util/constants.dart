@@ -1,5 +1,6 @@
 class Constants {
 
+  static const List<String> currencyList = ["INR", "USD", "EUR", "JPY"];
   /* Color Constants */
   static const String screenBackgroundColor = "#D3D3DB";
   static const String appBarBackgroundColor = "#FFFFFF";
@@ -15,7 +16,6 @@ class Constants {
   static const String defaultThemeColor = "#5730E3";
   static const String defaultThemeAppBarTitleColor = "#FFFFFF";
   static const String defaultHomePageMainContainerColor = "#FFFFFF";
-
 
   static const String appName = "FinApp";
 
@@ -56,7 +56,6 @@ class Constants {
   static const String addCategoriesScreenAppBarTitle = "Add Category";
   static const String editCategoriesScreenAppBarTitle = "Edit Category";
 
-
   /** Add Account Form Constants **/
 
   static const String addAccountFormAccountName = "ACCOUNT_NAME";
@@ -70,7 +69,6 @@ class Constants {
   static const String creditLimitLabel = "Credit Limit";
   static const String addAccountFormCreditLimitRequired = "Enter credit limit";
 
-
   static const String addAccountFormBillingDay = "BILLING_DAY";
   static const String billingDayLabel = "Billing Day";
 
@@ -78,7 +76,7 @@ class Constants {
   static const String gracePeriodLabel = "Grace Period";
 
   static const String addAccountFormAvailableBalance = "AVAILABLE_BALANCE";
-  static const String availableBalanceLabel = "Available balance";
+  static const String availableBalanceLabel = "Available Balance";
 
   static const String addAccountFormDescription = "DESCRIPTION";
   static const String descriptionLabel = "Description";
@@ -99,7 +97,6 @@ class Constants {
 
   static const String detailCategoryScreenAppBarTitle = "Category Detail";
 
-
   static const String noOptionFound = "No item found";
   static const String searchHere = "Search here...";
   static const String enterValidNumber = "Enter valid number";
@@ -119,7 +116,8 @@ class Constants {
   static const String areYouSureToResumeAgain = "Are you sure to resume again?";
   static const String yes = "Yes";
   static const String no = "No";
-  static const accountCanNotBeDeletedAsTransactionExists = "Account can not be deleted as transaction exists with this account. However, you can disable it.";
+  static const accountCanNotBeDeletedAsTransactionExists =
+      "Account can not be deleted as transaction exists with this account. However, you can disable it.";
   static const categoryCanNotBeDeletedAsHavingChildCategory = "Category can not be deleted as it is having child category";
 
   static const String noAccountFound = "No Account Details Found";
@@ -193,10 +191,7 @@ class Constants {
     "30 days"
   ];
 
-  static const Map<String, String> categoryType = {
-    "Income Category": "I",
-    "Expense Category": "E"
-  };
+  static const Map<String, String> categoryType = {"Income Category": "I", "Expense Category": "E"};
 
   static const String accountNameAlreadyExists = "Account with same name already exists";
   static const String categoryWithSameNameAlreadyExists = "Category with same name already exists";
@@ -275,4 +270,5 @@ class Constants {
   static const String reminderTime = "8:00 PM";
   static const String currency = "INR";
   static const String currencyCode = "₹";
+  static const String subCategory = "Sub Categories";
 }

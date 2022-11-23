@@ -21,12 +21,10 @@ class AddIncomeTransactionScreen extends StatefulWidget {
   const AddIncomeTransactionScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddIncomeTransactionScreen> createState() =>
-      _AddIncomeTransactionScreenState();
+  State<AddIncomeTransactionScreen> createState() => _AddIncomeTransactionScreenState();
 }
 
-class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
-    with RouteAware {
+class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen> with RouteAware {
   final CategoryService _categoryService = CategoryService();
   final TransactionService _transactionService = TransactionService();
   final AccountService _accountService = AccountService();
@@ -39,8 +37,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           title: const Text(
             Constants.addIncomeScreenAppBarTitle,
@@ -72,14 +69,12 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                           initialValue: DateTime.now(),
                           inputType: InputType.both,
                           decoration: const InputDecoration(
-                            labelText: Constants
-                                .addTransactionScreenTransactionDateLabel,
+                            labelText: Constants.addTransactionScreenTransactionDateLabel,
                             border: OutlineInputBorder(),
                           ),
                           initialTime: const TimeOfDay(hour: 8, minute: 0),
                           valueTransformer: (value) {
-                            final DateFormat formatter =
-                                DateFormat(Constants.dateTimeFormat);
+                            final DateFormat formatter = DateFormat(Constants.dateTimeFormat);
                             return formatter.format(value!);
                           },
                           // locale: const Locale.fromSubtags(languageCode: 'fr'),
@@ -91,15 +86,13 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                           initialValue: null,
                           name: Constants.addTransactionScreenToAccount,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.toAccountLabel,
+                            labelText: Constants.toAccountLabel,
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.arrow_drop_down),
                           ),
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.selectAccount),
+                              FormBuilderValidators.required(errorText: Constants.selectAccount),
                             ],
                           ),
                           readOnly: true,
@@ -117,8 +110,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                           initialValue: null,
                           name: Constants.addTransactionScreenCategory,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addTransactionScreenCategoryLabel,
+                            labelText: Constants.addTransactionScreenCategoryLabel,
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.arrow_drop_down),
                           ),
@@ -128,8 +120,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                           },
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.selectCategory),
+                              FormBuilderValidators.required(errorText: Constants.selectCategory),
                             ],
                           ),
                           valueTransformer: (value) {
@@ -143,23 +134,16 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                           name: Constants.finalAmount,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            _formKey
-                                .currentState
-                                ?.fields[
-                                    Constants.finalAmount]
-                                ?.validate();
+                            _formKey.currentState?.fields[Constants.finalAmount]?.validate();
                           },
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addTransactionScreenFinalAmountLabel,
+                            labelText: Constants.addTransactionScreenFinalAmountLabel,
                             border: OutlineInputBorder(),
                           ),
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.enterFinalAmount),
-                              FormBuilderValidators.numeric(
-                                  errorText: Constants.enterValidAmount)
+                              FormBuilderValidators.required(errorText: Constants.enterFinalAmount),
+                              FormBuilderValidators.numeric(errorText: Constants.enterValidAmount)
                             ],
                           ),
                         ),
@@ -169,8 +153,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                         FormBuilderTextField(
                           name: Constants.addTransactionScreenDescription,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addTransactionScreenDetailsLabel,
+                            labelText: Constants.addTransactionScreenDetailsLabel,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -204,9 +187,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
 
   Future<void> _openAccountSelectionDialog() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    await _accountService
-        .getAllAccounts(false)
-        .then((accounts) => openAccountSelectionScreen(accounts));
+    await _accountService.getAllAccounts(false).then((accounts) => openAccountSelectionScreen(accounts));
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
@@ -235,9 +216,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
       onApplyButtonClick: (list) {
         setState(
           () {
-            _formKey
-                .currentState!.fields[Constants.addTransactionScreenToAccount]
-                ?.didChange(list?.first.accountName);
+            _formKey.currentState!.fields[Constants.addTransactionScreenToAccount]?.didChange(list?.first.accountName);
             _accountId = list!.first.id!;
           },
         );
@@ -253,18 +232,14 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
               ),
-              tileColor:
-                  Utils.getColorFromColorCode(Constants.lisListTileColor),
+              tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
               leading: CircleAvatar(
                 child: _getAccountTypeIcon(account),
               ),
-              title: Text(account.accountName,
-                  style: const TextStyle(fontWeight: FontWeight.w500)),
+              title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: Text(
                 Utils.formatNumber(account.availableBalance),
-                style: TextStyle(
-                    color: _getBalanceColor(account),
-                    fontWeight: FontWeight.w600),
+                style: TextStyle(color: _getBalanceColor(account), fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -279,15 +254,19 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
 
   SvgIcon _getAccountTypeIcon(Account account) {
     return account.isCreditCard == 1
-        ? const SvgIcon(AllScreenIcon.creditCard, color: Colors.white,)
-        : const SvgIcon(AllScreenIcon.bank, color: Colors.white,);
+        ? const SvgIcon(
+            AllScreenIcon.creditCard,
+            color: Colors.white,
+          )
+        : const SvgIcon(
+            AllScreenIcon.bank,
+            color: Colors.white,
+          );
   }
 
   Future<void> _openCategorySelectionDialog() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    await _categoryService
-        .getCategoriesByType(Constants.incomeCategoryCode)
-        .then((categories) => openCategorySelectionScreen(categories));
+    await _categoryService.getCategoriesByType(Constants.incomeCategoryCode).then((categories) => openCategorySelectionScreen(categories));
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
@@ -308,9 +287,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
       ),
       // enableOnlySingleSelection: true,
       onItemSearch: (category, query) {
-        return category.categoryName!
-            .toLowerCase()
-            .contains(query.toLowerCase());
+        return category.categoryName!.toLowerCase().contains(query.toLowerCase());
       },
       emptySearchChild: const Center(child: Text(Constants.noCategoryFound)),
       searchFieldHint: Constants.searchHere,
@@ -318,9 +295,7 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
       onApplyButtonClick: (list) {
         setState(
           () {
-            _formKey
-                .currentState!.fields[Constants.addTransactionScreenCategory]
-                ?.didChange(list?.first.categoryName);
+            _formKey.currentState!.fields[Constants.addTransactionScreenCategory]?.didChange(list?.first.categoryName);
             _categoryId = list!.first.id!;
           },
         );
@@ -336,13 +311,11 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
               ),
-              tileColor:
-                  Utils.getColorFromColorCode(Constants.lisListTileColor),
+              tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
               leading: CircleAvatar(
                 child: _getSVGIconOrLetter(category),
               ),
-              title: Text(category.categoryName,
-                  style: const TextStyle(fontWeight: FontWeight.w500)),
+              title: Text(category.categoryName, style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: _getChildCountBadge(category),
             ),
           ),
@@ -350,8 +323,14 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
       },
     );
   }
+
   Widget _getSVGIconOrLetter(Category category) {
-    return category.iconId == 0 ? Text(category.categoryName.substring(0, 1)) : SvgIcon(CategoryIcon.icon[category.iconId]!, color: Colors.white,);
+    return category.iconId == 0
+        ? Text(category.categoryName.substring(0, 1))
+        : SvgIcon(
+            CategoryIcon.icon[category.iconId]!,
+            color: Colors.white,
+          );
   }
 
   Widget _getChildCountBadge(Category category) {
@@ -372,50 +351,28 @@ class _AddIncomeTransactionScreenState extends State<AddIncomeTransactionScreen>
     final navigator = Navigator.of(context);
     int? transactionId;
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      await _transactionService
-          .createTransaction(_formKey.currentState?.value, Constants.incomeCategoryCode)
-          .then(
+      await _transactionService.createTransaction(_formKey.currentState?.value, Constants.incomeCategoryCode).then(
         (value) async {
           transactionId = value;
           await _accountService.getAccountById(_accountId!).then(
             (accountList) async {
               Account account = accountList.first;
-              account.availableBalance = account.availableBalance +
-                  double.parse(_formKey
-                      .currentState
-                      ?.fields[Constants.finalAmount]
-                      ?.value);
-              account.creditedAmount = account.creditedAmount +
-                  double.parse(_formKey
-                      .currentState
-                      ?.fields[Constants.finalAmount]
-                      ?.value);
+              account.availableBalance = account.availableBalance + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
+              account.creditedAmount = account.creditedAmount + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
               account.inTransaction = account.inTransaction + 1;
-              await _accountService
-                  .updateAccountForInTransaction(account.toMap(),
-                      account.isCreditCard == 1 ? true : false, account.id!)
-                  .then(
+              await _accountService.updateAccountForInTransaction(account.toMap(), account.isCreditCard == 1 ? true : false, account.id!).then(
                 (value) async {
                   await _categoryService.getCategoryById(_categoryId!).then(
                     (categoryList) async {
                       Category category = categoryList.first;
-                      category.creditedAmount = category.creditedAmount +
-                          double.parse(_formKey
-                              .currentState
-                              ?.fields[
-                                  Constants.finalAmount]
-                              ?.value);
+                      category.creditedAmount = category.creditedAmount + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
                       category.inTransaction = category.inTransaction + 1;
-                      await _categoryService
-                          .updateCategoryForInTransaction(
-                              category.toMap(), category.id!)
-                          .then(
+                      await _categoryService.updateCategoryForInTransaction(category.toMap(), category.id!).then(
                         (value) {
                           navigator.pop();
                           navigator.push(
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  TransactionDetailScreen(transactionId!),
+                              builder: (context) => TransactionDetailScreen(transactionId!),
                             ),
                           );
                         },

@@ -108,7 +108,6 @@ class DatabaseHelper {
         IS_DELETED INTEGER DEFAULT 0
       )""";
 
-
   static const String _config = """ CREATE TABLE CONFIG (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         CONFIG_KEY TEXT NOT NULL,
@@ -120,8 +119,6 @@ class DatabaseHelper {
       ) SELECT 'CURRENCY', 'INR (₹)' UNION ALL
       SELECT 'IS_REMINDER_SET', '0' UNION ALL
       SELECT 'REMINDER_TIME', '20:00 PM' """;
-
-
 
   DatabaseHelper._createInstance();
 

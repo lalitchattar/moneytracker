@@ -26,8 +26,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           title: const Text(
             Constants.addAccountScreenAppBarTitle,
@@ -60,19 +59,14 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
                             border: OutlineInputBorder(),
                           ),
                           validator: FormBuilderValidators.compose(
-                            [
-                              FormBuilderValidators.required(
-                                  errorText: Constants
-                                      .addAccountFormAccountNameRequired)
-                            ],
+                            [FormBuilderValidators.required(errorText: Constants.addAccountFormAccountNameRequired)],
                           ),
                         ),
                         FormBuilderSwitch(
                           name: Constants.addAccountFormCreditCardName,
                           title: const Text(
                             Constants.addAccountFormCreditCardLabel,
-                            style: TextStyle(
-                                fontSize: 15.0, color: Colors.black54),
+                            style: TextStyle(fontSize: 15.0, color: Colors.black54),
                           ),
                           decoration: const InputDecoration(
                             border: InputBorder.none,
@@ -99,11 +93,8 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
                             keyboardType: TextInputType.number,
                             validator: FormBuilderValidators.compose(
                               [
-                                FormBuilderValidators.required(
-                                    errorText: Constants
-                                        .addAccountFormCreditLimitRequired),
-                                FormBuilderValidators.numeric(
-                                    errorText: Constants.enterValidNumber)
+                                FormBuilderValidators.required(errorText: Constants.addAccountFormCreditLimitRequired),
+                                FormBuilderValidators.numeric(errorText: Constants.enterValidNumber)
                               ],
                             ),
                           ),
@@ -128,15 +119,12 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
                                 color: Colors.grey,
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1.0),
+                                borderSide: BorderSide(color: Colors.grey, width: 1.0),
                               ),
                             ),
                             onTap: () async {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              await _openDropdownOptionScreen(
-                                  Constants.billingDaysOption,
-                                  Constants.addAccountFormBillingDay);
+                              await _openDropdownOptionScreen(Constants.billingDaysOption, Constants.addAccountFormBillingDay);
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                           ),
@@ -161,22 +149,17 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
                                 color: Colors.grey,
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 1.0),
+                                borderSide: BorderSide(color: Colors.grey, width: 1.0),
                               ),
                             ),
                             onTap: () async {
                               if (_getBillingDayValue() == null) {
-                                _formKey.currentState
-                                    ?.fields[Constants.addAccountFormBillingDay]
-                                    ?.invalidate(Constants.selectBillingDay);
+                                _formKey.currentState?.fields[Constants.addAccountFormBillingDay]?.invalidate(Constants.selectBillingDay);
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 return;
                               }
                               FocusManager.instance.primaryFocus?.unfocus();
-                              await _openDropdownOptionScreen(
-                                  Constants.gracePeriodOption,
-                                  Constants.addAccountFormGracePeriod);
+                              await _openDropdownOptionScreen(Constants.gracePeriodOption, Constants.addAccountFormGracePeriod);
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                           ),
@@ -195,10 +178,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
                             border: OutlineInputBorder(),
                           ),
                           validator: FormBuilderValidators.compose(
-                            [
-                              FormBuilderValidators.numeric(
-                                  errorText: Constants.enterValidNumber)
-                            ],
+                            [FormBuilderValidators.numeric(errorText: Constants.enterValidNumber)],
                           ),
                           valueTransformer: (value) {
                             return _getAvailableBalanceValue(value);
@@ -242,8 +222,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
     );
   }
 
-  Future<void> _openDropdownOptionScreen(
-      List<String> options, String dropdownName) async {
+  Future<void> _openDropdownOptionScreen(List<String> options, String dropdownName) async {
     await FilterListDelegate.show<String>(
       context: context,
       list: options,
@@ -260,11 +239,9 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
         setState(
           () {
             if (dropdownName == Constants.addAccountFormBillingDay) {
-              _formKey.currentState!.fields[Constants.addAccountFormBillingDay]
-                  ?.didChange(list?.first);
+              _formKey.currentState!.fields[Constants.addAccountFormBillingDay]?.didChange(list?.first);
             } else {
-              _formKey.currentState!.fields[Constants.addAccountFormGracePeriod]
-                  ?.didChange(list?.first);
+              _formKey.currentState!.fields[Constants.addAccountFormGracePeriod]?.didChange(list?.first);
             }
           },
         );
@@ -275,11 +252,8 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
           child: Card(
             elevation: 0,
             child: ListTile(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  side: const BorderSide(color: Colors.grey)),
-              tileColor:
-                  Utils.getColorFromColorCode(Constants.lisListTileColor),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5), side: const BorderSide(color: Colors.grey)),
+              tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
               title: Text(option),
             ),
           ),
@@ -291,16 +265,12 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
   void _saveAccount() {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       debugPrint(_formKey.currentState?.value.toString());
-      _accountService
-          .getAccountByName(_formKey
-              .currentState?.fields[Constants.addAccountFormAccountName]?.value)
-          .then(
+      _accountService.getAccountByName(_formKey.currentState?.fields[Constants.addAccountFormAccountName]?.value).then(
         (accountList) {
           if (accountList.isNotEmpty) {
             showDialog(
               context: context,
-              builder: (context) =>
-                  const ErrorDialogWidget(Constants.accountNameAlreadyExists),
+              builder: (context) => const ErrorDialogWidget(Constants.accountNameAlreadyExists),
             );
           } else {
             _accountService.createAccount(_formKey.currentState?.value).then(
@@ -324,8 +294,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
   }
 
   String? _getBillingDayValue() {
-    return _formKey
-        .currentState?.fields[Constants.addAccountFormBillingDay]?.value;
+    return _formKey.currentState?.fields[Constants.addAccountFormBillingDay]?.value;
   }
 
   void _resetCreditCardFields() {
@@ -336,8 +305,7 @@ class _AddAccountScreenState extends State<AddAccountScreen> with RouteAware {
 
   String? _getAvailableBalanceValue(String? value) {
     if ((value == null) && _isCreditCard) {
-      return _formKey
-          .currentState!.fields[Constants.addAccountFormCreditLimit]?.value;
+      return _formKey.currentState!.fields[Constants.addAccountFormCreditLimit]?.value;
     } else if (value == null && !_isCreditCard) {
       return "0.0";
     } else {

@@ -19,8 +19,7 @@ class EditCategoryScreen extends StatefulWidget {
   State<EditCategoryScreen> createState() => _EditCategoryScreenState();
 }
 
-class _EditCategoryScreenState extends State<EditCategoryScreen>
-    with RouteAware {
+class _EditCategoryScreenState extends State<EditCategoryScreen> with RouteAware {
   final CategoryService _categoryService = CategoryService();
   final _formKey = GlobalKey<FormBuilderState>();
   int _parentCategoryIndex = 0;
@@ -29,8 +28,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+          backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
           appBar: AppBar(
             title: const Text(
               Constants.editCategoriesScreenAppBarTitle,
@@ -45,14 +43,12 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
           ),
           body: FutureBuilder<List<Category>>(
             future: _categoryService.getCategoryByIdWithParent(widget.id),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
               if (snapshot.hasData) {
                 Category? category = snapshot.data?.first;
                 return SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15.0),
@@ -60,24 +56,18 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
                           key: _formKey,
                           skipDisabled: true,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Column(
                               children: [
                                 FormBuilderTextField(
                                   name: Constants.addCategoryFormCategoryName,
                                   initialValue: category!.categoryName,
                                   decoration: const InputDecoration(
-                                    labelText: Constants
-                                        .categoryNameLabel,
+                                    labelText: Constants.categoryNameLabel,
                                     border: OutlineInputBorder(),
                                   ),
                                   validator: FormBuilderValidators.compose(
-                                    [
-                                      FormBuilderValidators.required(
-                                          errorText: Constants
-                                              .addCategoryFormCategoryNameRequired)
-                                    ],
+                                    [FormBuilderValidators.required(errorText: Constants.addCategoryFormCategoryNameRequired)],
                                   ),
                                 ),
                                 const SizedBox(
@@ -85,18 +75,15 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
                                 ),
                                 FormBuilderDropdown(
                                   name: Constants.addCategoryFormCategoryType,
-                                  initialValue: _getCategoryOptionByTypeCode(
-                                      category.categoryType),
+                                  initialValue: _getCategoryOptionByTypeCode(category.categoryType),
                                   decoration: const InputDecoration(
-                                    labelText: Constants
-                                        .addCategoryFormCategoryTypeNameLabel,
+                                    labelText: Constants.addCategoryFormCategoryTypeNameLabel,
                                     border: OutlineInputBorder(),
                                   ),
                                   items: Constants.categoryType.keys
                                       .map(
                                         (billingDay) => DropdownMenuItem(
-                                          alignment:
-                                              AlignmentDirectional.centerStart,
+                                          alignment: AlignmentDirectional.centerStart,
                                           value: billingDay,
                                           child: Text(billingDay),
                                         ),
@@ -106,11 +93,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
                                     return _getCategoryTypeCode(value!);
                                   },
                                   validator: FormBuilderValidators.compose(
-                                    [
-                                      FormBuilderValidators.required(
-                                          errorText:
-                                              Constants.selectCategoryType)
-                                    ],
+                                    [FormBuilderValidators.required(errorText: Constants.selectCategoryType)],
                                   ),
                                   onChanged: (value) {
                                     _validateCategoryTypeAndResetParentCategory();
@@ -123,16 +106,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
                                   name: Constants.addCategoryFormParentCategory,
                                   initialValue: category.parentCategoryName,
                                   decoration: const InputDecoration(
-                                    labelText: Constants
-                                        .addCategoryFormParentCategoryNameLabel,
+                                    labelText: Constants.addCategoryFormParentCategoryNameLabel,
                                     border: OutlineInputBorder(),
                                     suffixIcon: Icon(
                                       Icons.arrow_drop_down,
                                       color: Colors.grey,
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 1.0),
+                                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
                                     ),
                                   ),
                                   readOnly: true,
@@ -189,21 +170,15 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
 
   Future<void> _updateCategory() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      _categoryService
-          .getCategoryByName(_formKey.currentState
-              ?.fields[Constants.addCategoryFormCategoryName]?.value)
-          .then(
+      _categoryService.getCategoryByName(_formKey.currentState?.fields[Constants.addCategoryFormCategoryName]?.value).then(
         (categoryList) {
           if (categoryList.isNotEmpty && widget.id != categoryList[0].id) {
             showDialog(
               context: context,
-              builder: (context) => const ErrorDialogWidget(
-                  Constants.categoryWithSameNameAlreadyExists),
+              builder: (context) => const ErrorDialogWidget(Constants.categoryWithSameNameAlreadyExists),
             );
           } else {
-            _categoryService
-                .updateCategory(_formKey.currentState?.value, widget.id)
-                .then(
+            _categoryService.updateCategory(_formKey.currentState?.value, widget.id).then(
                   (value) => Navigator.pop(
                     context,
                     MaterialPageRoute(
@@ -228,23 +203,17 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
   }
 
   void _validateCategoryTypeAndResetParentCategory() {
-    _formKey.currentState?.fields[Constants.addCategoryFormCategoryType]
-        ?.validate();
-    _formKey.currentState?.fields[Constants.addCategoryFormParentCategory]
-        ?.didChange(null);
+    _formKey.currentState?.fields[Constants.addCategoryFormCategoryType]?.validate();
+    _formKey.currentState?.fields[Constants.addCategoryFormParentCategory]?.didChange(null);
   }
 
   void validateCategoryTypeOrOpenParentCategoryScreen() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    if (_formKey.currentState?.fields[Constants.addCategoryFormCategoryType]
-            ?.value ==
-        null) {
-      _formKey.currentState?.fields[Constants.addCategoryFormCategoryType]
-          ?.validate();
+    if (_formKey.currentState?.fields[Constants.addCategoryFormCategoryType]?.value == null) {
+      _formKey.currentState?.fields[Constants.addCategoryFormCategoryType]?.validate();
     } else {
       await _categoryService
-          .getCategoriesByType(Constants.categoryType[_formKey.currentState!
-              .fields[Constants.addCategoryFormCategoryType]?.value]!)
+          .getCategoriesByType(Constants.categoryType[_formKey.currentState!.fields[Constants.addCategoryFormCategoryType]?.value]!)
           .then((categories) => openParentCategoryScreen(categories));
       FocusManager.instance.primaryFocus?.unfocus();
     }
@@ -267,9 +236,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
       ),
       // enableOnlySingleSelection: true,
       onItemSearch: (category, query) {
-        return category.categoryName!
-            .toLowerCase()
-            .contains(query.toLowerCase());
+        return category.categoryName!.toLowerCase().contains(query.toLowerCase());
       },
       emptySearchChild: const Center(child: Text(Constants.noCategoryFound)),
       searchFieldHint: Constants.searchHere,
@@ -277,9 +244,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
       onApplyButtonClick: (list) {
         setState(
           () {
-            _formKey
-                .currentState!.fields[Constants.addCategoryFormParentCategory]
-                ?.didChange(list?.first.categoryName);
+            _formKey.currentState!.fields[Constants.addCategoryFormParentCategory]?.didChange(list?.first.categoryName);
             _parentCategoryIndex = list!.first.id!;
           },
         );
@@ -294,16 +259,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen>
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
               ),
-              tileColor: Utils.getColorFromColorCode(
-                  Constants.lisListTileColor),
+              tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
               leading: CircleAvatar(
                 child: Text(
                   category.categoryName.substring(0, 1).toUpperCase(),
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
               ),
-              title: Text(category.categoryName,
-                  style: const TextStyle(fontWeight: FontWeight.w500)),
+              title: Text(category.categoryName, style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: _getChildCountBadge(category),
             ),
           ),

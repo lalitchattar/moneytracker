@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:moneytracker/util/utils.dart';
 
 class ThemeUtil {
-
   //Theming
   static const String defaultThemeColor = "#5730E3";
   static const String defaultThemeAppBarTextColor = "#FFFFFF";
@@ -26,5 +25,4 @@ class ThemeUtil {
   static Color getDefaultThemeAppBarTextColor() {
     return Utils.getColorFromColorCode(defaultThemeAppBarTextColor);
   }
-
 }

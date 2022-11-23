@@ -21,8 +21,7 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen> {
   static const _pageSize = 20;
 
-  final PagingController<int, Transactions> _pagingController =
-      PagingController(firstPageKey: 0);
+  final PagingController<int, Transactions> _pagingController = PagingController(firstPageKey: 0);
 
   final TransactionService _transactionService = TransactionService();
 
@@ -35,8 +34,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   }
 
   Future<void> _fetchTransactions(int offset) async {
-    final newItems =
-        await _transactionService.getTransactionsPageWise(_pageSize, offset);
+    final newItems = await _transactionService.getTransactionsPageWise(_pageSize, offset);
 
     final isLastPage = newItems.length < _pageSize;
     if (isLastPage) {
@@ -51,8 +49,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           title: const Text(
             Constants.listTransactionScreenAppBarTitle,
@@ -71,11 +68,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 itemBuilder: (context, transaction, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  TransactionDetailScreen(transaction.id!)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TransactionDetailScreen(transaction.id!)));
                     },
                     child: Card(
                       child: ListTile(
@@ -90,8 +83,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               ),
                               Text(
                                 transaction.transactionCategoryName!,
-                                style: const TextStyle(
-                                    fontSize: 12.0, fontWeight: FontWeight.w500),
+                                style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500),
                               )
                             ],
                           ),
@@ -99,9 +91,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         title: _getTransactionTitle(transaction),
                         trailing: Text(
                           Utils.formatNumber(transaction.finalAmount),
-                          style: TextStyle(
-                              color: _getBalanceColor(transaction),
-                              fontWeight: FontWeight.w600),
+                          style: TextStyle(color: _getBalanceColor(transaction), fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -116,12 +106,13 @@ class _TransactionScreenState extends State<TransactionScreen> {
   }
 
   MaterialColor _getBalanceColor(Transactions transaction) {
-    if(transaction.transactionType == "T") {
+    if (transaction.transactionType == "T") {
       return generateMaterialColor(color: ThemeUtil.getDefaultThemeColor());
-    } else if(transaction.transactionType == "I") {
+    } else if (transaction.transactionType == "I") {
       return Colors.green;
     } else {
-      return Colors.red;;
+      return Colors.red;
+      ;
     }
   }
 
@@ -137,16 +128,27 @@ class _TransactionScreenState extends State<TransactionScreen> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(Constants.from + transaction.fromAccountName.toString(), style: const TextStyle(
-              fontSize: 15.0, fontWeight: FontWeight.w500),),
-          const SizedBox(height: 10,),
-          Text(Constants.to + transaction.toAccountName.toString(), style: const TextStyle(
-              fontSize: 15.0, fontWeight: FontWeight.w500),),
+          Text(
+            Constants.from + transaction.fromAccountName.toString(),
+            style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            Constants.to + transaction.toAccountName.toString(),
+            style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+          ),
         ],
       );
     } else {
-      return Padding(padding: const EdgeInsets.only(left: 5.0), child: Text(transaction.fromAccountName!.isEmpty ? transaction.toAccountName! : transaction.fromAccountName!, style: const TextStyle(
-          fontSize: 15.0, fontWeight: FontWeight.w500),),);
+      return Padding(
+        padding: const EdgeInsets.only(left: 5.0),
+        child: Text(
+          transaction.fromAccountName!.isEmpty ? transaction.toAccountName! : transaction.fromAccountName!,
+          style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
+        ),
+      );
     }
   }
 

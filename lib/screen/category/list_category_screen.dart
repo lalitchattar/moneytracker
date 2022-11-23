@@ -25,8 +25,7 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           title: const Text(
             Constants.listCategoriesScreenAppBarTitle,
@@ -41,8 +40,7 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
         ),
         body: FutureBuilder<List<Category>>(
           future: _categoryService.getAllCategories(true),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
             if (snapshot.hasData) {
               return Padding(
                 padding: const EdgeInsets.only(top: 5.0),
@@ -68,8 +66,6 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
                             ),
                             title: Text(
                               category.categoryName,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w500),
                             ),
                             trailing: _getChildCountBadge(category),
                           ),
@@ -77,9 +73,7 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    _getDetailScreenBasedOnSuspendStatus(
-                                        category),
+                                builder: (context) => _getDetailScreenBasedOnSuspendStatus(category),
                               ),
                             ).then(
                               (value) => setState(
@@ -135,12 +129,15 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
   }
 
   Widget _getDetailScreenBasedOnSuspendStatus(Category account) {
-    return account.isSuspended == 1
-        ? SuspendDetailCategoryScreen(account.id)
-        : DetailCategoryScreen(account.id);
+    return account.isSuspended == 1 ? SuspendDetailCategoryScreen(account.id) : DetailCategoryScreen(account.id);
   }
 
   Widget _getSVGIconOrLetter(Category category) {
-    return category.iconId == 0 ? Text(category.categoryName.substring(0, 1)) : SvgIcon(CategoryIcon.icon[category.iconId]!, color: Colors.white,);
+    return category.iconId == 0
+        ? Text(category.categoryName.substring(0, 1))
+        : SvgIcon(
+            CategoryIcon.icon[category.iconId]!,
+            color: Colors.white,
+          );
   }
 }

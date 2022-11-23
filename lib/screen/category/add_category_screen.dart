@@ -29,8 +29,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           title: const Text(
             Constants.addCategoriesScreenAppBarTitle,
@@ -59,16 +58,11 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                         FormBuilderTextField(
                           name: Constants.addCategoryFormCategoryName,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.categoryNameLabel,
+                            labelText: Constants.categoryNameLabel,
                             border: OutlineInputBorder(),
                           ),
                           validator: FormBuilderValidators.compose(
-                            [
-                              FormBuilderValidators.required(
-                                  errorText: Constants
-                                      .addCategoryFormCategoryNameRequired)
-                            ],
+                            [FormBuilderValidators.required(errorText: Constants.addCategoryFormCategoryNameRequired)],
                           ),
                         ),
                         const SizedBox(
@@ -77,8 +71,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                         FormBuilderDropdown(
                           name: Constants.addCategoryFormCategoryType,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addCategoryFormCategoryTypeNameLabel,
+                            labelText: Constants.addCategoryFormCategoryTypeNameLabel,
                             border: OutlineInputBorder(),
                           ),
                           items: Constants.categoryType.keys
@@ -94,10 +87,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                             return _getCategoryTypeCode(value!);
                           },
                           validator: FormBuilderValidators.compose(
-                            [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.selectCategoryType)
-                            ],
+                            [FormBuilderValidators.required(errorText: Constants.selectCategoryType)],
                           ),
                           onChanged: (value) {
                             _validateCategoryTypeAndResetParentCategory();
@@ -109,16 +99,14 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                         FormBuilderTextField(
                           name: Constants.addCategoryFormParentCategory,
                           decoration: const InputDecoration(
-                            labelText: Constants
-                                .addCategoryFormParentCategoryNameLabel,
+                            labelText: Constants.addCategoryFormParentCategoryNameLabel,
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(
                               Icons.arrow_drop_down,
                               color: Colors.grey,
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.grey, width: 1.0),
+                              borderSide: BorderSide(color: Colors.grey, width: 1.0),
                             ),
                           ),
                           readOnly: true,
@@ -178,23 +166,17 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
   }
 
   void _validateCategoryTypeAndResetParentCategory() {
-    _formKey.currentState?.fields[Constants.addCategoryFormCategoryType]
-        ?.validate();
-    _formKey.currentState?.fields[Constants.addCategoryFormParentCategory]
-        ?.didChange(null);
+    _formKey.currentState?.fields[Constants.addCategoryFormCategoryType]?.validate();
+    _formKey.currentState?.fields[Constants.addCategoryFormParentCategory]?.didChange(null);
   }
 
   void validateCategoryTypeOrOpenParentCategoryScreen() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    if (_formKey.currentState?.fields[Constants.addCategoryFormCategoryType]
-            ?.value ==
-        null) {
-      _formKey.currentState?.fields[Constants.addCategoryFormCategoryType]
-          ?.validate();
+    if (_formKey.currentState?.fields[Constants.addCategoryFormCategoryType]?.value == null) {
+      _formKey.currentState?.fields[Constants.addCategoryFormCategoryType]?.validate();
     } else {
       await _categoryService
-          .getCategoriesByType(Constants.categoryType[_formKey.currentState!
-              .fields[Constants.addCategoryFormCategoryType]?.value]!)
+          .getCategoriesByType(Constants.categoryType[_formKey.currentState!.fields[Constants.addCategoryFormCategoryType]?.value]!)
           .then((categories) => openParentCategoryScreen(categories));
       FocusManager.instance.primaryFocus?.unfocus();
     }
@@ -217,9 +199,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
       ),
       // enableOnlySingleSelection: true,
       onItemSearch: (category, query) {
-        return category.categoryName!
-            .toLowerCase()
-            .contains(query.toLowerCase());
+        return category.categoryName!.toLowerCase().contains(query.toLowerCase());
       },
       emptySearchChild: const Center(child: Text(Constants.noCategoryFound)),
       searchFieldHint: Constants.searchHere,
@@ -227,9 +207,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
       onApplyButtonClick: (list) {
         setState(
           () {
-            _formKey
-                .currentState!.fields[Constants.addCategoryFormParentCategory]
-                ?.didChange(list?.first.categoryName);
+            _formKey.currentState!.fields[Constants.addCategoryFormParentCategory]?.didChange(list?.first.categoryName);
             _parentCategoryIndex = list!.first.id!;
           },
         );
@@ -245,13 +223,9 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(color: Colors.grey),
               ),
-              tileColor:
-                  Utils.getColorFromColorCode(Constants.lisListTileColor),
-              leading: CircleAvatar(
-                child: _getSVGIconOrLetter(category)
-              ),
-              title: Text(category.categoryName,
-                  style: const TextStyle(fontWeight: FontWeight.w500)),
+              tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
+              leading: CircleAvatar(child: _getSVGIconOrLetter(category)),
+              title: Text(category.categoryName, style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: _getChildCountBadge(category),
             ),
           ),
@@ -261,7 +235,12 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
   }
 
   Widget _getSVGIconOrLetter(Category category) {
-    return category.iconId == 0 ? Text(category.categoryName.substring(0, 1)) : SvgIcon(CategoryIcon.icon[category.iconId]!, color: Colors.white,);
+    return category.iconId == 0
+        ? Text(category.categoryName.substring(0, 1))
+        : SvgIcon(
+            CategoryIcon.icon[category.iconId]!,
+            color: Colors.white,
+          );
   }
 
   Widget _getChildCountBadge(Category category) {
@@ -280,16 +259,12 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> with RouteAware {
 
   void _saveCategory() {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      _categoryService
-          .getCategoryByName(_formKey.currentState
-              ?.fields[Constants.addCategoryFormCategoryName]?.value)
-          .then(
+      _categoryService.getCategoryByName(_formKey.currentState?.fields[Constants.addCategoryFormCategoryName]?.value).then(
         (accountList) {
           if (accountList.isNotEmpty) {
             showDialog(
               context: context,
-              builder: (context) => const ErrorDialogWidget(
-                  Constants.categoryWithSameNameAlreadyExists),
+              builder: (context) => const ErrorDialogWidget(Constants.categoryWithSameNameAlreadyExists),
             );
           } else {
             _categoryService.createCategory(_formKey.currentState?.value).then(

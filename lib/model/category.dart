@@ -16,7 +16,6 @@ class Category {
   late int childCount;
   late String? parentCategoryName;
 
-
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{};
     map["CATEGORY_NAME"] = categoryName;

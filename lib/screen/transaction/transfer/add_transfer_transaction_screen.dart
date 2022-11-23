@@ -16,12 +16,10 @@ class AddTransferTransactionScreen extends StatefulWidget {
   const AddTransferTransactionScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddTransferTransactionScreen> createState() =>
-      _AddTransferTransactionScreenState();
+  State<AddTransferTransactionScreen> createState() => _AddTransferTransactionScreenState();
 }
 
-class _AddTransferTransactionScreenState extends State<AddTransferTransactionScreen>
-    with RouteAware {
+class _AddTransferTransactionScreenState extends State<AddTransferTransactionScreen> with RouteAware {
   final TransactionService _transactionService = TransactionService();
   final AccountService _accountService = AccountService();
 
@@ -33,8 +31,7 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           title: const Text(
             Constants.addIncomeScreenAppBarTitle,
@@ -66,14 +63,12 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                           initialValue: DateTime.now(),
                           inputType: InputType.both,
                           decoration: const InputDecoration(
-                            labelText: Constants
-                                .addTransactionScreenTransactionDateLabel,
+                            labelText: Constants.addTransactionScreenTransactionDateLabel,
                             border: OutlineInputBorder(),
                           ),
                           initialTime: const TimeOfDay(hour: 8, minute: 0),
                           valueTransformer: (value) {
-                            final DateFormat formatter =
-                                DateFormat(Constants.dateTimeFormat);
+                            final DateFormat formatter = DateFormat(Constants.dateTimeFormat);
                             return formatter.format(value!);
                           },
                           // locale: const Locale.fromSubtags(languageCode: 'fr'),
@@ -91,14 +86,12 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                           ),
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.selectToAccount),
+                              FormBuilderValidators.required(errorText: Constants.selectToAccount),
                             ],
                           ),
                           readOnly: true,
                           onTap: () async {
-                            await _openAccountSelectionDialog(
-                                Constants.addTransactionScreenFromAccount);
+                            await _openAccountSelectionDialog(Constants.addTransactionScreenFromAccount);
                           },
                           valueTransformer: (value) {
                             return _fromAccountId;
@@ -117,14 +110,12 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                           ),
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.selectFromAccount),
+                              FormBuilderValidators.required(errorText: Constants.selectFromAccount),
                             ],
                           ),
                           readOnly: true,
                           onTap: () async {
-                            await _openAccountSelectionDialog(
-                                Constants.addTransactionScreenToAccount);
+                            await _openAccountSelectionDialog(Constants.addTransactionScreenToAccount);
                           },
                           valueTransformer: (value) {
                             return _toAccountId;
@@ -137,23 +128,16 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                           name: Constants.finalAmount,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            _formKey
-                                .currentState
-                                ?.fields[
-                                    Constants.finalAmount]
-                                ?.validate();
+                            _formKey.currentState?.fields[Constants.finalAmount]?.validate();
                           },
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addTransactionScreenFinalAmountLabel,
+                            labelText: Constants.addTransactionScreenFinalAmountLabel,
                             border: OutlineInputBorder(),
                           ),
                           validator: FormBuilderValidators.compose(
                             [
-                              FormBuilderValidators.required(
-                                  errorText: Constants.enterFinalAmount),
-                              FormBuilderValidators.numeric(
-                                  errorText: Constants.enterValidAmount)
+                              FormBuilderValidators.required(errorText: Constants.enterFinalAmount),
+                              FormBuilderValidators.numeric(errorText: Constants.enterValidAmount)
                             ],
                           ),
                         ),
@@ -163,8 +147,7 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                         FormBuilderTextField(
                           name: Constants.addTransactionScreenDescription,
                           decoration: const InputDecoration(
-                            labelText:
-                                Constants.addTransactionScreenDetailsLabel,
+                            labelText: Constants.addTransactionScreenDetailsLabel,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -198,14 +181,11 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
 
   Future<void> _openAccountSelectionDialog(String whichAccount) async {
     FocusManager.instance.primaryFocus?.unfocus();
-    await _accountService
-        .getAllAccounts(false)
-        .then((accounts) => openAccountSelectionScreen(accounts, whichAccount));
+    await _accountService.getAllAccounts(false).then((accounts) => openAccountSelectionScreen(accounts, whichAccount));
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  Future<void> openAccountSelectionScreen(
-      List<Account> accounts, String whichAccount) async {
+  Future<void> openAccountSelectionScreen(List<Account> accounts, String whichAccount) async {
     await FilterListDelegate.show<Account>(
       context: context,
       list: accounts,
@@ -231,22 +211,17 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
         setState(
           () {
             if (whichAccount == Constants.addTransactionScreenToAccount) {
-              _formKey
-                  .currentState!.fields[Constants.addTransactionScreenToAccount]
-                  ?.didChange(list?.first.accountName);
+              _formKey.currentState!.fields[Constants.addTransactionScreenToAccount]?.didChange(list?.first.accountName);
               _toAccountId = list!.first.id!;
             } else {
-              _formKey.currentState!
-                  .fields[Constants.addTransactionScreenFromAccount]
-                  ?.didChange(list?.first.accountName);
+              _formKey.currentState!.fields[Constants.addTransactionScreenFromAccount]?.didChange(list?.first.accountName);
               _fromAccountId = list!.first.id!;
             }
           },
         );
       },
       suggestionBuilder: (context, account, isSelected) {
-        if (whichAccount == Constants.addTransactionScreenToAccount &&
-            account.id != _fromAccountId) {
+        if (whichAccount == Constants.addTransactionScreenToAccount && account.id != _fromAccountId) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Card(
@@ -256,22 +231,17 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: Colors.grey),
                 ),
-                tileColor:
-                    Utils.getColorFromColorCode(Constants.lisListTileColor),
+                tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
                 leading: _getAccountTypeIcon(account),
-                title: Text(account.accountName,
-                    style: const TextStyle(fontWeight: FontWeight.w500)),
+                title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500)),
                 trailing: Text(
                   Utils.formatNumber(account.availableBalance),
-                  style: TextStyle(
-                      color: _getBalanceColor(account),
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(color: _getBalanceColor(account), fontWeight: FontWeight.w600),
                 ),
               ),
             ),
           );
-        } else if (whichAccount == Constants.addTransactionScreenFromAccount &&
-            account.id != _toAccountId) {
+        } else if (whichAccount == Constants.addTransactionScreenFromAccount && account.id != _toAccountId) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Card(
@@ -281,16 +251,12 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(color: Colors.grey),
                 ),
-                tileColor:
-                    Utils.getColorFromColorCode(Constants.lisListTileColor),
+                tileColor: Utils.getColorFromColorCode(Constants.lisListTileColor),
                 leading: _getAccountTypeIcon(account),
-                title: Text(account.accountName,
-                    style: const TextStyle(fontWeight: FontWeight.w500)),
+                title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500)),
                 trailing: Text(
                   Utils.formatNumber(account.availableBalance),
-                  style: TextStyle(
-                      color: _getBalanceColor(account),
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(color: _getBalanceColor(account), fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -322,68 +288,32 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
     int? transactionId;
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       debugPrint(_formKey.currentState?.value.toString());
-      await _transactionService
-          .createTransaction(
-              _formKey.currentState?.value, Constants.transferTransactionCode)
-          .then(
+      await _transactionService.createTransaction(_formKey.currentState?.value, Constants.transferTransactionCode).then(
         (value) async {
           transactionId = value;
           await _accountService.getAccountById(_fromAccountId!).then(
             (accountList) async {
               Account account = accountList.first;
-              account.availableBalance = account.availableBalance -
-                  double.parse(_formKey
-                      .currentState
-                      ?.fields[Constants.finalAmount]
-                      ?.value);
-              account.debitedAmount = account.debitedAmount +
-                  double.parse(_formKey
-                      .currentState
-                      ?.fields[Constants.finalAmount]
-                      ?.value);
+              account.availableBalance = account.availableBalance - double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
+              account.debitedAmount = account.debitedAmount + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
               account.outTransaction = account.outTransaction + 1;
               if (account.isCreditCard == 1) {
-                account.outstandingBalance = account.outstandingBalance! +
-                    double.parse(_formKey
-                        .currentState
-                        ?.fields[Constants.finalAmount]
-                        ?.value);
+                account.outstandingBalance = account.outstandingBalance! + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
               }
-              await _accountService
-                  .updateAccountForOutTransaction(account.toMap(),
-                      account.isCreditCard == 1 ? true : false, account.id!)
-                  .then(
+              await _accountService.updateAccountForOutTransaction(account.toMap(), account.isCreditCard == 1 ? true : false, account.id!).then(
                 (value) async {
                   await _accountService.getAccountById(_toAccountId!).then(
                     (accountList) async {
                       Account account = accountList.first;
-                      account.availableBalance = account.availableBalance +
-                          double.parse(_formKey
-                              .currentState
-                              ?.fields[
-                                  Constants.finalAmount]
-                              ?.value);
-                      account.creditedAmount = account.creditedAmount +
-                          double.parse(_formKey
-                              .currentState
-                              ?.fields[
-                                  Constants.finalAmount]
-                              ?.value);
+                      account.availableBalance = account.availableBalance + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
+                      account.creditedAmount = account.creditedAmount + double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
                       account.inTransaction = account.inTransaction + 1;
                       if (account.isCreditCard == 1) {
-                        account.outstandingBalance = account
-                                .outstandingBalance! -
-                            double.parse(_formKey
-                                .currentState
-                                ?.fields[
-                                    Constants.finalAmount]
-                                ?.value);
+                        account.outstandingBalance =
+                            account.outstandingBalance! - double.parse(_formKey.currentState?.fields[Constants.finalAmount]?.value);
                       }
 
-                      await _accountService.updateAccountForInTransaction(
-                          account.toMap(),
-                          account.isCreditCard == 1 ? true : false,
-                          account.id);
+                      await _accountService.updateAccountForInTransaction(account.toMap(), account.isCreditCard == 1 ? true : false, account.id);
                     },
                   );
                 },
@@ -393,8 +323,7 @@ class _AddTransferTransactionScreenState extends State<AddTransferTransactionScr
         },
       );
       navigator.pop();
-      navigator.push(MaterialPageRoute(
-          builder: (context) => TransactionDetailScreen(transactionId!)));
+      navigator.push(MaterialPageRoute(builder: (context) => TransactionDetailScreen(transactionId!)));
     }
   }
 

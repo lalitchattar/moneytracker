@@ -27,10 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final TransactionService _transactionService = TransactionService();
   final AccountService _accountService = AccountService();
 
-  final String _fromDate =
-      "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-01";
-  final String _toDate =
-      "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-31";
+  final String _fromDate = "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-01";
+  final String _toDate = "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-31";
 
   @override
   Widget build(BuildContext context) {
@@ -69,43 +67,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 18.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 18.0),
                               child: ListTile(
                                 title: const Text(
                                   Constants.totalBalance,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w500,
-                                      letterSpacing: 1.0),
+                                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, letterSpacing: 1.0),
                                 ),
                                 subtitle: Padding(
                                   padding: const EdgeInsets.only(top: 5.0),
                                   child: FutureBuilder<List>(
                                     future: _accountService.getTotalBalance(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<List> snapshot) {
+                                    builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                                       if (snapshot.hasData) {
-                                        String balance = Utils.formatNumber(
-                                                snapshot.data?.first[Constants
-                                                    .addAccountFormAvailableBalance]) ??
+                                        String balance = Utils.formatNumber(snapshot.data?.first[Constants.addAccountFormAvailableBalance]) ??
                                             Constants.initialBalance;
                                         return Text(
                                           balance,
-                                          style: const TextStyle(
-                                              fontSize: 25.0,
-                                              color: Colors.black,
-                                              letterSpacing: 1.0,
-                                              fontWeight: FontWeight.w500),
+                                          style:
+                                              const TextStyle(fontSize: 25.0, color: Colors.black, letterSpacing: 1.0, fontWeight: FontWeight.w500),
                                         );
                                       } else {
-                                        return const Text(
-                                            Constants.initialBalance,
-                                            style: TextStyle(
-                                                fontSize: 30.0,
-                                                color: Colors.black,
-                                                letterSpacing: 1.0,
-                                                fontWeight: FontWeight.w500));
+                                        return const Text(Constants.initialBalance,
+                                            style: TextStyle(fontSize: 30.0, color: Colors.black, letterSpacing: 1.0, fontWeight: FontWeight.w500));
                                       }
                                     },
                                   ),
@@ -118,8 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Padding(
                               padding: const EdgeInsets.only(top: 20.0),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Column(
                                     children: [
@@ -127,25 +109,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Container(
                                           height: 60.0,
                                           width: 60.0,
-                                          decoration: const BoxDecoration(
-                                              color: Colors.red,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
+                                          decoration: const BoxDecoration(color: Colors.red, borderRadius: BorderRadius.all(Radius.circular(10))),
                                           child: const CircleAvatar(
                                             backgroundColor: Colors.transparent,
                                             child: SvgIcon(
                                               AllScreenIcon.expense,
                                               color: Colors.white,
-                                              width: 30, height: 30,
+                                              width: 30,
+                                              height: 30,
                                             ),
                                           ),
                                         ),
                                         onTap: () {
-                                          Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const AddExpenseTransactionScreen()))
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddExpenseTransactionScreen()))
                                               .then((value) => setState(() {}));
                                         },
                                       ),
@@ -161,10 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Container(
                                           height: 60.0,
                                           width: 60.0,
-                                          decoration: const BoxDecoration(
-                                              color: Colors.green,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
+                                          decoration: const BoxDecoration(color: Colors.green, borderRadius: BorderRadius.all(Radius.circular(10))),
                                           child: const CircleAvatar(
                                             backgroundColor: Colors.transparent,
                                             child: SvgIcon(
@@ -176,11 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                         onTap: () {
-                                          Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const AddIncomeTransactionScreen()))
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddIncomeTransactionScreen()))
                                               .then((value) => setState(() {}));
                                         },
                                       ),
@@ -196,25 +165,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Container(
                                           height: 60.0,
                                           width: 60.0,
-                                          decoration: const BoxDecoration(
-                                              color: Colors.blue,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
+                                          decoration: const BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.all(Radius.circular(10))),
                                           child: const CircleAvatar(
                                             backgroundColor: Colors.transparent,
                                             child: SvgIcon(
                                               AllScreenIcon.transfer,
                                               color: Colors.white,
-                                              width: 30, height: 30,
+                                              width: 30,
+                                              height: 30,
                                             ),
                                           ),
                                         ),
                                         onTap: () {
-                                          Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const AddTransferTransactionScreen()))
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddTransferTransactionScreen()))
                                               .then((value) => setState(() {}));
                                         },
                                       ),
@@ -238,26 +201,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         FutureBuilder(
-                          future: _transactionService
-                              .getTotalIncomeAndExpenseInDateRange(
-                                  _fromDate, _toDate, Constants.incomeCode),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<List> snapshot) {
+                          future: _transactionService.getTotalIncomeAndExpenseInDateRange(_fromDate, _toDate, Constants.incomeCode),
+                          builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                             if (snapshot.hasData) {
                               List? totalIncomeExpense = snapshot.data;
                               return Card(
                                 elevation: 1,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  side: const BorderSide(
-                                      width: 0, color: Colors.grey),
+                                  side: const BorderSide(width: 0, color: Colors.grey),
                                 ),
                                 child: SizedBox(
                                   width: 180.0,
                                   height: 90.0,
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       const Padding(
                                         padding: EdgeInsets.only(
@@ -266,23 +224,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         child: Text(
                                           Constants.income,
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey,
-                                              letterSpacing: 1.0),
+                                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: Colors.grey, letterSpacing: 1.0),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20.0, top: 10.0),
+                                        padding: const EdgeInsets.only(left: 20.0, top: 10.0),
                                         child: Text(
                                           _getBalance(totalIncomeExpense!),
-                                          style: const TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.green,
-                                              letterSpacing: 1.0),
+                                          style:
+                                              const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500, color: Colors.green, letterSpacing: 1.0),
                                         ),
                                       ),
                                     ],
@@ -295,26 +245,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                         FutureBuilder(
-                          future: _transactionService
-                              .getTotalIncomeAndExpenseInDateRange(
-                                  _fromDate, _toDate, Constants.expenseCode),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<List> snapshot) {
+                          future: _transactionService.getTotalIncomeAndExpenseInDateRange(_fromDate, _toDate, Constants.expenseCode),
+                          builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                             if (snapshot.hasData) {
                               List? totalIncomeExpense = snapshot.data;
                               return Card(
                                 elevation: 1,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  side: const BorderSide(
-                                      width: 0, color: Colors.grey),
+                                  side: const BorderSide(width: 0, color: Colors.grey),
                                 ),
                                 child: SizedBox(
                                   width: 180.0,
                                   height: 90.0,
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       const Padding(
                                         padding: EdgeInsets.only(
@@ -323,23 +268,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         child: Text(
                                           Constants.expense,
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey,
-                                              letterSpacing: 1.0),
+                                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: Colors.grey, letterSpacing: 1.0),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20.0, top: 10.0),
+                                        padding: const EdgeInsets.only(left: 20.0, top: 10.0),
                                         child: Text(
                                           _getBalance(totalIncomeExpense!),
-                                          style: const TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.red,
-                                              letterSpacing: 1.0),
+                                          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500, color: Colors.red, letterSpacing: 1.0),
                                         ),
                                       ),
                                     ],
@@ -360,8 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text(
                         Constants.latestTransaction,
-                        style: TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.w500),
+                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
                       ),
                     ),
                     const SizedBox(
@@ -369,8 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     FutureBuilder(
                       future: _transactionService.getTransactionsPageWise(5, 0),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<Transactions>> snapshot) {
+                      builder: (BuildContext context, AsyncSnapshot<List<Transactions>> snapshot) {
                         if (snapshot.hasData) {
                           List<Widget> item = [];
                           snapshot.data?.forEach(
@@ -378,49 +312,32 @@ class _HomeScreenState extends State<HomeScreen> {
                               item.add(GestureDetector(
                                 child: Card(
                                   child: ListTile(
-                                    visualDensity:
-                                        const VisualDensity(vertical: 4),
+                                    visualDensity: const VisualDensity(vertical: 4),
                                     leading: SizedBox(
                                       width: 60.0,
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
                                           CircleAvatar(
-                                            backgroundColor:
-                                                Utils.getColorFromColorCode(
-                                                    Constants
-                                                        .defaultThemeColor),
-                                            child: _getSVGIconOrLetter(
-                                                transaction),
+                                            backgroundColor: Utils.getColorFromColorCode(Constants.defaultThemeColor),
+                                            child: _getSVGIconOrLetter(transaction),
                                           ),
                                           Text(
-                                            transaction
-                                                .transactionCategoryName!,
-                                            style: const TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w500),
+                                            transaction.transactionCategoryName!,
+                                            style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
                                     ),
                                     title: _getTransactionTitle(transaction),
                                     trailing: Text(
-                                      Utils.formatNumber(
-                                          transaction.finalAmount),
-                                      style: TextStyle(
-                                          color: _getBalanceColor(transaction),
-                                          fontWeight: FontWeight.w500),
+                                      Utils.formatNumber(transaction.finalAmount),
+                                      style: TextStyle(color: _getBalanceColor(transaction), fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              TransactionDetailScreen(
-                                                  transaction.id)));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => TransactionDetailScreen(transaction.id)));
                                 },
                               ));
                             },
@@ -429,8 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: item,
                           );
                         } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         }
                       },
                     )
@@ -482,9 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else {
       return Text(
-        transaction.fromAccountName!.isEmpty
-            ? transaction.toAccountName!
-            : transaction.fromAccountName!,
+        transaction.fromAccountName!.isEmpty ? transaction.toAccountName! : transaction.fromAccountName!,
         style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
       );
     }

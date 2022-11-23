@@ -54,5 +54,4 @@ class Account {
     isSuspended = map["IS_SUSPENDED"];
     excludeFromSummary = map["EXCLUDED_FROM_SUMMARY"];
   }
-
 }

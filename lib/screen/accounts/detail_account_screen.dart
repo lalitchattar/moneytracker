@@ -26,8 +26,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor:
-              Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+          backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
           appBar: AppBar(
             title: const Text(
               Constants.detailAccountScreenAppBarTitle,
@@ -42,7 +41,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
             actions: [
               IconButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccountScreen(widget.id))).then((value) => setState((){}));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccountScreen(widget.id))).then((value) => setState(() {}));
                 },
                 icon: const Icon(Icons.edit),
               ),
@@ -51,8 +50,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
           ),
           body: FutureBuilder<List<Account>>(
             future: _accountService.getAccountById(widget.id),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
               if (snapshot.hasData) {
                 Account? account = snapshot.data?.first;
                 return Padding(
@@ -79,35 +77,25 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                               Center(
                                 child: Text(
                                   account!.accountName,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 1.0),
+                                  style: const TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1.0),
                                 ),
                               ),
                               const SizedBox(
                                 height: 30,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           Constants.availableBalanceLabel,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
                                         ),
                                         Text(
-                                          Utils.formatNumber(
-                                              account.availableBalance),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
+                                          Utils.formatNumber(account.availableBalance),
+
                                         ),
                                       ],
                                     ),
@@ -121,26 +109,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                 height: 12.0,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           Constants.descriptionLabel,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
                                         ),
                                         Text(
-                                          account.description ??
-                                              Constants.noInfo,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
+                                          account.description ?? Constants.noInfo,
                                         ),
                                       ],
                                     ),
@@ -154,25 +133,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                 height: 12.0,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           Constants.inTransaction,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
                                         ),
                                         Text(
                                           account.inTransaction.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
                                         ),
                                       ],
                                     ),
@@ -186,25 +157,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                 height: 12.0,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           Constants.outTransaction,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
                                         ),
                                         Text(
                                           account.outTransaction.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
                                         ),
                                       ],
                                     ),
@@ -218,26 +181,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                 height: 12.0,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           Constants.creditedAmount,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
                                         ),
                                         Text(
-                                          Utils.formatNumber(
-                                              account.creditedAmount),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
+                                          Utils.formatNumber(account.creditedAmount),
                                         ),
                                       ],
                                     ),
@@ -251,26 +205,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                 height: 12.0,
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           Constants.debitedAmount,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
                                         ),
                                         Text(
-                                          Utils.formatNumber(
-                                              account.debitedAmount),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              letterSpacing: 1),
+                                          Utils.formatNumber(account.debitedAmount),
                                         ),
                                       ],
                                     ),
@@ -292,26 +237,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                               Visibility(
                                 visible: _isCreditCard(account),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.creditLimitLabel,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
-                                            Utils.formatNumber(
-                                                account.creditLimit),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
+                                            Utils.formatNumber(account.creditLimit),
                                           ),
                                         ],
                                       ),
@@ -331,26 +267,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                               Visibility(
                                 visible: _isCreditCard(account),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.outStandingBalance,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
-                                            Utils.formatNumber(
-                                                account.outstandingBalance),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
+                                            Utils.formatNumber(account.outstandingBalance),
                                           ),
                                         ],
                                       ),
@@ -370,26 +297,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                               Visibility(
                                 visible: _isCreditCard(account),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.billingDayLabel,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
-                                            account.billingDay ??
-                                                Constants.noInfo,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
+                                            account.billingDay ?? Constants.noInfo,
                                           ),
                                         ],
                                       ),
@@ -409,26 +327,17 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                               Visibility(
                                 visible: _isCreditCard(account),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.gracePeriodLabel,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
-                                            account.gracePeriod ??
-                                                Constants.noInfo,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
+                                            account.gracePeriod ?? Constants.noInfo,
                                           ),
                                         ],
                                       ),
@@ -462,8 +371,18 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
 
   SvgIcon _getAccountTypeIcon(Account account) {
     return account.isCreditCard == 1
-        ? const SvgIcon("assets/icons/creditcard.svg", color: Colors.white, width: 50.0, height: 50.0,)
-        : const SvgIcon("assets/icons/bank.svg", color: Colors.white, width: 50.0, height: 50.0,);
+        ? const SvgIcon(
+            "assets/icons/creditcard.svg",
+            color: Colors.white,
+            width: 50.0,
+            height: 50.0,
+          )
+        : const SvgIcon(
+            "assets/icons/bank.svg",
+            color: Colors.white,
+            width: 50.0,
+            height: 50.0,
+          );
   }
 
   PopupMenuButton _buildPopupMenuButton() {
@@ -514,8 +433,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child:
-                  const Text(Constants.no, style: TextStyle(color: Colors.red)),
+              child: const Text(Constants.no, style: TextStyle(color: Colors.red)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -526,9 +444,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                 style: TextStyle(color: Colors.red),
               ),
               onPressed: () {
-                _transactionService
-                    .getTransactionCountByAccountId(id)
-                    .then((value) {
+                _transactionService.getTransactionCountByAccountId(id).then((value) {
                   if (value == 0) {
                     _accountService.deleteAccount(id);
                     Navigator.pop(context);
@@ -540,10 +456,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                     );
                   } else {
                     Navigator.pop(context);
-                    showDialog(
-                        context: context,
-                        builder: (context) => const ErrorDialogWidget(Constants
-                            .accountCanNotBeDeletedAsTransactionExists));
+                    showDialog(context: context, builder: (context) => const ErrorDialogWidget(Constants.accountCanNotBeDeletedAsTransactionExists));
                   }
                 });
               },
@@ -575,8 +488,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child:
-                  const Text(Constants.no, style: TextStyle(color: Colors.red)),
+              child: const Text(Constants.no, style: TextStyle(color: Colors.red)),
               onPressed: () {
                 Navigator.of(context).pop();
               },

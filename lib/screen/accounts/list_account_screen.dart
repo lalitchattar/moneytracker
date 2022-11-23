@@ -25,8 +25,7 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor:
-            Utils.getColorFromColorCode(Constants.screenBackgroundColor),
+        backgroundColor: Utils.getColorFromColorCode(Constants.screenBackgroundColor),
         appBar: AppBar(
           title: const Text(
             Constants.listAccountScreenAppBarTitle,
@@ -41,8 +40,7 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
         ),
         body: FutureBuilder<List<Account>>(
           future: _accountService.getAllAccounts(true),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
             if (snapshot.hasData) {
               return Padding(
                 padding: const EdgeInsets.only(top: 20.0),
@@ -58,26 +56,20 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
                         child: GestureDetector(
                           child: ListTile(
                             visualDensity: const VisualDensity(vertical: 2),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)
-                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             tileColor: _getTileColor(account),
                             leading: CircleAvatar(
                               radius: 20.0,
                               child: _getAccountTypeIcon(account),
                             ),
-                            title: Text(account.accountName, style: const TextStyle(fontWeight: FontWeight.w500)),
+                            title: Text(account.accountName,),
                             trailing: Text(
                               Utils.formatNumber(account.availableBalance),
-                              style: TextStyle(
-                                color: _getBalanceColor(account),
-                                fontWeight: FontWeight.w500
-                              ),
+                              style: TextStyle(color: _getBalanceColor(account), fontWeight: FontWeight.w500),
                             ),
                           ),
-                          onTap: (){
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => _getDetailScreenBasedOnSuspendStatus(account)))
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => _getDetailScreenBasedOnSuspendStatus(account)))
                                 .then((value) => setState(() {}));
                           },
                         ),
@@ -95,11 +87,7 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
           spacing: 5.0,
           icon: Icons.add,
           onPress: () {
-            Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddAccountScreen()))
-                .then((value) => setState(() {}));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAccountScreen())).then((value) => setState(() {}));
           },
         ),
       ),
@@ -107,21 +95,25 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
   }
 
   MaterialColor _getBalanceColor(Account account) {
-    return account.availableBalance > 0
-        ? Colors.green
-        : Colors.red;
+    return account.availableBalance > 0 ? Colors.green : Colors.red;
   }
 
   SvgIcon _getAccountTypeIcon(Account account) {
     return account.isCreditCard == 1
-        ? const SvgIcon(AllScreenIcon.creditCard, color: Colors.white,)
-        : const SvgIcon(AllScreenIcon.bank, color: Colors.white,);
+        ? const SvgIcon(
+            AllScreenIcon.creditCard,
+            color: Colors.white,
+          )
+        : const SvgIcon(
+            AllScreenIcon.bank,
+            color: Colors.white,
+          );
   }
 
   Color _getTileColor(Account account) {
-    return account.isSuspended == 1 ? Utils.getColorFromColorCode(
-        Constants.listSuspendedListTileColor) : Utils.getColorFromColorCode(
-        Constants.lisListTileColor);
+    return account.isSuspended == 1
+        ? Utils.getColorFromColorCode(Constants.listSuspendedListTileColor)
+        : Utils.getColorFromColorCode(Constants.lisListTileColor);
   }
 
   Widget _getDetailScreenBasedOnSuspendStatus(Account account) {

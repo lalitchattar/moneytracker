@@ -32,16 +32,12 @@ class _BudgetScreenState extends State<BudgetScreen> {
         padding: const EdgeInsets.all(10.0),
         child: FutureBuilder<List<BudgetModel>>(
           future: _budgetService.checkBudgetExists(),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<BudgetModel>> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<List<BudgetModel>> snapshot) {
             if (snapshot.data?.isNotEmpty ?? false) {
               return FutureBuilder<List<BudgetModel>>(
                 future: _budgetService.getDataForBudgetChart(
-                    _getFromDate(snapshot.data!.first.forYear),
-                    _getToDate(snapshot.data!.first.forYear),
-                    Constants.expenseCode),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<BudgetModel>> snapshot) {
+                    _getFromDate(snapshot.data!.first.forYear), _getToDate(snapshot.data!.first.forYear), Constants.expenseCode),
+                builder: (BuildContext context, AsyncSnapshot<List<BudgetModel>> snapshot) {
                   if (snapshot.data?.isNotEmpty ?? false) {
                     BudgetModel budgetModel = snapshot.data!.first;
                     return SingleChildScrollView(
@@ -58,14 +54,8 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                     child: Stack(children: [
                                       DChartPie(
                                         data: [
-                                          {
-                                            Constants.domain: Constants.spent,
-                                            Constants.measure: _getSpendMeasure(budgetModel)
-                                          },
-                                          {
-                                            Constants.domain: Constants.remain,
-                                            Constants.measure: _getRemainMeasure(budgetModel)
-                                          },
+                                          {Constants.domain: Constants.spent, Constants.measure: _getSpendMeasure(budgetModel)},
+                                          {Constants.domain: Constants.remain, Constants.measure: _getRemainMeasure(budgetModel)},
                                         ],
                                         fillColor: (pieData, index) {
                                           switch (pieData[Constants.domain]) {
@@ -90,25 +80,18 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                   height: 30,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.budget,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
                                             Utils.formatNumber(budgetModel.budgetAmount),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1, color: Colors.green),
+                                            style: const TextStyle( color: Colors.green),
                                           ),
                                         ],
                                       ),
@@ -122,25 +105,18 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                   height: 12,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.spent,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
                                             Utils.formatNumber(budgetModel.expense),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1, color: Colors.red),
+                                            style: const TextStyle( color: Colors.red),
                                           ),
                                         ],
                                       ),
@@ -154,25 +130,18 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                   height: 12,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.exceed,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
-                                           Utils.formatNumber( _calculateExceedAmount(budgetModel)),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1, color: _getExceedColor(budgetModel)),
+                                            Utils.formatNumber(_calculateExceedAmount(budgetModel)),
+                                            style: TextStyle(color: _getExceedColor(budgetModel)),
                                           ),
                                         ],
                                       ),
@@ -186,25 +155,17 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                   height: 12,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.transactions,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
                                             budgetModel.totalTransaction.toString(),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                         ],
                                       ),
@@ -218,25 +179,17 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                   height: 12,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.highestSpend,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
                                             Utils.formatNumber(budgetModel.highestAmount),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                         ],
                                       ),
@@ -250,25 +203,17 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                   height: 12,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             Constants.lowestSpend,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                           Text(
                                             Utils.formatNumber(budgetModel.lowestAmount),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: 1),
                                           ),
                                         ],
                                       ),
@@ -288,10 +233,6 @@ class _BudgetScreenState extends State<BudgetScreen> {
                     return const Center(
                       child: Text(
                         Constants.noTransactionFoundToSetBudget,
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.0),
                       ),
                     );
                   }
@@ -332,10 +273,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
             child: Column(
               children: [
                 Row(
-                  children: [
-                    Text(Constants.budgetFor +
-                        DateFormat.MMMM().format(DateTime.now()))
-                  ],
+                  children: [Text(Constants.budgetFor + DateFormat.MMMM().format(DateTime.now()))],
                 ),
                 FormBuilder(
                   key: _formKey,
@@ -344,10 +282,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                       FormBuilderTextField(
                         name: Constants.budgetAmount,
                         keyboardType: TextInputType.number,
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                              errorText: Constants.enterBudgetAmount)
-                        ]),
+                        validator: FormBuilderValidators.compose([FormBuilderValidators.required(errorText: Constants.enterBudgetAmount)]),
                       ),
                       FormBuilderCheckbox(
                         name: Constants.forYear,
@@ -365,8 +300,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text(Constants.cancel,
-                  style: TextStyle(color: Colors.red)),
+              child: const Text(Constants.cancel, style: TextStyle(color: Colors.red)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -379,9 +313,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
               onPressed: () {
                 if (_formKey.currentState?.saveAndValidate() ?? false) {
                   debugPrint(_formKey.currentState?.value.toString());
-                  _budgetService
-                      .createBudgetEntry(_formKey.currentState?.value)
-                      .then(
+                  _budgetService.createBudgetEntry(_formKey.currentState?.value).then(
                     (value) {
                       Navigator.pop(context);
                       setState(() {});
@@ -411,14 +343,15 @@ class _BudgetScreenState extends State<BudgetScreen> {
       return "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-31";
     }
   }
-  
+
   double _getSpendMeasure(BudgetModel budgetModel) {
     return Utils.calculateXPercentageOfY(budgetModel.expense, budgetModel.budgetAmount);
   }
 
   double _getRemainMeasure(BudgetModel budgetModel) {
-    return (100 - Utils.calculateXPercentageOfY(budgetModel.expense, budgetModel.budgetAmount)) <=
-      0 ? 0 : (100 - Utils.calculateXPercentageOfY(budgetModel.expense, budgetModel.budgetAmount));
+    return (100 - Utils.calculateXPercentageOfY(budgetModel.expense, budgetModel.budgetAmount)) <= 0
+        ? 0
+        : (100 - Utils.calculateXPercentageOfY(budgetModel.expense, budgetModel.budgetAmount));
   }
 
   double _calculateExceedAmount(BudgetModel budgetModel) {
