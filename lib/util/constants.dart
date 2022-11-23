@@ -1,6 +1,7 @@
 class Constants {
 
   static const List<String> currencyList = ["INR", "USD", "EUR", "JPY"];
+  static const currencyFormat = "###,###.##";
   /* Color Constants */
   static const String screenBackgroundColor = "#D3D3DB";
   static const String appBarBackgroundColor = "#FFFFFF";

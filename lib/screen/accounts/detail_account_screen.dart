@@ -5,6 +5,7 @@ import 'package:svg_icon/svg_icon.dart';
 import '../../model/account.dart';
 import '../../service/account_service.dart';
 import '../../service/transaction_service.dart';
+import '../../util/application_config.dart';
 import '../../util/constants.dart';
 import '../../util/utils.dart';
 import '../../widget/error_dialog_widget.dart';
@@ -21,6 +22,7 @@ class DetailAccountScreen extends StatefulWidget {
 class _DetailAccountScreenState extends State<DetailAccountScreen> {
   final AccountService _accountService = AccountService();
   final TransactionService _transactionService = TransactionService();
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                           Constants.availableBalanceLabel,
                                         ),
                                         Text(
-                                          Utils.formatNumber(account.availableBalance),
+                                          Utils.formattedMoney(account.availableBalance, _applicationConfig.configMap!["CURRENCY"]!)
 
                                         ),
                                       ],
@@ -191,7 +193,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                           Constants.creditedAmount,
                                         ),
                                         Text(
-                                          Utils.formatNumber(account.creditedAmount),
+                                            Utils.formattedMoney(account.creditedAmount, _applicationConfig.configMap!["CURRENCY"]!)
                                         ),
                                       ],
                                     ),
@@ -215,7 +217,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                           Constants.debitedAmount,
                                         ),
                                         Text(
-                                          Utils.formatNumber(account.debitedAmount),
+                                            Utils.formattedMoney(account.debitedAmount, _applicationConfig.configMap!["CURRENCY"]!)
                                         ),
                                       ],
                                     ),
@@ -247,7 +249,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                             Constants.creditLimitLabel,
                                           ),
                                           Text(
-                                            Utils.formatNumber(account.creditLimit),
+                                              Utils.formattedMoney(account.creditLimit, _applicationConfig.configMap!["CURRENCY"]!)
                                           ),
                                         ],
                                       ),
@@ -277,7 +279,7 @@ class _DetailAccountScreenState extends State<DetailAccountScreen> {
                                             Constants.outStandingBalance,
                                           ),
                                           Text(
-                                            Utils.formatNumber(account.outstandingBalance),
+                                              Utils.formattedMoney(account.outstandingBalance, _applicationConfig.configMap!["CURRENCY"]!)
                                           ),
                                         ],
                                       ),

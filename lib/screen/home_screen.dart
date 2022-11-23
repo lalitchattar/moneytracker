@@ -8,6 +8,7 @@ import 'package:moneytracker/screen/transaction/transaction_details_screen.dart'
 import 'package:moneytracker/screen/transaction/transfer/add_transfer_transaction_screen.dart';
 import 'package:moneytracker/service/account_service.dart';
 import 'package:moneytracker/util/ThemeUtil.dart';
+import 'package:moneytracker/util/application_config.dart';
 import 'package:svg_icon/svg_icon.dart';
 
 import '../service/transaction_service.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TransactionService _transactionService = TransactionService();
   final AccountService _accountService = AccountService();
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
 
   final String _fromDate = "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-01";
   final String _toDate = "${DateFormat.y().format(DateTime.now())}-${DateFormat.M().format(DateTime.now())}-31";
@@ -79,16 +81,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     future: _accountService.getTotalBalance(),
                                     builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                                       if (snapshot.hasData) {
-                                        String balance = Utils.formatNumber(snapshot.data?.first[Constants.addAccountFormAvailableBalance]) ??
-                                            Constants.initialBalance;
+                                        String balance = Utils.formattedMoney(snapshot.data?.first[Constants.addAccountFormAvailableBalance], _applicationConfig.configMap!["CURRENCY"]!) ??
+                                            Utils.formattedMoney(0.0, _applicationConfig.configMap!["CURRENCY"]!);
                                         return Text(
                                           balance,
                                           style:
                                               const TextStyle(fontSize: 25.0, color: Colors.black, letterSpacing: 1.0, fontWeight: FontWeight.w500),
                                         );
                                       } else {
-                                        return const Text(Constants.initialBalance,
-                                            style: TextStyle(fontSize: 30.0, color: Colors.black, letterSpacing: 1.0, fontWeight: FontWeight.w500));
+                                        return Text(Utils.formattedMoney(0.0, _applicationConfig.configMap!["CURRENCY"]!),
+                                            style: const TextStyle(fontSize: 25.0, color: Colors.black, letterSpacing: 1.0, fontWeight: FontWeight.w500));
                                       }
                                     },
                                   ),
@@ -331,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     title: _getTransactionTitle(transaction),
                                     trailing: Text(
-                                      Utils.formatNumber(transaction.finalAmount),
+                                      Utils.formattedMoney(transaction.finalAmount, _applicationConfig.configMap!["CURRENCY"]!),
                                       style: TextStyle(color: _getBalanceColor(transaction), fontWeight: FontWeight.w500),
                                     ),
                                   ),
@@ -406,8 +408,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _getBalance(List balanceList) {
     if (balanceList.isNotEmpty) {
-      return Utils.formatNumber(balanceList[0][Constants.finalAmount]);
+      return Utils.formattedMoney(balanceList[0][Constants.finalAmount], _applicationConfig.configMap!["CURRENCY"]!);
     }
-    return Constants.initialBalance;
+    return Utils.formattedMoney(0.00, _applicationConfig.configMap!["CURRENCY"]!);
   }
 }

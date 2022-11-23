@@ -5,6 +5,7 @@ import 'package:moneytracker/screen/accounts/add_account_screen.dart';
 import 'package:moneytracker/screen/accounts/detail_account_screen.dart';
 import 'package:moneytracker/screen/accounts/suspended_detail_account_screen.dart';
 import 'package:moneytracker/util/all_screen_icon.dart';
+import 'package:moneytracker/util/application_config.dart';
 import 'package:svg_icon/svg_icon.dart';
 import '../../service/account_service.dart';
 
@@ -20,6 +21,7 @@ class ListAccountScreen extends StatefulWidget {
 
 class _ListAccountScreenState extends State<ListAccountScreen> {
   final AccountService _accountService = AccountService();
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class _ListAccountScreenState extends State<ListAccountScreen> {
                             ),
                             title: Text(account.accountName,),
                             trailing: Text(
-                              Utils.formatNumber(account.availableBalance),
+                              Utils.formattedMoney(account.availableBalance, _applicationConfig.configMap!["CURRENCY"].toString()),
                               style: TextStyle(color: _getBalanceColor(account), fontWeight: FontWeight.w500),
                             ),
                           ),

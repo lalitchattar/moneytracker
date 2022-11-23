@@ -4,6 +4,7 @@ import 'package:material_color_generator/material_color_generator.dart';
 import 'package:moneytracker/screen/transaction/transaction_details_screen.dart';
 import 'package:moneytracker/service/transaction_service.dart';
 import 'package:moneytracker/util/ThemeUtil.dart';
+import 'package:moneytracker/util/application_config.dart';
 import 'package:moneytracker/util/category_icon_mapping.dart';
 import 'package:svg_icon/svg_icon.dart';
 
@@ -24,6 +25,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   final PagingController<int, Transactions> _pagingController = PagingController(firstPageKey: 0);
 
   final TransactionService _transactionService = TransactionService();
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
 
   @override
   void initState() {
@@ -90,8 +92,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         ),
                         title: _getTransactionTitle(transaction),
                         trailing: Text(
-                          Utils.formatNumber(transaction.finalAmount),
-                          style: TextStyle(color: _getBalanceColor(transaction), fontWeight: FontWeight.w600),
+                          Utils.formattedMoney(transaction.finalAmount, _applicationConfig.configMap!["CURRENCY"]!),
+                          style: TextStyle(color: _getBalanceColor(transaction)),
                         ),
                       ),
                     ),

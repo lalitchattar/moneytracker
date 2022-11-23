@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneytracker/screen/category/edit_category_screen.dart';
 import 'package:moneytracker/screen/category/list_category_screen.dart';
+import 'package:moneytracker/util/application_config.dart';
 import 'package:svg_icon/svg_icon.dart';
 import '../../model/category.dart';
 import '../../service/category_service.dart';
@@ -20,6 +21,7 @@ class DetailCategoryScreen extends StatefulWidget {
 
 class _DetailCategoryScreenState extends State<DetailCategoryScreen> {
   final CategoryService _categoryService = CategoryService();
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +171,7 @@ class _DetailCategoryScreenState extends State<DetailCategoryScreen> {
                                             Constants.creditedAmount,
                                           ),
                                           Text(
-                                            Utils.formatNumber(category.creditedAmount),
+                                              Utils.formattedMoney(category.creditedAmount, _applicationConfig.configMap!["CURRENCY"]!)
                                           ),
                                         ],
                                       ),
@@ -193,7 +195,7 @@ class _DetailCategoryScreenState extends State<DetailCategoryScreen> {
                                             Constants.debitedAmount,
                                           ),
                                           Text(
-                                            Utils.formatNumber(category.debitedAmount),
+                                              Utils.formattedMoney(category.debitedAmount, _applicationConfig.configMap!["CURRENCY"]!)
                                           ),
                                         ],
                                       ),

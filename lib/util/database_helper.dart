@@ -116,7 +116,7 @@ class DatabaseHelper {
 
   static const _configInsert = """ INSERT INTO CONFIG(
       CONFIG_KEY, CONFIG_VALUE
-      ) SELECT 'CURRENCY', 'INR (₹)' UNION ALL
+      ) SELECT 'CURRENCY', 'INR' UNION ALL
       SELECT 'IS_REMINDER_SET', '0' UNION ALL
       SELECT 'REMINDER_TIME', '20:00 PM' """;
 

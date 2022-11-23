@@ -3,6 +3,7 @@ import 'package:svg_icon/svg_icon.dart';
 
 import '../../model/transactions.dart';
 import '../../service/transaction_service.dart';
+import '../../util/application_config.dart';
 import '../../util/category_icon_mapping.dart';
 import '../../util/constants.dart';
 import '../../util/utils.dart';
@@ -17,6 +18,7 @@ class TransactionDetailScreen extends StatefulWidget {
 
 class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
   final TransactionService _transactionService = TransactionService();
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                             Center(
                               child: Text(
                                 _getTransactionTypeByCode(transactions!.transactionType),
-                                style: const TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1.0),
+                                style: const TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1.0),
                               ),
                             ),
                             const SizedBox(
@@ -79,11 +81,9 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                     children: [
                                       const Text(
                                         Constants.descriptionLabel,
-                                        style: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                       ),
                                       Text(
-                                        transactions.description ?? Constants.noInfo,
-                                        style: const TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
+                                        transactions.description ?? Constants.noInfo
                                       ),
                                     ],
                                   ),
@@ -107,11 +107,9 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                       children: [
                                         const Text(
                                           Constants.fromAccountLabel,
-                                          style: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                         ),
                                         Text(
                                           transactions.fromAccountName!,
-                                          style: const TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                         ),
                                       ],
                                     ),
@@ -139,11 +137,9 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                       children: [
                                         const Text(
                                           Constants.toAccountLabel,
-                                          style: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                         ),
                                         Text(
                                           transactions.toAccountName!,
-                                          style: const TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                         ),
                                       ],
                                     ),
@@ -166,11 +162,9 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                     children: [
                                       const Text(
                                         Constants.categoryNameLabel,
-                                        style: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                       ),
                                       Text(
                                         transactions.transactionCategoryName ?? Constants.noInfo,
-                                        style: const TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                       ),
                                     ],
                                   ),
@@ -192,11 +186,9 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                     children: [
                                       const Text(
                                         Constants.transactionDate,
-                                        style: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                       ),
                                       Text(
                                         Utils.formatDate(transactions.dateAndTime),
-                                        style: const TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                       ),
                                     ],
                                   ),
@@ -218,11 +210,9 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                     children: [
                                       const Text(
                                         Constants.transactionTime,
-                                        style: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                       ),
                                       Text(
                                         Utils.formatTime(transactions.dateAndTime),
-                                        style: const TextStyle(fontWeight: FontWeight.w500, letterSpacing: 1),
                                       ),
                                     ],
                                   ),
@@ -244,14 +234,10 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
                                     children: [
                                       const Text(
                                         Constants.transactionAmount,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 1,
-                                        ),
                                       ),
                                       Text(
-                                        Utils.formatNumber(transactions.finalAmount),
-                                        style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1, color: _getBalanceColor(transactions)),
+                                        Utils.formattedMoney(transactions.finalAmount, _applicationConfig.configMap!["CURRENCY"]!),
+                                        style: TextStyle(letterSpacing: 1, color: _getBalanceColor(transactions)),
                                       ),
                                     ],
                                   ),

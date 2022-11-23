@@ -266,7 +266,7 @@ class _MoreScreenState extends State<MoreScreen> {
                               currencyFilter: Constants.currencyList,
                               onSelect: (Currency currency) {
                                 setState(() {
-                                  _applicationConfig.setCurrencySetting("${currency.code} (${currency.symbol})");
+                                  _applicationConfig.setCurrencySetting(currency.code);
                                 });
                               },
                               favorite: [Constants.currency],

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:moneytracker/model/budget_model.dart';
 import 'package:moneytracker/service/budget_service.dart';
 
+import '../util/application_config.dart';
 import '../util/constants.dart';
 import '../util/utils.dart';
 
@@ -17,6 +18,7 @@ class BudgetScreen extends StatefulWidget {
 }
 
 class _BudgetScreenState extends State<BudgetScreen> {
+  final ApplicationConfig _applicationConfig = ApplicationConfig();
   final BudgetService _budgetService = BudgetService();
   final _formKey = GlobalKey<FormBuilderState>();
   @override
@@ -90,7 +92,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                             Constants.budget,
                                           ),
                                           Text(
-                                            Utils.formatNumber(budgetModel.budgetAmount),
+                                              Utils.formattedMoney(budgetModel.budgetAmount, _applicationConfig.configMap!["CURRENCY"]!),
                                             style: const TextStyle( color: Colors.green),
                                           ),
                                         ],
@@ -115,7 +117,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                             Constants.spent,
                                           ),
                                           Text(
-                                            Utils.formatNumber(budgetModel.expense),
+                                            Utils.formattedMoney(budgetModel.expense, _applicationConfig.configMap!["CURRENCY"]!),
                                             style: const TextStyle( color: Colors.red),
                                           ),
                                         ],
@@ -140,7 +142,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                             Constants.exceed,
                                           ),
                                           Text(
-                                            Utils.formatNumber(_calculateExceedAmount(budgetModel)),
+                                            Utils.formattedMoney(_calculateExceedAmount(budgetModel), _applicationConfig.configMap!["CURRENCY"]!),
                                             style: TextStyle(color: _getExceedColor(budgetModel)),
                                           ),
                                         ],
@@ -189,7 +191,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                             Constants.highestSpend,
                                           ),
                                           Text(
-                                            Utils.formatNumber(budgetModel.highestAmount),
+                                            Utils.formattedMoney(budgetModel.highestAmount, _applicationConfig.configMap!["CURRENCY"]!),
                                           ),
                                         ],
                                       ),
@@ -213,7 +215,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                             Constants.lowestSpend,
                                           ),
                                           Text(
-                                            Utils.formatNumber(budgetModel.lowestAmount),
+                                            Utils.formattedMoney(budgetModel.lowestAmount, _applicationConfig.configMap!["CURRENCY"]!),
                                           ),
                                         ],
                                       ),

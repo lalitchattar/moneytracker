@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:money2/money2.dart';
 
+import 'constants.dart';
+
 class Utils {
   /*static dynamic formatNumber(dynamic number) {
     NumberFormat formatPattern;
@@ -56,8 +58,8 @@ class Utils {
     return formatter.format(dateTimeObj);
   }
 
-  static void formattedMoney(num amount, String code) {
+  static String formattedMoney(num amount, String code) {
     Money money = Money.fromNum(amount, code: code);
-    debugPrint(money.toString());
+    return money.format("S${Constants.currencyFormat}").toString();
   }
 }
